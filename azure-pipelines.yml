@@ -15,9 +15,7 @@ steps:
 - script: ./julia-1.0.1/bin/julia --project=@. -e 'using Pkg; Pkg.instantiate()'
   displayName: 'Install dependencies'
 
-- script: |
-    ls
-    # ./julia-1.0.1/bin/julia --project=@. ./build.jl
+- script: ./julia-1.0.1/bin/julia --project=@. $(Build.SourcesDirectory)/build.jl
   displayName: 'Build Notebooks'
 
 - checkout: self
