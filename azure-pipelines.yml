@@ -12,7 +12,7 @@ steps:
     tar zxf julia-1.0.1-linux-x86_64.tar.gz
   displayName: 'Download and extract Julia'
 
-- script: ./julia-1.0.1/bin/julia --project=@. -e 'using Pkg; Pkg.instantiate()'
+- script: ./julia-1.0.1/bin/julia --project=@. -e 'using Pkg; Pkg.instantiate(); include("build.jl")'
   displayName: 'Install dependencies'
 
 - checkout: self
