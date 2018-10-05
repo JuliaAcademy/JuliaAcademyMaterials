@@ -15,6 +15,10 @@ steps:
 - script: ./julia-1.0.1/bin/julia --project=@. -e 'using Pkg; Pkg.instantiate()'
   displayName: 'Install dependencies'
 
+- checkout: self
+  clean: false
+  persistCredentials: true
+
 - script: |
     git checkout -b 'build'
     git add build 
