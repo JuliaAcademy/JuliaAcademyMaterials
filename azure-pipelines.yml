@@ -16,5 +16,8 @@ steps:
   displayName: 'Install dependencies'
 
 - script: |
-    git status
-  displayName: 'git status'
+    git checkout -b 'build'
+    git add build 
+    git commit -m "add build directory"
+    git push --set-upstream origin build
+  displayName: 'git stuff'
