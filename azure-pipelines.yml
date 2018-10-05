@@ -14,3 +14,13 @@ steps:
 
 - script: ./julia-1.0.1/bin/julia --project=@. -e 'using Pkg; Pkg.instantiate()'
   displayName: 'Install dependencies'
+
+- script: 
+    git branch -D build
+    git push origin --delete build
+    git checkout -b 'build'
+    git add .
+    git commit -m 'adding build'
+    git push --set-upstream origin build
+    git checkout master
+  displayName: 'deploy to build branch'
