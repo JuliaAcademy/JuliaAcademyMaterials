@@ -17,7 +17,7 @@ steps:
 
 - script: |
     pwd
-    ls
+    ls $(Build.SourcesDirectory)
     ./julia-1.0.1/bin/julia --project=@. $(Build.SourcesDirectory)/build.jl
   displayName: 'Build Notebooks'
 
