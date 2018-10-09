@@ -23,10 +23,9 @@ steps:
 #   clean: false
 #   persistCredentials: true
 
-# - script: |
-#     cd $(Build.Repository.LocalPath)
-#     git checkout -b 'build'
-#     git add -f build 
-#     git commit -m "add build directory"
-#     git push --set-upstream origin build
-#   displayName: 'git stuff'
+- script: |
+    git checkout -b 'build'
+    git add -f build 
+    git commit -m "add build directory"
+    git push --set-upstream origin build
+  displayName: 'Commit build to the `build` branch'
