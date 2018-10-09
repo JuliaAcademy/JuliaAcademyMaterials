@@ -16,9 +16,7 @@ steps:
   displayName: 'Install dependencies'
 
 - script: |
-    pwd
-    ls $(Build.Repository.LocalPath)
-    ./julia-1.0.1/bin/julia --project=@. $(Build.Repository.LocalPath)/build.jl
+    ./julia-1.0.1/bin/julia --project=@. build.jl
   displayName: 'Build Notebooks'
 
 # - checkout: self
