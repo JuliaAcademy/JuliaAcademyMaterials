@@ -21,14 +21,14 @@ steps:
     ./julia-1.0.1/bin/julia --project=@. $(Build.Repository.LocalPath)/build.jl
   displayName: 'Build Notebooks'
 
-- checkout: self
-  clean: false
-  persistCredentials: true
+# - checkout: self
+#   clean: false
+#   persistCredentials: true
 
-- script: |
-    cd $(Build.Repository.LocalPath)
-    git checkout -b 'build'
-    git add build 
-    git commit -m "add build directory"
-    git push --set-upstream origin build
-  displayName: 'git stuff'
+# - script: |
+#     cd $(Build.Repository.LocalPath)
+#     git checkout -b 'build'
+#     git add -f build 
+#     git commit -m "add build directory"
+#     git push --set-upstream origin build
+#   displayName: 'git stuff'
