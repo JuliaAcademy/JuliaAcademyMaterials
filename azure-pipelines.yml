@@ -19,13 +19,15 @@ steps:
     ./julia-1.0.1/bin/julia --project=@. build.jl
   displayName: 'Build Notebooks'
 
-# - checkout: self
-#   clean: false
-#   persistCredentials: true
+- checkout: self
+  clean: false
+  persistCredentials: true
 
 - script: |
-    git checkout -b 'build'
+    git branch -d notebooks
+    git push origin --delete notebooks
+    git checkout --orphan 'notebooks'
     git add -f build 
     git commit -m "add build directory"
-    git push --set-upstream origin build
-  displayName: 'Commit build to the `build` branch'
+    git push --set-upstream origin notebooks
+  displayName: 'Commit build to the `notebooks` branch'
