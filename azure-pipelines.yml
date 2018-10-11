@@ -22,7 +22,7 @@ steps:
 - script: ls
   displayName: 'list files'
 
-- checkout: self
-  persistCredentials: true
-  clean: true
-  displayName: 'Git checkout'
+# - checkout: self
+#   persistCredentials: true
+#   clean: true
+#   displayName: 'Git checkout'
