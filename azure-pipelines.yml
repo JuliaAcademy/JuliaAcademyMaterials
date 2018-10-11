@@ -18,3 +18,11 @@ steps:
 - script: |
     ./julia-1.0.1/bin/julia --project=@. build.jl
   displayName: 'Build Notebooks'
+
+- script: ls
+  displayName: 'list files'
+
+- checkout: self
+  persistCredentials: true
+  clean: true
+  displayName: 'Git checkout'
