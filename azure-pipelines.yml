@@ -28,7 +28,7 @@ steps:
     git branch -d notebooks
     git push origin --delete notebooks
     git checkout --orphan notebooks
-    git add build
+    git add -f build
     git commit -m "Generated Notebooks"
     git push --set-upstream origin notebooks
   displayName: 'Commit Notebooks to orphaned branch'
