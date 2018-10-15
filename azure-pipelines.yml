@@ -22,12 +22,3 @@ steps:
 - script: |
     ./julia-1.0.1/bin/julia --project=@. build.jl
   displayName: 'Build Notebooks'
-
-- script: |
-    git branch -d notebooks
-    git push origin --delete notebooks
-    git checkout --orphan notebooks
-    git add -f build
-    git commit -m "Generated Notebooks"
-    git push --set-upstream origin notebooks
-  displayName: 'Commit Notebooks to orphaned branch'

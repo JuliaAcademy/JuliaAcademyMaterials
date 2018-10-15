@@ -1,16 +1,19 @@
 using Literate 
 
 courses = [
-    (name = "Course Template", dir = "Course_Template")
+    (name = "Course Template",                  dir = "Template"),
+    (name = "Big Data Analysis with JuliaDB",   dir = "JuliaDB")
 ]
 
 for c in courses 
-    files = readdir(c.dir)
+    files = filter(x -> endswith(x, ".jl"), readdir(c.dir))
     for f in files 
         path = joinpath(c.dir, f)
-        include(path)
-        Literate.notebook(path, "build/"; credit=false)
+        try
+            include(path)  # "test" that the code runs
+            Literate.notebook(path, "_generated_notebooks/$(c.name)/"; credit=false)
+        catch 
+            @warn "File $path contains an error"
+        end
     end
 end
-
-include("Course_Template/testfile.jl")
