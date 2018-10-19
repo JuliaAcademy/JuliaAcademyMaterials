@@ -4,6 +4,6 @@
 # science.  In this course, you will learn how to do fundamental data science tasks with 
 # the state-of-the-art packages in Julia.
 #
-# # Data 
+# # Data Types
 #
 # 
