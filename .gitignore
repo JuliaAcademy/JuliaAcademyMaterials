@@ -1,5 +1,1 @@
-_generated_notebooks/
-
-*.ipynb
-*/*.ipynb
-*/*/*.ipynb
+Notebooks/

@@ -1,21 +1,22 @@
 using Literate 
 
-# Add courses here
-courses = [
-    (name = "Course Template",                  dir = "Template"),
-    (name = "Big Data Analysis with JuliaDB",   dir = "JuliaDB")
-]
+srcpath = joinpath(@__DIR__(), "Courses")
+buildpath = joinpath(@__DIR__(), "Notebooks")
 
-#-----------------------------------------------------------------------#
-for c in courses 
-    files = filter(x -> endswith(x, ".jl"), readdir(c.dir))
-    for f in files 
-        path = joinpath(c.dir, f)
-        try
-            include(path)  # "test" that the code runs
-            Literate.notebook(path, "_generated_notebooks/$(c.name)/"; credit=false)
-        catch 
-            @warn "File $path contains an error"
+rm(buildpath, recursive=true, force=true)
+mkdir(buildpath)
+
+for dir in readdir(srcpath)
+    subdir = mkdir(joinpath(buildpath, dir))
+    for file in readdir(joinpath(srcpath, dir))
+        if endswith(file, ".jl")
+            try
+                Literate.notebook(joinpath(srcpath, dir, file), joinpath(buildpath, subdir); credit=false)
+            catch
+                @info "Notebook failed to build:" joinpath(path, dir, file)
+            end
+        else
+            cp(joinpath(srcpath, dir, file), joinpath(buildpath, subdir, file))
         end
     end
 end

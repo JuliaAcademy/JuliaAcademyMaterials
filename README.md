@@ -2,4 +2,6 @@
 
 # Source files for Julia Academy Notebooks
 
-- Run `julia build.jl` to create the `_generated_notebooks/` directory populated with notebooks.
+- Running `julia build.jl` will
+    1. Create a `Notebooks/` directory
+    2. Course content in `Courses/` will get converted to notebook (if `.jl` file) or get directly copied.
