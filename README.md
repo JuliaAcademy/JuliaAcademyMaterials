@@ -2,6 +2,6 @@
 
 # Source files for Julia Academy Notebooks
 
-- Running `julia build.jl` will
+- Running `julia --project build.jl` will
     1. Create a `Notebooks/` directory
     2. Course content in `Courses/` will get converted to notebook (if `.jl` file) or get directly copied.
