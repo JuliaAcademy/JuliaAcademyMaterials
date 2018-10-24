@@ -1,22 +1,51 @@
-using Literate 
+import Pkg
 
 srcpath = joinpath(@__DIR__(), "Courses")
 buildpath = joinpath(@__DIR__(), "Notebooks")
 
+if isempty(ARGS)
+    courses = readdir(srcpath)
+else
+    courses = ARGS
+end
+
 rm(buildpath, recursive=true, force=true)
 mkdir(buildpath)
 
-for dir in readdir(srcpath)
-    subdir = mkdir(joinpath(buildpath, dir))
-    for file in readdir(joinpath(srcpath, dir))
+notebooks_failed = String[]
+
+Base.julia_cmd()
+for dir in courses
+    src_course = joinpath(srcpath, dir)
+    build_course = mkdir(joinpath(buildpath, dir))
+    cp(src_course, build_course; force=true)
+
+    Pkg.activate(build_course)
+    Pkg.instantiate()
+    for file in readdir(build_course)
         if endswith(file, ".jl")
+            course = joinpath(build_course, file)
+            academy_environment = @__DIR__
+            # Create a stacked environment with the JuliaAcademy environment in
+            # it so we can load Literate for each notebook
+            script = """
+            pushfirst!(LOAD_PATH, $(repr(academy_environment)));
+            import Literate;
+            Literate.notebook($(repr(course)), $(repr(build_course)); credit=false)
+            """
             try
-                Literate.notebook(joinpath(srcpath, dir, file), joinpath(buildpath, subdir); credit=false)
+                run(`$(Base.julia_cmd()) --project=$(build_course) -e $script`)
             catch
-                @info "Notebook failed to build:" joinpath(path, dir, file)
+                src_course = relpath(joinpath(src_course, file), @__DIR__)
+                @error "Script failed to build: $relpath)"
+                push!(notebooks_failed, src_course)
             end
-        else
-            cp(joinpath(srcpath, dir, file), joinpath(buildpath, subdir, file))
+            rm(course)
         end
     end
+end
+
+if !isempty(notebooks_failed)
+    error("The following notebooks failed: \n",
+          join(notebooks_failed, '\n'))
 end
