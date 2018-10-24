@@ -27,6 +27,7 @@ for dir in courses
             script = """
             pushfirst!(LOAD_PATH, $(repr(academy_environment)));
             import Literate;
+            import Pkg; Pkg.instantiate();
             Literate.notebook($(repr(course)), $(repr(build_course)); credit=false)
             """
             try
