@@ -1,11 +1,13 @@
+import Pkg
+
+srcpath = joinpath(@__DIR__(), "Courses")
+buildpath = joinpath(@__DIR__(), "Notebooks")
+
 if isempty(ARGS)
     courses = readdir(srcpath)
 else
     courses = ARGS
 end
-
-srcpath = joinpath(@__DIR__(), "Courses")
-buildpath = joinpath(@__DIR__(), "Notebooks")
 
 rm(buildpath, recursive=true, force=true)
 mkdir(buildpath)
@@ -18,6 +20,8 @@ for dir in courses
     build_course = mkdir(joinpath(buildpath, dir))
     cp(src_course, build_course; force=true)
 
+    Pkg.activate(build_course)
+    Pkg.instantiate()
     for file in readdir(build_course)
         if endswith(file, ".jl")
             course = joinpath(build_course, file)
@@ -27,7 +31,6 @@ for dir in courses
             script = """
             pushfirst!(LOAD_PATH, $(repr(academy_environment)));
             import Literate;
-            import Pkg; Pkg.instantiate();
             Literate.notebook($(repr(course)), $(repr(build_course)); credit=false)
             """
             try
