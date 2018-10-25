@@ -19,7 +19,7 @@
 
 using StatsBase, Plots
 
-y = randn(1000)
+y = randn(10_000)
 
 h = fit(Histogram, y; closed = :left)
 
@@ -47,17 +47,59 @@ histogram(y)
 
 using KernelDensity, StatPlots
 
-p = plot(kde(y), label = "Bandwidth: Auto", w=2)
+k = kde(y)
+
+p = plot(k, label = "Bandwidth: Auto", w=2)
+
 for bw in .1:.2:.9
     plot!(p, kde(y; bandwidth = bw), label = "Bandwidth: $bw", w=2)
 end
+
 histogram!(p, y, alpha = .1, normed=true)
 
 
 # #### Averaged Shifted Histograms (ASH)
+#
+# The Averaged Shifted Histogram (ASH) estimator is a bit of a misnomer; It is essentially
+# kernel density estimation performed on a fine-partition (many small bins) histogram.  
+#
+# ASH has an advantage over KDEs in terms of performance since the density is calculated 
+# over the bins instead of all observations.  Similarly, ASH has an advantage over histograms
+# in that smoothing the density over many small bins gives a more fine-grained view of the
+# distribution.
+
+using AverageShiftedHistograms
+
+a = ash(y)
+
+plot(a)
+
+# The line is a bit noisy, but we can increase the amount of smoothing with parameter `m`
+
+ash!(a; m = 15)
+
+plot(a)
+
+# Let's compare all three of our density estimates.
+
+plot(a, hist=false)
+histogram!(y, normed=true, alpha=.2, label = "Histogram")
+plot!(k, label = "KDE")
 
 
 
+# #### Categorical Data
+
+using OnlineStats 
+
+y = rand([1,2,2,3,3,3,4,4,5], 10^5)
+
+o = fit!(CountMap(Int), y)
+
+plot(o)
+
+
+# ### Bivariate Relationships
 
 
 
