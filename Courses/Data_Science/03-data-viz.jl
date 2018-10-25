@@ -64,6 +64,9 @@ plot(y, st = :scatter)
 
 scatter(randn(10, 3), marker = (5, .3, :auto))
 
-# # StatsPlots.jl 
-# The **StatsPlots** package is an extension of **Plots** that provides utilities for 
+# # StatPlots.jl 
+# The **StatPlots** package is an extension of **Plots** that provides utilities for 
 # creating plots that are statistical in nature.  
+
+using StatPlots
+
