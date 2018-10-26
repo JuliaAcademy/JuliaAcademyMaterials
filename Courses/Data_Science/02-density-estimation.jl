@@ -1,3 +1,5 @@
+ENV["GKSwstype"] = "100" #src (hack so GR doesn't throw a fit)
+
 # # Density Estimation
 #
 # Understanding the shape of your data is important for any data analysis.
