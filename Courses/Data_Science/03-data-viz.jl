@@ -9,7 +9,9 @@ ENV["GKSwstype"] = "100" #src (hack so GR doesn't throw a fit)
 # but we will focus here on the fantastic **Plots** interface.
 #
 # # Plots.jl 
+#
 # ![](http://docs.juliaplots.org/latest/examples/img/lorenz.gif)
+#
 # **Plots** defines an interface for plotting data that works with multiple plotting libraries
 # as the backend for creating the actual visualization.
 

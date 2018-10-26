@@ -1,3 +1,5 @@
+ENV["GKSwstype"] = "100" #src (hack so GR doesn't throw a fit)
+
 # # Getting Started with Data Science in Julia
 #
 # Here we will cover some basic statistics functionality.  While this material is introductory,
