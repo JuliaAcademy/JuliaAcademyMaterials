@@ -1,3 +1,5 @@
+ENV["GKSwstype"] = "100" #src (hack so GR doesn't throw a fit)
+
 # # Data Viz
 #
 # Visualization is often the first step for any data analysis.  In this section we'll cover 
