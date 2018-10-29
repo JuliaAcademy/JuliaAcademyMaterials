@@ -80,4 +80,4 @@ marginalhist(randn(1000), randn(1000))
 
 #-
 
-corrplot(randn(1000, 2))
+corrplot(randn(1000, 3))
