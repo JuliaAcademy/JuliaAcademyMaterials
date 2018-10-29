@@ -85,4 +85,6 @@ countmap(y)
 
 # ## What's Next?
 #
-# TODO
+# This module introduced you to the **`Statistics`** and **`StatsBase`** packages.  
+# The next modules will cover more specific data science tasks such as fitting regressions,
+# working with datasets, and data visualization.
