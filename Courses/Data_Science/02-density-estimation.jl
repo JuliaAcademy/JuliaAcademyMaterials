@@ -13,6 +13,25 @@ ENV["GKSwstype"] = "100" #src (hack so GR doesn't throw a fit)
 #
 # ## Empirical Density Estimation
 #
+# ### Empirical Cumulative Density Function (ECDF)
+#
+# The **`StatsBase`** package provides the `ecdf` function, which returns a function that 
+# can calculate the ECDF evaluated at a point, defined as 
+#
+# $$f_{\text{ECDF}}(x) = \frac{\text{# values less than or equal to x}}{\text{total # values}}.$$
+#
+# In other words, the number returned by the ECDF is the probability that a random sample 
+# from the dataset is less than or equal to the argument.
+
+using StatsBase, Plots
+
+y = 1:10
+
+f = ecdf(y)
+
+plot(f, 0, 11, label="", xlab="x", ylab = "P(data <= x)")
+
+
 # ### Univariate Data
 #
 # First we will look at how to estimate/plot univariate distributions of data. 
@@ -82,9 +101,14 @@ ash!(a; m = 15)
 
 plot(a)
 
+# But make sure you don't oversmooth!
+
+ash!(a; m = 50)
+plot(a)
+
 # Let's compare all three of our density estimates.
 
-plot(a, hist=false)
+plot(ash!(a, m = 15), hist=false)
 histogram!(y, normed=true, alpha=.2, label = "Histogram")
 plot!(k, label = "KDE")
 
@@ -102,6 +126,8 @@ plot(o)
 
 
 # ### Bivariate Relationships
+#
+# So far, we've only looked at univariate distributions.   
 
 
 

@@ -35,7 +35,7 @@ plot(y)
 plot(y, seriestype = :scatter, markersize = 5, markercolor = :black)
 
 # ## Series Types
-
+#
 # One of the more important keyword arguments to the `plot` function is `seriestype`, as it 
 # determines how the input is turned into a plot.  For convenience, you can also call a 
 # `seriestype` as a function :
@@ -47,6 +47,7 @@ plot(y, seriestype = :scatter)
 scatter(y)
 
 # ## Argument Aliases
+#
 # **Plots** supports "aliases" for keyword arguments for fast interactive creation of plots.  
 # The idea for this is to help remove the need to constantly check the documentation for 
 # the correct argument name.
@@ -59,7 +60,7 @@ plot(y, st = :scatter)
 
 
 # ## Magic Arguments
-
+#
 # One feature unique to **Plots** is that of magic arguments.  Certain keyword arguments act 
 # like "magic" where by providing a tuple, Plots intelligently maps the items to the 
 # corresponding plot element.  For example, by providing `marker = (5, .3, :auto)`, the 
@@ -69,8 +70,14 @@ plot(y, st = :scatter)
 scatter(randn(10, 3), marker = (5, .3, :auto))
 
 # # StatPlots.jl 
+#
 # The **StatPlots** package is an extension of **Plots** that provides utilities for 
 # creating plots that are statistical in nature.  
 
 using StatPlots
 
+marginalhist(randn(1000), randn(1000))
+
+#-
+
+corrplot(randn(1000, 2))
