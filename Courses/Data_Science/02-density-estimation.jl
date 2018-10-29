@@ -127,7 +127,22 @@ plot(o)
 
 # ### Bivariate Relationships
 #
-# So far, we've only looked at univariate distributions.   
+# So far, we've only looked at univariate distributions.  However, we can also use 
+# Histograms, KDEs, and ASH estimators on bivariate data.
+
+x = randn(10^4)
+y = x .+ randn(10^4)
+
+h = fit(Histogram, (x,y); closed = :left)
+k = kde((x,y))
+a = ash(x, y)
+
+plot(
+    plot(h; title="Histogram"), 
+    plot(k; title="KDE"), 
+    plot(a; title = "ASH"); 
+    layout=3
+)
 
 
 
