@@ -1,6 +1,7 @@
 [deps]
 AverageShiftedHistograms = "77b51b56-6f8f-5c3a-9cb4-d71f9594ea6e"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 GLM = "38e38edf-8417-5370-95a0-9cbb8c7f171a"
 KernelDensity = "5ab0869b-81aa-558d-bb23-cbf5423bbe9b"
 Literate = "98b081ad-f1c9-55d3-8b20-4c87d4299306"
