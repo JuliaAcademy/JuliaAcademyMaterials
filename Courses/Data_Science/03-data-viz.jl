@@ -1,6 +1,6 @@
 ENV["GKSwstype"] = "100" #src (hack so GR doesn't throw a fit)
 
-# # Data Viz
+# # Data Vizualization
 #
 # Visualization is often the first step for any data analysis.  In this section we'll cover 
 # Julia's best data viz tools.
