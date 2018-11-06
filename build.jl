@@ -36,9 +36,9 @@ for dir in courses
             try
                 run(`$(Base.julia_cmd()) --project=$(build_course) -e $script`)
             catch
-                src_course = relpath(joinpath(src_course, file), @__DIR__)
+                err_src_course = relpath(joinpath(src_course, file), @__DIR__)
                 @error "Script failed to build: $relpath)"
-                push!(notebooks_failed, src_course)
+                push!(notebooks_failed, err_src_course)
             end
             rm(course)
         end
