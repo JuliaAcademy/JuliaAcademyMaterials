@@ -1,10 +1,13 @@
-# Creating your course
-
-_by Matt Bauman_
+# About this course
 
 Learn how to create your very own JuliaAcademy course materials (this is the course's tagline).
 
 ## Course overview
+
+The first file in your course isn't really a module in your course — it's what
+will appear in the course overview page. Use this file to simply describe what
+students will learn by taking this course. In this case, you will learn how to
+develop your very own course.
 
 Talk a little bit about what you expect students to learn and sell them on
 taking the course. By the end of this course, you will have learned all the
