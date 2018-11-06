@@ -1,44 +1,88 @@
 ENV["GKSwstype"] = "100" #src (hack so GR doesn't throw a fit)
 
-# # Getting Started with Data Science in Julia
+# # A Primer on Data Science in Julia
 #
-# Here we will cover some basic statistics functionality.  While this material is introductory,
-# it assumes you are already familiar with Julia.  If you don't understand the code examples 
-# yet, that's okay!  You may want to start with our "Introduction to Julia" course.
+# > [T]he key word in data science is not “data”; it is “science”.
 #
-# ## Summary Statistics
+# - Jeff Leek
+# 
+# # What is Data Science?
 #
-# Basic statistics functionality is in the **`Statistics`** module, which is a part of Julia's 
-# standard library.  To use common functions like `mean`, `var`, `cov`, and `quantile`, 
-# first load the **`Statistics`** package.
+# The term **data science** is a relatively new term used to describe a variety of cross-discipline tasks that cover statistics, mathematics, computer science, data visualization, and information science.  Because of the wide variety of tasks involved, the role of a "data scientist" may differ greatly from business to business (or even within a single company).  At a high level, data science is the collection of activities that help one move upword in the *DIKW Pyramid*, shown below:
+#
+# ![](https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/DIKW_Pyramid.svg/494px-DIKW_Pyramid.svg.png)
+#
+# **How do we get from data to knowledge/wisdom?**
+#
+# Movement up the pyramid happens in incremental steps.  Sometimes you'll have an "aha!" moment and make a leap in understanding, but that is typically due to the previous information you've gathered.  To aid with the task of incremental knowledge-building, the data science workflow is made up of the following steps:
+#
+# 1. Define Your Objective
+# 2. Explore Your Data
+# 3. Model Your Data
+# 4. Explore Your Model
+# 5. Communicate Your Results
+#
+# The modules in this course aim to assist with the above steps:
+#
+# - Getting Started
+# - Data Visualization 
+# - Working with Data Tables
+# - Unsupervised Learning
+# - Supervised Learnings
+# - Communicating Data Science
+
+
+
+
+
+
+# # Basic Statistics
+#
+# Our introduction to the world of data science will begin with basic statistical operations.
+# The **`Statistics`** module, from Julia's standard libarary, provides many of the core 
+# statistical machinery, such as means, variances, quantiles, etc.
 
 using Statistics
 
-y = randn(100)
+x = randn(100, 4)
 
-mean(y)
+mean(x)
 
-# It's often the case that each column or row of a matrix represents a different variable
-# and you would like to get the mean/var/etc. of each variable separately.  You can specify
-# the keyword argument `dims` to apply the function over a specific dimension.
+# Above we calculated the mean for every value in the Matrix y.  If instead we want the mean 
+# over a specific dimension of the matrix (e.g. mean of each column), we can specify the 
+# `dims` keyword argument.
 
-x = randn(5, 5);  # Note: use ';' to suppress output!
+mean(x, dims=1)
 
-#- 
+# There are many other operations besides `mean` that are provided in the **`Statistics*``
+# module.  We can examine all the exported names of a module with the `names` function:
 
-mean(x, dims=1)  # mean of each column
+names(Statistics)
 
 #-
 
-mean(x, dims=2)  # mean of each row
+cor(x)
 
 # ## StatsBase
 #
 # The **`StatsBase`** package offers more statistical techniques beyond what 
-# **`Statistics`** has.  We'll load the **`Plots`** package as well so we can plot the 
-# histograms.
+# **`Statistics`** has.  We'll load the **`Plots`** package as well.
 
-using StatsBase, Plots 
+using StatsBase
+
+quantile(y)
+
+
+
+
+
+
+
+
+
+
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------# OLD
 
 # ### StatsBase: Histograms
 #
