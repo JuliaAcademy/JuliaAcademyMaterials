@@ -6,8 +6,8 @@ using Test #src
 
 x = "Change this String to be the random sample"
 
-@assert length(x) == 20             # src
-@assert all(x -> 1 ≤ x ≤ 15, x)     # src
+# @assert length(x) == 20             # src
+# @assert all(x -> 1 ≤ x ≤ 15, x)     # src
 
 # # Exercise 2
 #
