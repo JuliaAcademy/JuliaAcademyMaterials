@@ -20,14 +20,8 @@ Movement up the pyramid happens in incremental steps.  Sometimes you'll have an 
 4. Explore Your Model
 5. Communicate Your Results
 
-# Course Modules
+# Course Objectives
 
-While working through the modules of this course, try to keep this workflow in mind.  The course modules are not tied to a single step (e.g. data visualization should be used in nearly all of them), but they are designed to give you the machinery to perform the steps with ease.
+After taking this course, you will be able to
 
-- Getting Started
-- Data Visualization 
-- Working with Data Tables
-- Unsupervised Learning
-- Supervised Learning
-- Model Diagnostics
-- Communicating Data Science
+- 

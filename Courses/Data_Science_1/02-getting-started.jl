@@ -66,3 +66,28 @@ countmap(y1)
 countmap(y2)
 
 # This is just a small sample (pun intended) of the features in **`StatsBase`**.  For a more complete look of what is possible, check out the [documentation](http://juliastats.github.io/StatsBase.jl/latest/index.html).
+
+# ## Parametric Distributions
+#
+# The [**`Distributions`**](https://github.com/JuliaStats/Distributions.jl) package provides an interface for working with probability distributions.  The full documentation is [here](https://juliastats.github.io/Distributions.jl/stable/).  
+
+# Here we'll also load the **`StatPlots`** package (more on this in the next course module) to visualize the distributions.
+
+using Distributions, StatPlots
+
+plot(Normal(), label = "Normal")
+
+#-
+
+plot!(Gamma(5, 1), label = "Gamma")
+
+# There are many methods available that create a consistent "grammar" for discussing distributions:
+#
+# - Probability density function: `pdf`
+# - Cumulative distribution function: `cdf`
+# - etc.
+
+
+d = Normal()
+
+pdf(d, 0), cdf(d, 0), mean(d), var(d), quantile(d, .5), mode(d)
