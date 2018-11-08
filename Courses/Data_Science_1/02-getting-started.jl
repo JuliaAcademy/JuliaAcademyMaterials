@@ -1,55 +1,76 @@
-ENV["GKSwstype"] = "100" #src (hack so GR doesn't throw a fit)
+ENV["GKSwstype"] = "100" #src
 
 # # Getting Started with Data Science in Julia
 
-println("Hello, World!")
+println("Hello, Data Science World!")
 
-# # Basic Statistics
+# # What does your data look like?
 #
-# Our introduction to the world of data science will begin with basic statistical operations.
-# The **`Statistics`** module, from Julia's standard libarary, provides many of the core 
-# statistical machinery, such as means, variances, quantiles, etc.
+# Before you can solve complex problems with data, you should have a firm grasp on what your data looks like.  Are your variables continuous or categorical?  What do the distributions look like?  Are there missing observations?  Are variables correlated?  All of these questions arise in the data science workflow, so it's helpful to know the answers from the start of your analysis.
+
+# Let's start with loading the [**`Statistics`**](https://docs.julialang.org/en/latest/stdlib/Statistics/) package, which provides basic statistical operations like means, variances, etc.
 
 using Statistics
 
-x = randn(100, 4)
-
-mean(x)
-
-# Above we calculated the mean for every value in the Matrix y.  If instead we want the mean 
-# over a specific dimension of the matrix (e.g. mean of each column), we can specify the 
-# `dims` keyword argument.
-
-mean(x, dims=1)
-
-# There are many other operations besides `mean` that are provided in the **`Statistics*``
-# module.  We can examine all the exported names of a module with the `names` function:
+# You can examine the items that a package exports with the `names` function.
 
 names(Statistics)
 
+# To start, let's try some of the functions from **`Statistics`** on simulated data.
+
+x = randn(100, 3)
+
+mean(x, dims=1)  # calculate over first dimension (column means)
+
 #-
 
-cor(x)
+cor(x)  # correlation matrix  
 
-# ## [StatsBase](https://github.com/JuliaStats/StatsBase.jl)
+# For a more realistic example, let's load some data from the **`RDatasets`** package, which has a large collection of datasets that get loaded as a `DataFrame`.  The [`"iris"` dataset](https://en.wikipedia.org/wiki/Iris_flower_data_set) is a collection of measurements for three different species of the iris flower: Iris Setosa, Iris Virginica, and Iris Versicolor (shown below).  The measurements consist of length and width of the petal and sepal (part underneath the flower).
+
+# <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Iris_versicolor_3.jpg" width=400>
+
+using RDatasets
+
+iris = dataset("datasets", "iris")
+
+# DataFrames are discussed in another course module.  For now, we'll just use the fact that data vectors from the DataFrame can be selected with `mydf.mycol`:
+
+iris.SepalLength
+
+# What is the average sepal width accross all three species?
+
+mean(iris.SepalWidth)
+
+# Maximum and minimum?
+
+@show minimum(iris.SepalWidth)
+@show maximum(iris.SepalWidth)
+extrema(iris.SepalWidth)
+
+# Is petal width correlated with petal length?
+
+cor(iris.PetalWidth, iris.PetalLength)
+
+# While we could examine each column separately, a much quicker way to summarize our variables is with the `describe` function, which creates a new DataFrame where each row contains 
+
+describe(iris)
+
+
+# # Random Sampling
 #
-# The **`StatsBase`** package offers more statistical techniques beyond what 
-# **`Statistics`** has.
-
-using StatsBase
-
-quantile(x[:, 1])
-
-# ## Random Sampling
+# <img src="https://upload.wikimedia.org/wikipedia/commons/b/bf/Simple_random_sampling.PNG" width=400>
 #
 # [Random Sampling](https://en.wikipedia.org/wiki/Sampling_(statistics)) plays an integral part in many data science tasks, such as:
 #
-# - Splitting data into multiple data sets for [cross validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics)).
+# - Splitting data into multiple datasets for [cross validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics)).
 # - Subsampling a large dataset to something more manageable.
 # - Running statistical simulations.
 # - [Statistical Bootstrap](https://en.wikipedia.org/wiki/Bootstrapping_(statistics))
 #
-# **`StatsBase`** has the `sample` function to factilitate sampling [with or without replacement](https://en.wikipedia.org/wiki/Sampling_(statistics)#Replacement_of_selected_units).  
+# The **`StatsBase`** package has the `sample` function to factilitate sampling [with or without replacement](https://en.wikipedia.org/wiki/Sampling_(statistics)#Replacement_of_selected_units).  
+
+using StatsBase
 
 y1 = sample(1:20, 20, replace=true)  # replaces units after being selected
 
@@ -67,19 +88,22 @@ countmap(y2)
 
 # This is just a small sample (pun intended) of the features in **`StatsBase`**.  For a more complete look of what is possible, check out the [documentation](http://juliastats.github.io/StatsBase.jl/latest/index.html).
 
-# ## Parametric Distributions
+
+
+
+# # Parametric Distributions
 #
 # The [**`Distributions`**](https://github.com/JuliaStats/Distributions.jl) package provides an interface for working with probability distributions.  The full documentation is [here](https://juliastats.github.io/Distributions.jl/stable/).  
 
-# Here we'll also load the **`StatPlots`** package (more on this in the next course module) to visualize the distributions.
+# Here we'll also load the **`StatPlots`** package (more on this in the next course module) to visualize the probability distributions.
 
 using Distributions, StatPlots
 
-plot(Normal(), label = "Normal")
+plot(Normal(), label = "Normal(0, 1)")
 
 #-
 
-plot!(Gamma(5, 1), label = "Gamma")
+plot!(Gamma(5, 1), label = "Gamma(5, 1)")
 
 # There are many methods available that create a consistent "grammar" for discussing distributions:
 #
@@ -91,3 +115,10 @@ plot!(Gamma(5, 1), label = "Gamma")
 d = Normal()
 
 pdf(d, 0), cdf(d, 0), mean(d), var(d), quantile(d, .5), mode(d)
+
+#-
+
+d = Gamma(5, 1)
+
+pdf(d, 0), cdf(d, 0), mean(d), var(d), quantile(d, .5), mode(d)
+
