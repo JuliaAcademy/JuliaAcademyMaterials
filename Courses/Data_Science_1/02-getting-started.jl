@@ -147,3 +147,8 @@ d = Gamma(4,3)
 myquantile(d, .7), quantile(d, .7)
 
 # The above example shows off the power of generic functions.  Instead of hard-coding the distribution (as would be necessary in R), we can write functions in terms of an arbitrary distribution (without extra effort).  This gives us a lot of flexibility for tasks such as writing [Gibbs Samplers](https://en.wikipedia.org/wiki/Gibbs_sampling) that can swap out distributions with ease.
+
+
+# # Missing Data
+#
+# TODO
