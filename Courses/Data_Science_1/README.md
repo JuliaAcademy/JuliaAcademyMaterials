@@ -12,6 +12,8 @@
         3. Model Your Data
         4. Explore Your Model
         5. Communicate Your Results
+- Getting Started
+    - Statistics and StatsBase
 - Data Visualization (Explore Your Data)
     - Univariate plots
     - Bivariate relationships
