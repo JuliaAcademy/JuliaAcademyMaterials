@@ -122,3 +122,28 @@ d = Gamma(5, 1)
 
 pdf(d, 0), cdf(d, 0), mean(d), var(d), quantile(d, .5), mode(d)
 
+# As an example, let's write a function that uses [Newton's Method](https://en.wikipedia.org/wiki/Newton%27s_method) that can find a given quantile for any continuous univariate distribution.  Newton's method attempts to find the root for a function $f$ by performing iterations of the form:
+#
+# $$\theta^{(t)} = \theta^{(t-1)} - \frac{f(\theta^{(t-1)})}{f'(\theta^{(t-1)})}.$$
+#
+# For quantiles, we want to find the root of the function $F(\theta) - q$ where $F$ is the cumulative density function of the distribtuion and $q \in (0, 1)$.  Using **`Distributions`**, this looks something like
+
+function myquantile(d::Distribution, q::Number)
+    θ = mean(d)
+    for i in 1:20
+        θ -= (cdf(d, θ) - q) / pdf(d, θ)  # θ = θ - (F(θ) - q) / F'(θ)
+    end
+    θ
+end
+
+# Does our `myquantile` function work as expected?  Let's try out our function on several distributions.
+
+d = Normal()
+myquantile(d, .5), quantile(d, .5)
+
+#-
+
+d = Gamma(4,3)
+myquantile(d, .7), quantile(d, .7)
+
+# The above example shows off the power of generic functions.  Instead of hard-coding the distribution (as would be necessary in R), we can write functions in terms of an arbitrary distribution (without extra effort).  This gives us a lot of flexibility for tasks such as writing [Gibbs Samplers](https://en.wikipedia.org/wiki/Gibbs_sampling) that can swap out distributions with ease.
