@@ -13,7 +13,7 @@
         4. Explore Your Model
         5. Communicate Your Results
 - Getting Started
-    - Statistics and StatsBase
+    - Statistics, StatsBase, Distributions
 - Data Visualization (Explore Your Data)
     - Univariate plots
     - Bivariate relationships
