@@ -2,6 +2,10 @@ ENV["GKSwstype"] = "100" #src
 
 # # Data Vizualization
 #
+# > The greatest value of a picture is when it forces us to notice what we never expected to see.
+#
+# - John Tukey
+#
 # Data visualization is used throughout the data science workflow.  It's used for everything from identifying simple relationships between variables to understanding how hyper-parameters affect model performance.  This course module will focus on exploratory data analysis using visualizations.
 #
 # Note that Julia does not have a built-in plotting library, but there are many to choose from:

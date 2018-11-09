@@ -14,11 +14,11 @@ The term **data science** is a relatively new term used to describe a variety of
 
 Movement up the pyramid happens in incremental steps.  Sometimes you'll have an "aha!" moment and make a leap in understanding, but that is typically due to the previous information you've gathered.  To aid with the task of incremental knowledge-building, the data science workflow is made up of the following steps:
 
-1. Define Your Objective
-2. Explore Your Data
-3. Model Your Data
-4. Explore Your Model
-5. Communicate Your Results
+1. **Define** Your Objective
+2. **Explore** Your Data
+3. **Model** Your Data
+4. **Evaluate** Your Model
+5. **Communicate** Your Results
 
 # Course Objectives
 

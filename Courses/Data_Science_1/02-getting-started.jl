@@ -1,6 +1,10 @@
 ENV["GKSwstype"] = "100" #src
 
 # # Getting Started with Data Science in Julia
+#
+# > [A]lways bite the bullet with regard to understanding the basics of the data first before you do anything else...
+#
+# - Caitlin Smallwood, Vice President of Science and Algorithms at Netflix
 
 println("Hello, Data Science World!")
 
@@ -26,7 +30,9 @@ mean(x, dims=1)  # calculate over first dimension (column means)
 
 cor(x)  # correlation matrix  
 
-# For a more realistic example, let's load some data from the **`RDatasets`** package, which has a large collection of datasets that get loaded as a `DataFrame`.  The [`"iris"` dataset](https://en.wikipedia.org/wiki/Iris_flower_data_set) is a collection of measurements for three different species of the iris flower: Iris Setosa, Iris Virginica, and Iris Versicolor (shown below).  The measurements consist of length and width of the petal and sepal (part underneath the flower).
+# For a more realistic example, let's load some data from the **`RDatasets`** package, which has a large collection of datasets that get loaded as a `DataFrame`.  
+
+# The [`"iris"` dataset](https://en.wikipedia.org/wiki/Iris_flower_data_set) is a collection of measurements for three different species of the iris flower: Iris Setosa, Iris Virginica, and Iris Versicolor (shown below).  The measurements consist of length and width of the petal and sepal (part underneath the flower).
 
 # <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Iris_versicolor_3.jpg" width=400>
 
