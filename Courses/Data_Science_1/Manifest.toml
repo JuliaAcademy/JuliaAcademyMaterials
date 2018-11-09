@@ -181,6 +181,18 @@ git-tree-sha1 = "c24e9b6500c037673f0241a2783472b8c3d080c7"
 uuid = "31c24e10-a181-5473-b8eb-7969acd0382f"
 version = "0.16.4"
 
+[[DocStringExtensions]]
+deps = ["LibGit2", "Markdown", "Pkg", "Test"]
+git-tree-sha1 = "a016e0bfe98a748c4488e2248c2ef4c67d6fdd35"
+uuid = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
+version = "0.5.0"
+
+[[Documenter]]
+deps = ["Base64", "DocStringExtensions", "InteractiveUtils", "LibGit2", "Logging", "Markdown", "Pkg", "REPL", "Random", "Test", "Unicode"]
+git-tree-sha1 = "9f2135e0e7ecb63f9c3ef73ea15a31d8cdb79bb7"
+uuid = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+version = "0.20.0"
+
 [[DoubleFloats]]
 deps = ["AccurateArithmetic", "LinearAlgebra", "Polynomials", "Random", "Test"]
 git-tree-sha1 = "edd568c7ec8b26b058f13c1d2aed65f3bb8bcefa"
@@ -309,6 +321,12 @@ deps = ["InteractiveUtils", "LearnBase", "Markdown", "Random", "RecipesBase", "S
 git-tree-sha1 = "b97d2e9a527733649d0205d3374d0daee352c50e"
 uuid = "30fc2ffe-d236-52d8-8643-a9d8f7c094a7"
 version = "0.5.0"
+
+[[MacroTools]]
+deps = ["Compat"]
+git-tree-sha1 = "c443e1c8d58a4e9f61b708ad0a88286c7042145b"
+uuid = "1914dd2f-81c6-5fcd-8719-6d5c9610ff09"
+version = "0.4.4"
 
 [[Markdown]]
 deps = ["Base64"]
@@ -479,6 +497,18 @@ git-tree-sha1 = "7e8dff9c205f36eceaf6e62a43ff851637ca45fc"
 uuid = "1fd47b50-473d-5c70-9696-f719f8f3bcdc"
 version = "2.0.2"
 
+[[Query]]
+deps = ["DataValues", "Documenter", "IterableTables", "MacroTools", "QueryOperators", "Statistics", "TableTraits", "Test"]
+git-tree-sha1 = "e1b8e599878696dd1a9499e93fd8c707e9e7d222"
+uuid = "1a8c2f83-1ff3-5112-b086-8aa67b057ba1"
+version = "0.10.1"
+
+[[QueryOperators]]
+deps = ["DataStructures", "IteratorInterfaceExtensions", "TableShowUtils", "Test"]
+git-tree-sha1 = "22cf30f1972da9936f7bc675d024280fcfe10f36"
+uuid = "2aef5ad7-51ca-5a8f-8e88-e75cf067b44b"
+version = "0.4.0"
+
 [[RData]]
 deps = ["CategoricalArrays", "CodecZlib", "DataFrames", "Dates", "FileIO", "Missings", "Test", "TimeZones"]
 git-tree-sha1 = "8f3b644f4ebce291431846f5532272b0864c757c"
@@ -601,6 +631,12 @@ deps = ["LinearAlgebra", "Test"]
 git-tree-sha1 = "2039aaa96f7b21634a1b3246cb2699dd1d26d473"
 uuid = "7522ee7d-7047-56d0-94d9-4bc626e7058d"
 version = "0.2.0"
+
+[[TableShowUtils]]
+deps = ["DataValues", "Dates", "JSON", "Markdown", "Test"]
+git-tree-sha1 = "6ffc18504eab3f900af2d23adc0e7bddf94bd29b"
+uuid = "5e66a065-1f0a-5976-b372-e0b8c017ca10"
+version = "0.2.1"
 
 [[TableTraits]]
 deps = ["IteratorInterfaceExtensions", "Test"]

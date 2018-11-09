@@ -19,4 +19,4 @@
     - Bivariate relationships
 - Working with Data Tables (Explore Your Data)
     - Loading data into Julia
-    - Using JuliaDB/DataFrames/etc.
+    - Using DataFrames and JuliaDB
