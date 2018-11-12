@@ -17,6 +17,6 @@
 - Data Visualization (Explore Your Data)
     - Univariate plots
     - Bivariate relationships
-- Working with Data Tables (Explore Your Data)
+- Working with Data (Explore Your Data)
     - Loading data into Julia
     - Using DataFrames and JuliaDB

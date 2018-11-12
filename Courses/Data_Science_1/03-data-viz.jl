@@ -21,7 +21,7 @@ ENV["GKSwstype"] = "100" #src
 #
 # If you are new to Julia, this may be an overwhelming number of options.  We highly recommend the **`Plots`** package, as it is a great option for both newcomers and power users.  This course module uses **`Plots`** and its related packages.
 
-# # What is Plots.jl?
+# # What is [Plots.jl](https://github.com/JuliaPlots/Plots.jl)?
 #
 # ![](http://docs.juliaplots.org/latest/examples/img/lorenz.gif)
 #
@@ -67,8 +67,7 @@ plot(y, m = :circle)
 
 scatter(randn(10, 3), m = (5, .3, :auto))
 
-
-# # Exploratory Data Visualization
+# ## Plotting from datasets
 #
 # Let's now use what we've learned about **`Plots`** to explore the `mtcars` dataset, extracted from a 1974 issue of of *Motor Trend* Magazine.  The variables included are:
 #
