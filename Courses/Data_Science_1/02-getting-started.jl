@@ -118,7 +118,7 @@ plot(Normal(), label = "Normal(0, 1)")
 
 plot!(Gamma(5, 1), label = "Gamma(5, 1)")
 
-# There are many methods available that create a consistent "grammar" for discussing distributions:
+# The package defines a number of functions that together create a consistent "grammar" for discussing distributions:
 #
 # - Probability density function: `pdf`
 # - Cumulative distribution function: `cdf`
