@@ -122,6 +122,7 @@ plot!(Gamma(5, 1), label = "Gamma(5, 1)")
 #
 # - Probability density function: `pdf`
 # - Cumulative distribution function: `cdf`
+# - The inverse cumulative distribution function with the standard `quantile` statistical function
 # - etc.
 
 
