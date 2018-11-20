@@ -74,7 +74,14 @@ describe(iris)
 # - Running statistical simulations.
 # - [Statistical Bootstrap](https://en.wikipedia.org/wiki/Bootstrapping_(statistics))
 #
-# The **`StatsBase`** package has the `sample` function to factilitate sampling [with or without replacement](https://en.wikipedia.org/wiki/Sampling_(statistics)#Replacement_of_selected_units).  
+# The **`StatsBase`** package has the `sample` function to factilitate sampling [with or without replacement](https://en.wikipedia.org/wiki/Sampling_(statistics)#Replacement_of_selected_units).
+# Imagine you had a bag with 20 numbers in it.
+# Sampling with replacement means that you put the number you drew back into the bag before the next draw.
+# Just like rolling a dice, each draw is _independent_ and a given number might get drawn again.
+# On the other hand, if you were to _not_ put the drawn number back in the bag, that would be representative of sampling without replacement.
+# Each draw is _dependent_ upon all previous draws as those numbers are no longer available for selection.
+# For bootstrapping and statistical simulations, it's typical to use sampling with replacement.
+# While the two behave nearly the same if the sample is a very small fraction of the overall population, it becomes important to sample without replacement if the sample is large or if using uneven importance weights.
 
 using StatsBase
 
