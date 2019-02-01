@@ -54,7 +54,7 @@ select(t, r"(Carat|Price)") # select the columns that match a regular expression
 #
 # Rows are selected based on some criteria with the `filter` function.  The first argument is a function which is then applied to whatever is selected by the `select` keyword argument.  Any valid selection via the `select` function (Integers, column names as Symbols, Regexes, etc.) can be used.  
 #
-# Note that if you select a single column, the function is applied to a Vector.  If the selection retrieves a table, the function is applied to the rows of the table as NamedTuples.
+# Note that if you select a single column, the function is applied to each element of that column and a regular vector is returned.  If the selection selects multiple columns, then the function is applied to each row of the subsetted table (as a NamedTuple) and a table is returned.
 
 filter(x -> x > .7, t; select = :Carat)  # function applied to Vector
 

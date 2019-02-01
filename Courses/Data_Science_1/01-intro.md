@@ -25,5 +25,6 @@ Movement up the pyramid happens in incremental steps.  Sometimes you'll have an 
 After taking this course, you will be able to
 
 - Load data into Julia/save data to disk
+- Explore the data with descriptive statistics
 - Create common data visualizations
-- Use a variety of data science-focused Julia packages, including **`Statistics`**, **`StatsBase`**, **`RDatasets`**, **`DataFrames`**, **`JuliaDB`**, **`Plots`**/**`StatPlots`**, **`AverageShiftedHistograms`**, **`KernelDensity`**, and more.
+- Use a variety of data science-focused Julia packages, including **`Statistics`**, **`StatsBase`**, **`RDatasets`**, **`DataFrames`**, **`JuliaDB`**, **`Plots`**/**`StatsPlots`**, **`AverageShiftedHistograms`**, **`KernelDensity`**, and more.
