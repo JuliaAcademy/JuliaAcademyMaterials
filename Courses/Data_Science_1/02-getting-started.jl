@@ -65,7 +65,7 @@ describe(iris)
 
 # # Random Sampling
 #
-# <img src="https://upload.wikimedia.org/wikipedia/commons/b/bf/Simple_random_sampling.PNG" width=400>
+# <img src="assets/sample.png" width=400>
 #
 # [Random Sampling](https://en.wikipedia.org/wiki/Sampling_(statistics)) plays an integral part in many data science tasks, such as:
 #
@@ -153,8 +153,3 @@ d = Gamma(4,3)
 myquantile(d, .7), quantile(d, .7)
 
 # The above example shows off the power of generic functions.  Instead of hard-coding the distribution (as would be necessary in R), we can write functions in terms of an arbitrary distribution (without extra effort).  This gives us a lot of flexibility for tasks such as writing [Gibbs Samplers](https://en.wikipedia.org/wiki/Gibbs_sampling) that can swap out distributions with ease.
-
-
-# # Missing Data
-#
-# TODO
