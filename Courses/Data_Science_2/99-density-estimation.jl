@@ -66,7 +66,7 @@ histogram(y)
 # using the default (Normal) kernel.  Note that the bandwidth choice has a very big effect
 # on the shape of the estimated density.
 
-using KernelDensity, StatPlots
+using KernelDensity, StatsPlots
 
 k = kde(y)
 
@@ -154,7 +154,7 @@ plot(
 # Suppose you already know some things about a dataset's distribution or you want to see
 # how well the data fits a specific distribution.  Here we'll use the **`Distributions`** 
 # package to fit data to distributions using maximum likelihood estimation (MLE).  We 
-# also need the **`StatPlots`** package for plotting the distributions.
+# also need the **`StatsPlots`** package for plotting the distributions.
 
 using Distributions
 

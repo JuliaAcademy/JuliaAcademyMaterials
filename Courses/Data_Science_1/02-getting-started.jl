@@ -108,9 +108,9 @@ countmap(y2)
 #
 # The [**`Distributions`**](https://github.com/JuliaStats/Distributions.jl) package provides an interface for working with probability distributions.  The full documentation is [here](https://juliastats.github.io/Distributions.jl/stable/).  
 
-# Here we'll also load the **`StatPlots`** package (more on this in the next course module) to visualize the probability distributions.
+# Here we'll also load the **`StatsPlots`** package (more on this in the next course module) to visualize the probability distributions.
 
-using Distributions, StatPlots
+using Distributions, StatsPlots
 
 plot(Normal(), label = "Normal(0, 1)")
 

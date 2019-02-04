@@ -5,7 +5,7 @@ ENV["GKSwstype"] = "100" #src
 # > Data is the new oil. It’s valuable, but if unrefined it cannot really be used. It has to be changed into gas, plastic, chemicals, etc to create a valuable entity that drives profitable activity; so must data be broken down, analyzed for it to have value.
 # - Clive Humbly, 2006
 #
-# There are several great packages for working with tabular data in Julia.  We have already seen a little bit of **`DataFrames`**, but we will focus on **`JuliaDB`** in this course module.  Many of the reasons one would choose **`JuliaDB`** instead of **`DataFrames`** (and vice versa) are personal preferences.  Most packages that integrate with tabular data, such as **`StatPlots`**, work equally well with both, so your choice mainly depends on the slight differences in the interfaces for filtering and selecting data.  However, **`JuliaDB`** does have some key differences compared to **`DataFrames`**:
+# There are several great packages for working with tabular data in Julia.  We have already seen a little bit of **`DataFrames`**, but we will focus on **`JuliaDB`** in this course module.  Many of the reasons one would choose **`JuliaDB`** instead of **`DataFrames`** (and vice versa) are personal preferences.  Most packages that integrate with tabular data, such as **`StatsPlots`**, work equally well with both, so your choice mainly depends on the slight differences in the interfaces for filtering and selecting data.  However, **`JuliaDB`** does have some key differences compared to **`DataFrames`**:
 #
 # - It has two data types for accessing data in different ways.
 # - It can run distributed operations and work with data larger than computer memory.

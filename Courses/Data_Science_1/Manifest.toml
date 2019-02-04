@@ -594,7 +594,7 @@ git-tree-sha1 = "0b45dc2e45ed77f445617b99ff2adf0f5b0f23ea"
 uuid = "276daf66-3868-5448-9aa4-cd146d93841b"
 version = "0.7.2"
 
-[[StatPlots]]
+[[StatsPlots]]
 deps = ["Clustering", "DataStructures", "DataValues", "Distributions", "IterableTables", "KernelDensity", "Observables", "Plots", "Reexport", "StatsBase", "TableTraits", "TableTraitsUtils", "Test", "Widgets"]
 git-tree-sha1 = "4555d876c4c2db293dc661c94f26679b788ccb13"
 uuid = "60ddc479-9b66-56df-82fc-76a74619b69c"

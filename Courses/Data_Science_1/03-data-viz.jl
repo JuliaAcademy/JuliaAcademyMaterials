@@ -96,9 +96,9 @@ describe(mtcars)
 
 scatter(mtcars.MPG, mtcars.HP, xlab="MPG", ylab = "HP")
 
-# The `dataframe.column` syntax isn't always convenient for making complex visualizations.  The **`StatPlots`** package adds a number of features to **`Plots`** for creating statistical graphics.  One of its main features is the `@df` macro that allows you to reference columns of a data table by name inside of a call to `plot`
+# The `dataframe.column` syntax isn't always convenient for making complex visualizations.  The **`StatsPlots`** package adds a number of features to **`Plots`** for creating statistical graphics.  One of its main features is the `@df` macro that allows you to reference columns of a data table by name inside of a call to `plot`
 
-using StatPlots
+using StatsPlots
 
 @df mtcars corrplot([:MPG :Cyl :HP :AM], bins=25, grid=false)
 
