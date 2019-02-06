@@ -4,7 +4,7 @@ ENV["GKSwstype"] = "100" #src
 #
 # > [A]lways bite the bullet with regard to understanding the basics of the data first before you do anything else...
 # >
-# > /- Caitlin Smallwood, Vice President of Science and Algorithms at Netflix
+# > \- Caitlin Smallwood, Vice President of Science and Algorithms at Netflix
 
 println("Hello, Data Science World!")
 

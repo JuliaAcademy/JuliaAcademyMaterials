@@ -1,8 +1,8 @@
 # A Primer on Data Science in Julia
 
 > The key word in data science is not “data”; it is “science”.
-
-- [Jeff Leek, simplystatistics.org](https://simplystatistics.org/2013/12/12/the-key-word-in-data-science-is-not-data-it-is-science/)
+>
+> \- [Jeff Leek, simplystatistics.org](https://simplystatistics.org/2013/12/12/the-key-word-in-data-science-is-not-data-it-is-science/)
 
 # What is Data Science?
 
