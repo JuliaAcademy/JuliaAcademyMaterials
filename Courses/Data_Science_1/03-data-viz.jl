@@ -3,8 +3,8 @@ ENV["GKSwstype"] = "100" #src
 # # Data Vizualization
 #
 # > The greatest value of a picture is when it forces us to notice what we never expected to see.
-#
-# - John Tukey
+# > 
+# > /- John Tukey
 #
 # Data visualization is used throughout the data science workflow.  It's used for everything from identifying simple relationships between variables to understanding how hyper-parameters affect model performance.  This course module will focus on exploratory data analysis using visualizations.
 #
@@ -23,7 +23,7 @@ ENV["GKSwstype"] = "100" #src
 
 # # What is [Plots.jl](https://github.com/JuliaPlots/Plots.jl)?
 #
-# ![](http://docs.juliaplots.org/latest/examples/img/lorenz.gif)
+# ![](https://raw.githubusercontent.com/JuliaPlots/PlotReferenceImages.jl/master/PlotDocs/index/lorenz_attractor.gif)
 #
 # **`Plots`** defines an interface for plotting that works with multiple plotting libraries "backends", including **`PyPlot`**, **`GR`**, and **`UnicodePlots`**.  It allows you to switch between backends, making it painless to go from an interactive javascript plot to something print-ready.  Let's get started with some of the core **`Plots`** concepts.
 

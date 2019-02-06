@@ -3,7 +3,8 @@ ENV["GKSwstype"] = "100" #src
 # # Working with Data
 #
 # > Data is the new oil. It’s valuable, but if unrefined it cannot really be used. It has to be changed into gas, plastic, chemicals, etc to create a valuable entity that drives profitable activity; so must data be broken down, analyzed for it to have value.
-# - Clive Humbly, 2006
+# >
+# > /- Clive Humbly, 2006
 #
 # There are several great packages for working with tabular data in Julia.  We have already seen a little bit of **`DataFrames`**, but we will focus on **`JuliaDB`** in this course module.  Many of the reasons one would choose **`JuliaDB`** instead of **`DataFrames`** (and vice versa) are personal preferences.  Most packages that integrate with tabular data, such as **`StatsPlots`**, work equally well with both, so your choice mainly depends on the slight differences in the interfaces for filtering and selecting data.  However, **`JuliaDB`** does have some key differences compared to **`DataFrames`**:
 #
@@ -13,7 +14,7 @@ ENV["GKSwstype"] = "100" #src
 #
 # # [JuliaDB](https://github.com/JuliaComputing/JuliaDB.jl)
 #
-# <img src = "https://user-images.githubusercontent.com/25916/36773410-843e61b0-1c7f-11e8-818b-3edb08da8f41.png" width=600>
+# <img src = "https://user-images.githubusercontent.com/25916/36773410-843e61b0-1c7f-11e8-818b-3edb08da8f41.png" width=200>
 #
 # We will cover the basic functionality of **`JuliaDB`** through an example.  Let's use the **`RDatasets`** package to load the `diamonds` dataset, a collection of measurements on the quality of ~54,000 diamonds.  The variables include:
 #

@@ -3,8 +3,8 @@ ENV["GKSwstype"] = "100" #src
 # # Getting Started with Data Science in Julia
 #
 # > [A]lways bite the bullet with regard to understanding the basics of the data first before you do anything else...
-#
-# - Caitlin Smallwood, Vice President of Science and Algorithms at Netflix
+# >
+# > /- Caitlin Smallwood, Vice President of Science and Algorithms at Netflix
 
 println("Hello, Data Science World!")
 
@@ -44,7 +44,7 @@ iris = dataset("datasets", "iris")
 
 iris.SepalLength
 
-# What is the average sepal width accross all three species?
+# What is the average sepal width across all three species?
 
 mean(iris.SepalWidth)
 
@@ -58,7 +58,7 @@ extrema(iris.SepalWidth)
 
 cor(iris.PetalWidth, iris.PetalLength)
 
-# While we could examine each column separately, a much quicker way to summarize our variables is with the `describe` function, which creates a new DataFrame where each row contains 
+# While we could examine each column separately, a much quicker way to summarize our variables is with the `describe` function:
 
 describe(iris)
 
