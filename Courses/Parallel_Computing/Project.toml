@@ -1,0 +1,6 @@
+[deps]
+BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+CuArrays = "3a865a2d-5b23-5a0f-bc46-62713ec82fae"
+Distributed = "8ba89e20-285c-5b6f-9357-94700520ee1b"
+Flux = "587475ba-b771-5e3f-ad9e-33799f191a9c"
+SharedArrays = "1a1011a3-84de-559e-8e89-a11a2f7dc383"
