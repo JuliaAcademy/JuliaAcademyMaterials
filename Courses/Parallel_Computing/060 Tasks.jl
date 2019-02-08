@@ -73,3 +73,61 @@ t
 @time for i in 1:10
     sleep(1)
 end
+
+
+# What about this?
+
+@time for i in 1:10
+    @async sleep(1)
+end
+
+# And finally, this?
+
+@time @sync for i in 1:10
+    @async sleep(1)
+end
+
+# Now what if I had something that actually did work?
+
+function work(N)
+    series = 1.0
+    for i in 1:N
+        series += (isodd(i) ? -1 : 1) / (i*2+1)
+    end
+    return 4*series
+end
+
+@time work(100_000_000)
+
+#-
+@time @sync for i in 1:10
+    @async work(100_000_000)
+end
+
+# # So what's happening here?
+#
+# `sleep` is nicely cooperating with our tasks
+
+methods(sleep)
+
+# # Fetching values from tasks
+
+# You can even fetch values from tasks
+
+t = @async (sleep(5); rand())
+#-
+wait(t)
+#-
+fetch(t)
+
+# # Key takeaways
+#
+# There is a lot more to tasks, but they form the foundation for reasoning about
+# actually _doing_ computation in parallel (and not just hoping that things will
+# cooperate for us to emulate parallelism by task switching).
+#
+# * `@async` creates and starts running a task
+# * `@sync` waits for them to all complete
+# * We can reason about something that runs asynchronously and may return a value
+#   at some point in the future. We can even `wait` for it.
+#

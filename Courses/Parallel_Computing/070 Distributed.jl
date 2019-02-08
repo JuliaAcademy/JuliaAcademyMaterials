@@ -123,11 +123,8 @@ p - pi
 # Increase the work on each worker by 100x and reduce the amount of communication by 100x:
 @time pmap(partial_pi, [(0:999999) .+ offset for offset in 0:1000000:r[end]-1])
 
-# There are other ways of doing this, though, too.
-
-# ### The SharedArray
-
-# ### The DistributedArray
+# There are other ways of doing this, though, too — we'll get to them in a minute.
+# But first, there's something else that I glossed over: the `@everywhere`s above.
 
 # ## Code movement
 
@@ -155,6 +152,27 @@ fetch(@spawnat 2 mean(rand(100_000)))
 
 @everywhere using Statistics
 fetch(@spawnat 2 mean(rand(100_000)))
+
+# # Other ways to structure and/or share data between processes
+#
+# Unlike `@threads`, we no longer have access to the same memory. While this
+# does make expressing some algorithms a little more tricky, the "default"
+# is much safer! There isn't any shared state to begin with, so it's harder
+# to write an incorrect algorithm. It's also just harder to write some
+# algorithms in the first place.
+#
+# So there are some special array types that can help bridge the gap between
+# processes and make writing parallel code a bit easier.
+
+# ## The `SharedArray`
+#
+# If all workers are on the same physical machine, while they cannot share
+# memory, they do all have shared access to the same hard drive(s)!
+#
+# The `SharedArray` makes use of this fact, allowing concurrent accesses to the
+# same array.
+
+
 
 # # Multi-process parallelism is the heavy-duty workhorse in Julia
 #

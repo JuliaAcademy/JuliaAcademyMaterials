@@ -139,3 +139,18 @@ unsafe_diff!(Bcopy, Bcopy)
 # BUT: this is tricky and a pain; often it's just to be aware of what makes
 # Julia code automatically SIMD-able, some of the cases where it may fail, and
 # how to check its work.
+
+# ## SIMD
+#
+# * Exploits built-in parallelism in a processor
+# * Best for small, tight innermost loops
+# * Often happens automatically if you're careful
+#     * Follow the [perforance best practices](https://docs.julialang.org/en/v1/manual/performance-tips/)
+#     * `@inbounds` any array acesses
+#     * No branches or (non-inlined) function calls
+# * Can use `@simd` to allow Julia to break some rules to make it happen
+#     * But be careful, especially with `@simd ivdep`!
+# * Depending on processor and types involved, can yield 2-16x gains with extraordinarily little overhead
+#     * Smaller datatypes can improve this further; use `Float32` instead of `Float64`
+#       if possible, `Int32` instead of `Int64`, etc.
+#     * When buying a new processor, look for [AVX-512](https://en.wikichip.org/wiki/x86/avx-512) support

@@ -17,3 +17,10 @@
 #         * Shared memory
 #         * Distributed memory
 #     * GPU programming
+#
+#
+# ## Why so many kinds of parallelism?
+#
+# * Not all problems are created equal
+# * Not all computing machines are created equal
+# * We want to maximize comuting while minimizing overhead

@@ -163,6 +163,18 @@ git-tree-sha1 = "2b96d7f25fbea82c08a736d78cbf14df8d2100a5"
 uuid = "0c68f7d7-f131-5f86-a1c3-88cf8149b2d7"
 version = "0.6.1"
 
+[[Homebrew]]
+deps = ["BinDeps", "InteractiveUtils", "JSON", "Libdl", "Test", "Unicode"]
+git-tree-sha1 = "f01fb2f34675f9839d55ba7238bab63ebd2e531e"
+uuid = "d9be37ee-ecc9-5288-90f1-b9ca67657a75"
+version = "0.7.1"
+
+[[Hwloc]]
+deps = ["BinDeps", "Homebrew", "Libdl", "Test"]
+git-tree-sha1 = "f0fe4499a5b5f956629a4f7238a0fcf10adabcc4"
+uuid = "0e44f5e4-bd66-52a0-8798-143a42290a1d"
+version = "1.0.0"
+
 [[InteractiveUtils]]
 deps = ["LinearAlgebra", "Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
