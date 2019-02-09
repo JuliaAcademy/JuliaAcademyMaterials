@@ -1,6 +1,4 @@
-# # Distributed
-
-# Distributed (or multi-core or multi-process) parallelism
+# # Distributed (or multi-core or multi-process) parallelism
 
 using Distributed
 nprocs()
@@ -87,7 +85,7 @@ p - pi
 
 # ## Data movement
 
-# Moving data is _expensive_! (from https://www.prowesscorp.com/computer-latency-at-a-human-scale/)
+# Remember: Moving data is _expensive_!
 #
 # | System Event                   | Actual Latency | Scaled Latency |
 # | ------------------------------ | -------------- | -------------- |
