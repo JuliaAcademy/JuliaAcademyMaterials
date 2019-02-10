@@ -137,8 +137,10 @@ p - pi
 # you'll see errors like this:
 
 hello() = "hello world"
-
 r = @spawnat 2 hello()
+
+#-
+
 fetch(r)
 
 # Note that this applies to packages, too!
@@ -168,9 +170,166 @@ fetch(@spawnat 2 mean(rand(100_000)))
 # memory, they do all have shared access to the same hard drive(s)!
 #
 # The `SharedArray` makes use of this fact, allowing concurrent accesses to the
-# same array.
+# same array — somewhat akin to threads default state.
+#
+# This is the prefix definition from the "thinking in parallel" course:
+#
+# ```
+# using .Threads
+# function prefix_threads!(y, ⊕)
+#     l=length(y)
+#     k=ceil(Int, log2(l))
+#     for j=1:k
+#         @threads for i=2^j:2^j:min(l, 2^k)       #"reduce"
+#             @inbounds y[i] = y[i-2^(j-1)] ⊕ y[i]
+#         end
+#     end
+#     for j=(k-1):-1:1
+#         @threads for i=3*2^(j-1):2^j:min(l, 2^k) #"expand"
+#             @inbounds y[i] = y[i-2^(j-1)] ⊕ y[i]
+#         end
+#     end
+#     y
+# end
+# ```
 
+using SharedArrays
+function prefix!(y::SharedArray, ⊕)
+    l=length(y)
+    k=ceil(Int, log2(l))
+    for j=1:k
+        @distributed for i=2^j:2^j:min(l, 2^k)       #"reduce"
+            @inbounds y[i] = y[i-2^(j-1)] ⊕ y[i]
+        end
+    end
+    for j=(k-1):-1:1
+        @distributed for i=3*2^(j-1):2^j:min(l, 2^k) #"expand"
+            @inbounds y[i] = y[i-2^(j-1)] ⊕ y[i]
+        end
+    end
+    y
+end
+data = rand(10_000_000);
+A = SharedArray(data)
+#-
+prefix!(SharedArray(data), +) # compile
+@time prefix!(A, +)
+#-
+A ≈ cumsum(data)
 
+# What went wrong?
+
+function prefix!(y::SharedArray, ⊕)
+    l=length(y)
+    k=ceil(Int, log2(l))
+    for j=1:k
+        @sync @distributed for i=2^j:2^j:min(l, 2^k)       #"reduce"
+            @inbounds y[i] = y[i-2^(j-1)] ⊕ y[i]
+        end
+    end
+    for j=(k-1):-1:1
+        @sync @distributed for i=3*2^(j-1):2^j:min(l, 2^k) #"expand"
+            @inbounds y[i] = y[i-2^(j-1)] ⊕ y[i]
+        end
+    end
+    y
+end
+A = SharedArray(data)
+@time prefix!(A, +)
+#-
+A ≈ cumsum(data)
+#
+
+# ## DistributedArrays
+#
+# We can, though, turn the problem on its head and allow the _data_ itself
+# to determine how the problem gets split up. This can save us tons of indexing
+# headaches.
+
+@everywhere using Distributed
+@everywhere using DistributedArrays
+A = DArray(I->fill(myid(), length.(I)), (24, 24))
+
+# The first argument takes a function that transforms the given set of indices
+# to the _local portion_ of the distributed array.
+A = DArray((24,24)) do I
+    @show I
+    fill(myid(), length.(I))
+end
+
+# Notice that none of the array actually lives on processor 1, but we can still
+# display the contents — when we do we're requesting all workers give us their
+# current data! While we've only talked about master-worker communcation so far,
+# workers can communicate directly amongst themselves, too (by default).
+
+@everywhere using BenchmarkTools
+fetch(@spawnat 2 @benchmark $A[1,1])
+#-
+fetch(@spawnat 2 @benchmark $A[end,end])
+
+# So it's fastest to work on a `DArray`'s "local" portion, but it's _possible_
+# to grab other data if need be. This is perfect for any sort of tiled operation
+# that works on neighboring values (like image filtering/convolution). Or Conway's
+# game of life!
+
+function life_step(d::DArray)
+    DArray(size(d),procs(d)) do I
+        # Compute the indices of the outside edge (that will come from other processors)
+        top   = mod1(first(I[1])-1,size(d,1))
+        bot   = mod1( last(I[1])+1,size(d,1))
+        left  = mod1(first(I[2])-1,size(d,2))
+        right = mod1( last(I[2])+1,size(d,2))
+
+        # Create a new, temporary array that holds the local part + outside edge
+        old = Array{Bool}(undef, length(I[1])+2, length(I[2])+2)
+        # These accesses will pull data from other processors
+        old[1      , 1      ] = d[top , left]
+        old[2:end-1, 1      ] = d[I[1], left]   # left side (and corners)
+        old[end    , 1      ] = d[bot , left]
+        old[1      , end    ] = d[top , right]
+        old[2:end-1, end    ] = d[I[1], right]  # right side (and corners)
+        old[end    , end    ] = d[bot , right]
+        old[1      , 2:end-1] = d[top , I[2]]   # top
+        old[end    , 2:end-1] = d[bot , I[2]]   # bottom
+        # But this big one is all local!
+        old[2:end-1, 2:end-1] = d[I[1], I[2]]   # middle
+
+        life_rule(old) # Compute the new segment!
+    end
+end
+@everywhere function life_rule(old)
+    # Now this part — the computational part — is entirely local and on Arrays!
+    m, n = size(old)
+    new = similar(old, m-2, n-2)
+    for j = 2:n-1
+        @inbounds for i = 2:m-1
+            nc = (+)(old[i-1,j-1], old[i-1,j], old[i-1,j+1],
+                     old[i  ,j-1],             old[i  ,j+1],
+                     old[i+1,j-1], old[i+1,j], old[i+1,j+1])
+            new[i-1,j-1] = (nc == 3 || nc == 2 && old[i,j])
+        end
+    end
+    new
+end
+#-
+A = DArray(I->rand(Bool, length.(I)), (20,20))
+using Colors
+Gray.(A)
+#-
+B = copy(A)
+#-
+B = Gray.(life_step(B))
+
+# ## Clusters and more ways to distribute
+#
+# You can easily connect to completely separate machines with SSH access built in!
+# But there are many other ways to connect to clusters:
+#
+# * [Kubernetes](https://juliacomputing.com/blog/2018/12/15/kuber.html)
+# * [MPI](https://github.com/JuliaParallel/MPI.jl)
+# * [Cluster job queues with ClusterManagers](https://github.com/JuliaParallel/ClusterManagers.jl)
+# * [Hadoop](https://github.com/JuliaParallel/Elly.jl)
+# * [Spark](https://github.com/dfdx/Spark.jl)
 
 # # Multi-process parallelism is the heavy-duty workhorse in Julia
 #
@@ -184,6 +343,6 @@ fetch(@spawnat 2 mean(rand(100_000)))
 #   time and memory parameters of your problem
 #     * `@distributed` can be good for reductions and even relatively fast inner loops with limited (or no) explicit data transfer
 #     * `pmap` is great for very expensive inner loops that return a value
-#     * `SharedArray`s can be an easier drop-in replacement of some complicated data transfers, but at a (time) cost
-#     * `DistributedArray`s can be tricky to work with but can be very efficient
+#     * `SharedArray`s can be an easier drop-in replacement for threading-like behaviors (on a single machine)
+#     * `DistributedArray`s can turn the problem on its head and let the data do the work splitting!
 #

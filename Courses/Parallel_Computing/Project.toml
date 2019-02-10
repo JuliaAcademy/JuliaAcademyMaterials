@@ -1,7 +1,13 @@
 [deps]
 BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+Colors = "5ae59095-9a9b-59fe-a467-6f913c188581"
+Compose = "a81c6b42-2e10-5240-aca2-a61377ecd94b"
 CuArrays = "3a865a2d-5b23-5a0f-bc46-62713ec82fae"
 Distributed = "8ba89e20-285c-5b6f-9357-94700520ee1b"
+DistributedArrays = "aaf54ef3-cdf8-58ed-94cc-d582ad619b94"
+FillArrays = "1a297f60-69ca-5386-bcde-b61e274b549b"
 Flux = "587475ba-b771-5e3f-ad9e-33799f191a9c"
+Gadfly = "c91e804a-d5a3-530f-b6f0-dfbca275c004"
 Hwloc = "0e44f5e4-bd66-52a0-8798-143a42290a1d"
+Interact = "c601a237-2ae4-5e1e-952c-7a85b0c7eef1"
 SharedArrays = "1a1011a3-84de-559e-8e89-a11a2f7dc383"

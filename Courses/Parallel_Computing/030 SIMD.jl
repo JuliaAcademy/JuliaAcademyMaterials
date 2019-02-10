@@ -24,7 +24,7 @@ simplesum(A)
 #-
 
 using BenchmarkTools
-@btime mysum($A)
+@btime simplesum($A)
 
 # So, is that good?
 

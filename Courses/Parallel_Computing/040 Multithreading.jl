@@ -11,7 +11,7 @@
 versioninfo(verbose = true)
 
 #-
-;cat /proc/cpuinfo # on Linux machines
+#nb ;cat /proc/cpuinfo # on Linux machines
 #-
 
 # import Pkg; Pkg.add("Hwloc")
@@ -59,9 +59,9 @@ nthreads()
 # JULIA_NUM_THREADS=4 julia
 # ```
 
-# On JuliaBox, this is a challenge — we don't have access to the launching process!
-
-;env JULIA_NUM_THREADS=4 julia -E 'using .Threads; nthreads()'
+#nb # On JuliaBox, this is a challenge — we don't have access to the launching process!
+#nb
+#nb ;env JULIA_NUM_THREADS=4 julia -E 'using .Threads; nthreads()'
 
 #
 #
@@ -78,7 +78,7 @@ A
 
 # But if we prefix it with `@threads` then the loop body runs on all threads!
 
-@macroexpand @threads for i in 1:nthreads()
+@threads for i in 1:nthreads()
     A[threadid()] = threadid()
 end
 A
@@ -216,15 +216,15 @@ threadedpi(100_000_000)
 # Ok, now why didn't that work?  It's slow!
 import Random
 Random.seed!(0)
-Rserial = zeros(nthreads())
-for i in 1:nthreads()
+Rserial = zeros(20)
+for i in 1:20
     Rserial[i] = rand()
 end
 Rserial
 #-
 Random.seed!(0)
-Rthreaded = zeros(nthreads())
-@threads for i in 1:nthreads()
+Rthreaded = zeros(20)
+@threads for i in 1:20
     Rthreaded[i] = rand()
 end
 Rthreaded

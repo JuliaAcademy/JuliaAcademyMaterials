@@ -24,3 +24,5 @@
 # * Not all problems are created equal
 # * Not all computing machines are created equal
 # * We want to maximize comuting while minimizing overhead
+#     * Chosen solution will depend upon the amount of computing in each inner loop
+#       and the amount of syncronization that is required between loops.
