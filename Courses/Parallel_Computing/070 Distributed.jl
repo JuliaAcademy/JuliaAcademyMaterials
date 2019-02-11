@@ -5,7 +5,7 @@ nprocs()
 
 #-
 
-addprocs(4)
+addprocs(4; exeflags="--project=$(@__DIR__)")
 nprocs()
 
 #-
