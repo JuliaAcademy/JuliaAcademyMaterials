@@ -23,10 +23,10 @@ imgs = MNIST.images()
 labels = onehotbatch(MNIST.labels(), 0:9)
 
 # Partition into batches of size 32
+
 train = [(cat(float.(imgs[i])..., dims = 4), labels[:,i])
          for i in partition(1:60_000, 32)]
-
-# Prepare test set (first 1,000 images)
+## Prepare test set (first 1,000 images)
 tX = cat(float.(MNIST.images(:test)[1:1000])..., dims = 4)
 tY = onehotbatch(MNIST.labels(:test)[1:1000], 0:9)
 

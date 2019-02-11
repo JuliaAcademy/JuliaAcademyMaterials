@@ -2,16 +2,22 @@
 
 using Distributed
 nprocs()
+
 #-
-addprocs()
+
+addprocs(4)
 nprocs()
+
 #-
+
 myid()
 
 # Now we can easily communicate with the other nodes:
 
 r = @spawnat 2 (myid(), rand())
+
 #-
+
 fetch(r)
 
 # This works kinda like an `@async` task!
@@ -39,8 +45,11 @@ end
     return 4*series
 end
 
-@time @sync for i in 2:nprocs()
-    @spawnat i work(100_000_000)
+#-
+
+@time work(1_000_000_000)
+@time @sync for i in workers()
+    @spawnat i work(1_000_000_000)
 end
 
 # Of course, this isn't very helpful. We're just performing exactly the same
@@ -56,17 +65,20 @@ end
 end
 a = partial_pi(0:999)
 a, a-pi
+
 #-
+
 b = partial_pi(1000:9999)
 (a + b), (a+b) - pi
 
 # So now we can distribute this computation across our many workers!
+
 r = 0:10_000_000_000
 futures = Array{Future}(undef, nworkers())
 @time begin
-    for i in 2:nprocs()
+    for (i, id) in enumerate(workers())
         batch = 0:length(r)÷nworkers()-1
-        futures[i-1] = @spawnat i partial_pi(batch .+ (i-2)*(length(r)÷nworkers()))
+        futures[i] = @spawnat id partial_pi(batch .+ (i-1)*(length(r)÷nworkers()))
     end
     p = sum(fetch.(futures))
 end
@@ -113,13 +125,14 @@ p - pi
 # very expensive computation relative to the communication overhead, there are
 # several ways to do this. The easiest is `pmap`:
 
-@time pmap(partial_pi, [(0:9999) .+ offset for offset in 0:10000:r[end]-1])
+@time pmap(partial_pi, [(0:99999) .+ offset for offset in 0:100000:r[end]-1])
 
 # But if we have a large computation relative to the number of return values,
 # pmap is great and easy.
 #
 # Increase the work on each worker by 100x and reduce the amount of communication by 100x:
-@time pmap(partial_pi, [(0:999999) .+ offset for offset in 0:1000000:r[end]-1])
+
+@time pmap(partial_pi, [(0:9999999) .+ offset for offset in 0:10000000:r[end]-1])
 
 # There are other ways of doing this, though, too — we'll get to them in a minute.
 # But first, there's something else that I glossed over: the `@everywhere`s above.
@@ -209,12 +222,16 @@ function prefix!(y::SharedArray, ⊕)
     end
     y
 end
-data = rand(10_000_000);
-A = SharedArray(data)
+data = rand(1_000_000);
+A = SharedArray(data);
+
 #-
+
 prefix!(SharedArray(data), +) # compile
-@time prefix!(A, +)
+@time prefix!(A, +);
+
 #-
+
 A ≈ cumsum(data)
 
 # What went wrong?
@@ -324,7 +341,8 @@ B = Gray.(life_step(B))
 #
 # You can easily connect to completely separate machines with SSH access built in!
 # But there are many other ways to connect to clusters:
-#
+# 
+# * [JuliaRun](https://juliacomputing.com/products/juliarun)
 # * [Kubernetes](https://juliacomputing.com/blog/2018/12/15/kuber.html)
 # * [MPI](https://github.com/JuliaParallel/MPI.jl)
 # * [Cluster job queues with ClusterManagers](https://github.com/JuliaParallel/ClusterManagers.jl)

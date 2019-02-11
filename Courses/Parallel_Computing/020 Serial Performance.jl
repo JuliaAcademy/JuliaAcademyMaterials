@@ -37,17 +37,25 @@ findclosest(data, 0.5)
 @benchmark findclosest($data, $0.5)
 
 # ### Profile!
-#
 
 using Profile
 
+Profile.clear()
 @profile for _ in 1:100000; findclosest(data, 0.5); end
 
-Profile.print()
-
-#-
+Profile.print(maxdepth=11)
 
 # ### Iterate!
+# 
+# Before we had:
+# ```julia
+# function findclosest(data, point)
+#     _, index =  findmin(abs.(data .- point))
+#     return data[index]
+# end
+# ```
+# 
+# Let's come up with a new definition that can combine the two operations:
 
 function findclosest2(data, point)
     bestval = first(data)
@@ -65,18 +73,33 @@ end
 @benchmark findclosest2($data, $0.5)
 
 # ## A quick word on macros
-#
+# 
 # Macros are those funny things starting with `@`. They can reinterpret what
 # you write and do something different — essentially introducing a new keyword.
 
 @macroexpand @time f()
 
 # ## How is Julia fast?
-#
+# 
 # By understanding the basics of how Julia _can_ be fast, you can get a better
 # sense for how to write fast Julia code.
-#
-# Perhaps most importantly, Julia can reason about types:
+# 
+# Perhaps most importantly, Julia can reason about types. Recall: this is the definition of `findclosest2`:
+# 
+# ```julia
+# function findclosest2(data, point)
+#     bestval = first(data)
+#     bestdist = abs(bestval - point)
+#     for elt in data
+#         dist = abs(elt - point)
+#         if dist < bestdist
+#             bestval = elt
+#             bestdist = dist
+#         end
+#     end
+#     return bestval
+# end
+# ```
 
 @code_typed findclosest2(data, 0.5)
 
@@ -87,7 +110,7 @@ newdata = Real[data...]
 
 #-
 
-@code_typed findclosest2(newdata, 0.5)
+@code_warntype findclosest2(newdata, 0.5)
 
 # ### Type stability
 #
@@ -95,10 +118,13 @@ newdata = Real[data...]
 # type will be based purely on the types of the inputs.
 #
 # Things that thwart type stability:
+# * Running things in global scope: create functions instead!
 # * Non-concretely typed containers
 # * Structs with abstractly-typed fields
 # * Non-constant globals (they might change!)
 # * Functions that change what they return based on the _values_:
+
+#-
 
 # More on macros.
 # Each and every macro can define its own syntax. The `@benchmark` macro uses `$` in a special way.
@@ -127,15 +153,14 @@ x = 0.5 # non-constant global
 
 @code_llvm 1.0 + 2.0
 
-#-
+# This applies just the same to any functions we write — even the more complicated ones:
 
-@code_typed findclosest2(Int32[2,3,4],Int32(3))
+@code_llvm findclosest2(Float32[2.2,3.4,4.5],Float32(3.2))
 
 # ## Modern hardware effects
-#
+# 
 # There are lots of little performance quirks in modern computers; I'll just
 # cover two interesting ones here:
-#
 
 sorteddata = sort(data)
 @benchmark findclosest2($sorteddata, $0.5)

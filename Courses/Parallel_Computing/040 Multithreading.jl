@@ -44,9 +44,12 @@ BLAS.set_num_threads(4)
 
 # ## What does it look like to implement your _own_ threaded algorithm?
 
+#-
+
 # Multithreading support is marked as "experimental" for Julia 1.0 and is
 # pending a big revamp for Julia version 1.2 or 1.3. The core tenets will be
 # the same, but it should become much easier to use efficiently.
+
 using .Threads
 
 nthreads()
@@ -59,12 +62,14 @@ nthreads()
 # JULIA_NUM_THREADS=4 julia
 # ```
 
+#-
+
 #nb # On JuliaBox, this is a challenge — we don't have access to the launching process!
-#nb
+
 #nb ;env JULIA_NUM_THREADS=4 julia -E 'using .Threads; nthreads()'
 
-#
-#
+#-
+
 threadid()
 
 # So we're currently on thread 1. Of course a loop like this will
@@ -117,6 +122,7 @@ threaded_sum2(A)
 
 # Alright! Now we got the correct answer (modulo some floating point associativity),
 # but it's still slower than just doing the simple thing on 1 core.
+
 threaded_sum2(A) ≈ sum(A)
 
 # But it's still slow! Using atomics is much slower than just adding integers
@@ -214,6 +220,7 @@ threadedpi(100_000_000)
 @time threadedpi(100_000_000)
 
 # Ok, now why didn't that work?  It's slow!
+
 import Random
 Random.seed!(0)
 Rserial = zeros(20)
@@ -221,16 +228,22 @@ for i in 1:20
     Rserial[i] = rand()
 end
 Rserial
+
 #-
+
 Random.seed!(0)
 Rthreaded = zeros(20)
 @threads for i in 1:20
     Rthreaded[i] = rand()
 end
 Rthreaded
+
 #-
+
 Set(Rserial) == Set(Rthreaded)
+
 #-
+
 indexin(Rserial, Rthreaded)
 
 # Aha, `rand()` isn't threadsafe! It's mutating (and reading) some global each
@@ -275,7 +288,9 @@ function serial_matmul(As)
     first_idxs
 end
 @time serial_matmul(Ms);
+
 #-
+
 using LinearAlgebra
 BLAS.set_num_threads(nthreads())
 function threaded_matmul(As)

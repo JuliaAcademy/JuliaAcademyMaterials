@@ -16,12 +16,14 @@
 # sits at the top and can arbitrarily control who gets to run when. Julia's task
 # system uses cooperative multitasking (also known as coroutines or green threads).
 
+#-
+
 # Tasks work best when they're waiting for some _external_ condition to complete
 # their work. Let's say we had a directory "results" and wanted to process any
 # new files that appeared there:
 
 using FileWatching
-mkdir("results")
+isdir("results") || mkdir("results")
 watch_folder("results", #= time out in seconds =# 5)
 
 # Julia happily will sit there and wait for something to happen... but it's
@@ -44,6 +46,7 @@ function process_folder(dir)
         file, info = watch_folder(dir)
         path = joinpath(dir, file)
         if isfile(path)
+            print("processing $path...")
             run(`cp $path processed-results/$file`) # Or actually do real work...
         end
     end
@@ -52,28 +55,42 @@ end
 t = @async process_folder("results")
 
 #-
-readdir("results")
-#-
-run(`touch results/2.txt`)
+
+run(`touch results/1.txt`)
+sleep(.1)
 readdir("processed-results")
+
 #-
+
+run(`touch results/2.txt`)
+sleep(.1)
+readdir("processed-results")
+
+#-
+
 isdone = true
 run(`touch results/3.txt`)
+sleep(.1)
 readdir("processed-results")
+
 #-
+
 run(`touch results/4.txt`)
+sleep(.1)
 readdir("processed-results")
+
 #-
-t
-#-
+
+rm("results", recursive=true)
+rm("processed-results", recursive=true)
+
 # ## Quiz:
-#
+# 
 # How long will this take?
 
 @time for i in 1:10
     sleep(1)
 end
-
 
 # What about this?
 
@@ -100,34 +117,43 @@ end
 @time work(100_000_000)
 
 #-
+
 @time @sync for i in 1:10
     @async work(100_000_000)
 end
 
 # # So what's happening here?
-#
+# 
 # `sleep` is nicely cooperating with our tasks
 
 methods(sleep)
 
 # # Fetching values from tasks
 
+#-
+
 # You can even fetch values from tasks
 
 t = @async (sleep(5); rand())
+
 #-
+
 wait(t)
+
 #-
+
 fetch(t)
 
 # # Key takeaways
-#
+# 
 # There is a lot more to tasks, but they form the foundation for reasoning about
 # actually _doing_ computation in parallel (and not just hoping that things will
 # cooperate for us to emulate parallelism by task switching).
-#
+# 
 # * `@async` creates and starts running a task
 # * `@sync` waits for them to all complete
 # * We can reason about something that runs asynchronously and may return a value
-#   at some point in the future. We can even `wait` for it.
-#
+#   at some point in the future with `fetch`. Or we can just `wait` for it.
+
+
+

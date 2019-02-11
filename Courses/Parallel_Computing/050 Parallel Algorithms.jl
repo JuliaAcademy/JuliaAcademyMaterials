@@ -7,16 +7,18 @@
 # Alan Edelman entitled "Parallel Prefix Polymorphism Permits Parallelization, Presentation & Proof" and
 # will appear in the proceedings of the [First Workshop for High Performance Technical Computing in Dynamic
 # Languages](http://jiahao.github.io/hptcdl-sc14/), held in conjunction with [SC14: The International Conference on High Performance Computing, Networking, Storage and Analysis](http://sc14.supercomputing.org/)
-#
 
-using Compose, Gadfly, Interact
+using Interact
+
+#-
+
+using Compose, Gadfly
 
 # # `reduce()`
 #
 # Reduction applies a binary operator to a vector repeatedly to return a scalar. Thus + becomes sum, and * becomes prod.
 #
 # It is considered a basic parallel computing primitive.
-#
 
 reduce(+, 1:8), sum(1:8)  # triangular numbers
 

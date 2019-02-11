@@ -1,12 +1,54 @@
 # # SIMD: The parallelism that can (sometimes) happen automatically
-#
+# 
 # SIMD: Single-instruction, multiple data
-#
+# 
 # (Also confusingly called vectorization)
 
-# ## The architechture
+#-
+
+# ## The architecture
+# 
+# Instead of computing four sums sequentially:
+# 
+# \begin{align}
+# x_1 + y_1 &\rightarrow z_1 \\
+# x_2 + y_2 &\rightarrow z_2 \\
+# x_3 + y_3 &\rightarrow z_3 \\
+# x_4 + y_4 &\rightarrow z_4
+# \end{align}
+# 
+# Modern processors have vector processing units that can do it all at once:
+# 
+# $$
+# \left(\begin{array}{cc} 
+# x_1 \\
+# x_2 \\
+# x_3 \\
+# x_4
+# \end{array}\right)
+# +
+# \left(\begin{array}{cc} 
+# y_1 \\
+# y_2 \\
+# y_3 \\
+# y_4
+# \end{array}\right)
+# \rightarrow
+# \left(\begin{array}{cc} 
+# z_1 \\
+# z_2 \\
+# z_3 \\
+# z_4
+# \end{array}\right)
+# $$ 
+# 
+
+
+#-
 
 # ## Making it happen
+
+#-
 
 # Simple task: compute the sum of a vector:
 
@@ -30,11 +72,11 @@ using BenchmarkTools
 
 @btime sum($A)
 
-# Whoa, we're a lot slower that the builtin `sum` — and we're getting a different answer, too!
+# We're slower that the builtin `sum` — and we're getting a different answer, too! Let's look at what happens with a 32-bit float instead of a 64 bit one. Each element has half the number of bits, so lets also double the length (so the total number of bits processed remains constant).
 
 A32 = rand(Float32, length(A)*2)
 @btime simplesum($A32)
-@btime sum($A32)
+@btime sum($A32);
 
 # That's even worse! What's going on here?  We're seeing an even multiple number
 # difference in our performance — perhaps Julia's builtin sum is using some
@@ -60,16 +102,39 @@ simplesum(A), simdsum(A), sum(A)
 simplesum(A32), simdsum(A32), sum(A32)
 
 # Why aren't they the same?
-#
+# 
 # Without `@simd`, Julia is doing _exactly_ what we told it to do: it's taking
 # each element of our array and adding it to a big pile sequentially. Our answer
 # is smaller than what Julia's builtin `sum` thinks it is: that's because as our
 # pile gets bigger we begin losing the lower bits of each element that we're
 # adding, and those small losses begin to add up!
-#
+# 
 # The `@simd` macro tells Julia that it can re-arrange floating point additions —
-# even if it would change the answer.
-#
+# even if it would change the answer. Depending on your CPU, this may lead to 2x or 4x
+# or even 8x parallelism. Essentially, Julia is computing independent sums for
+# the even indices and the odd indices simultaneously:
+# 
+# \begin{align}
+# odds &\leftarrow 0 \\
+# evens &\leftarrow 0 \\
+# \text{loop}&\ \text{odd}\ i: \\
+#     &\left(\begin{array}{cc} 
+# odds \\
+# evens
+# \end{array}\right)
+# \leftarrow
+# \left(\begin{array}{cc} 
+# odds \\
+# evens
+# \end{array}\right)
+# +
+# \left(\begin{array}{cc} 
+# x_{i} \\
+# x_{i+1}
+# \end{array}\right) \\
+# total &\leftarrow evens + odds
+# \end{align}
+# 
 # In many cases, Julia can and does know that a for-loop can be SIMD-ed and it
 # will take advantage of this by default!
 
