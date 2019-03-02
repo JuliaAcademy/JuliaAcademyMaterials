@@ -10,11 +10,18 @@
 # Just like how we needed to send data to other processes, we need to send our
 # data to the GPU to do computations there.
 
+# You can inspect the installed GPUs with nvidia-smi:
+
+#-
+
+;nvidia-smi
+
 # ## Example
 #
 # The deep learning MNIST example: https://fluxml.ai/experiments/mnist/
 #
 # This is how it looks on the CPU:
+
 using Flux, Flux.Data.MNIST, Statistics
 using Flux: onehotbatch, onecold, crossentropy, throttle
 using Base.Iterators: repeated, partition
@@ -22,8 +29,7 @@ using Base.Iterators: repeated, partition
 imgs = MNIST.images()
 labels = onehotbatch(MNIST.labels(), 0:9)
 
-# Partition into batches of size 32
-
+## Partition into batches of size 32
 train = [(cat(float.(imgs[i])..., dims = 4), labels[:,i])
          for i in partition(1:60_000, 32)]
 ## Prepare test set (first 1,000 images)
@@ -42,19 +48,24 @@ m = Chain(
 
 loss(x, y) = crossentropy(m(x), y)
 accuracy(x, y) = mean(onecold(m(x)) .== onecold(y))
-opt = ADAM()
-@time Flux.train!(loss, Flux.params(m), train[1:10], opt, cb = () -> @show(accuracy(tX, tY)))
+## opt = ADAM() # <-- Move Flux.params(m) here!
+## @time Flux.train!(loss, Flux.params(m), train[1:10], opt, cb = () -> @show(accuracy(tX, tY)))
+opt = ADAM(Flux.params(m), ) # <-- Move Flux.params(m) here!
+Flux.train!(loss, train[1:1], opt, cb = () -> @show(accuracy(tX, tY)))
+@time Flux.train!(loss, train[1:10], opt, cb = () -> @show(accuracy(tX, tY)))
 
 # Now let's re-do it on a GPU. "All" it takes is moving the data there with `gpu`!
-using CuArrays
 
+include("scripts/fixupCUDNN.jl") # JuliaBox uses an old version of CuArrays; this backports a fix for it
 gputrain = gpu.(train[1:10])
 gpum = gpu(m)
 gputX = gpu(tX)
 gputY = gpu(tY)
 gpuloss(x, y) = crossentropy(gpum(x), y)
 gpuaccuracy(x, y) = mean(onecold(gpum(x)) .== onecold(y))
-@time Flux.train!(gpuloss, Flux.params(gpum), gputrain, opt, cb = () -> @show(gpuaccuracy(gputX, gputY)))
+gpuopt = ADAM(Flux.params(gpum), )
+Flux.train!(gpuloss, gpu.(train[1:1]), gpuopt, cb = () -> @show(gpuaccuracy(gputX, gputY)))
+@time Flux.train!(gpuloss, gputrain, gpuopt, cb = () -> @show(gpuaccuracy(gputX, gputY)))
 
 # ## Defining your own GPU kernels
 #
@@ -63,7 +74,7 @@ gpuaccuracy(x, y) = mean(onecold(gpum(x)) .== onecold(y))
 # How might you define your own GPU kernel?
 #
 # Recall the monte carlo pi example:
-#
+
 function serialpi(n)
     inside = 0
     for i in 1:n
@@ -72,7 +83,7 @@ function serialpi(n)
     end
     return 4 * inside / n
 end
-#
+
 # How could we express this on the GPU?
 
 using CuArrays.CURAND
@@ -80,20 +91,15 @@ function findpi_gpu(n)
     4 * sum(curand(Float64, n).^2 .+ curand(Float64, n).^2 .<= 1) / n
 end
 findpi_gpu(10_000_000)
+
 #-
+
 using BenchmarkTools
 @btime findpi_gpu(10_000_000)
 @btime serialpi(10_000_000)
 
 # That leans on broadcast to build the GPU kernel — and is creating three arrays
 # in the process — but it's still much faster than our serial pi from before.
-#
-# We can do even better with a bit more laziness
-using FillArrays
-function findpi_gpu_lazy(n)
-    4 * sum(Fill(0.0, n) .+ curand(Float64).^2 .+ curand(Float64).^2 .<= 1.0) / n
-end
-@btime findpi_gpu_lazy(10_000_000)
 
 # In general, using CuArrays and broadcast is one of the best ways to just
 # get everything to work. If you really want to get your hands dirty, you

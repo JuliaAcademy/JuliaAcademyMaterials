@@ -23,6 +23,8 @@
 #     * Appropriately matching the parallelism strategy to your machine capabilities
 #     * Appropriately matching the parallelism strategy with the problem at hand
 
+#-
+
 # ## What is happening to our computers!?
 #
 # ![](images/40-years-processor-trend.png)

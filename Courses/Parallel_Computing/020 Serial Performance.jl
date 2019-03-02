@@ -7,10 +7,14 @@
 # I _highly_ recommend reviewing the [Performance Tips](https://docs.julialang.org/en/v1.1/manual/performance-tips/)
 # in the manual. This is only going to briefly introduce some of the main concepts.
 
+#-
+
 # ## Measure, measure, measure.
 #
 # It is very easy to experiment in Julia; you can rapidly try many options and
 # see what is the fastest.
+
+#-
 
 # Use the [BenchmarkTools](https://github.com/JuliaCI/BenchmarkTools.jl) package:
 
@@ -46,7 +50,7 @@ Profile.clear()
 Profile.print(maxdepth=11)
 
 # ### Iterate!
-# 
+#
 # Before we had:
 # ```julia
 # function findclosest(data, point)
@@ -54,7 +58,7 @@ Profile.print(maxdepth=11)
 #     return data[index]
 # end
 # ```
-# 
+#
 # Let's come up with a new definition that can combine the two operations:
 
 function findclosest2(data, point)
@@ -70,22 +74,41 @@ function findclosest2(data, point)
     return bestval
 end
 
+## And do a spot-check to make sure we did the optimization correctly:
+findclosest2(data, 0.5) == findclosest(data, .5)
+
+#-
+
 @benchmark findclosest2($data, $0.5)
 
+#-
+
 # ## A quick word on macros
-# 
+#
 # Macros are those funny things starting with `@`. They can reinterpret what
 # you write and do something different — essentially introducing a new keyword.
+#
+# For example, the `@assert` macro simply takes an expression and throws an
+# exception if it returns `false`.
 
-@macroexpand @time f()
+@assert 2+2 == 4
+
+# It does this by literally re-writing what you wrote. You can see it in action
+# with `@macroexpand`
+
+@macroexpand @assert 2+2 == 4
+
+# Each macro can define its own special syntax, and this is used extensively for
+# code introspection, serial performance improvements, and — perhaps most
+# importantly — parallelization perimitives!
 
 # ## How is Julia fast?
-# 
+#
 # By understanding the basics of how Julia _can_ be fast, you can get a better
 # sense for how to write fast Julia code.
-# 
+#
 # Perhaps most importantly, Julia can reason about types. Recall: this is the definition of `findclosest2`:
-# 
+#
 # ```julia
 # function findclosest2(data, point)
 #     bestval = first(data)
@@ -101,11 +124,23 @@ end
 # end
 # ```
 
-@code_typed findclosest2(data, 0.5)
+@code_typed optimize=false findclosest2(data, 0.5)
+
+#-
+
+typeof(data)
 
 #-
 
 newdata = Real[data...]
+typeof(newdata)
+
+#-
+
+@code_typed optimize=false findclosest2(newdata, 0.5)
+
+#-
+
 @benchmark findclosest2(newdata, 0.5)
 
 #-
@@ -126,7 +161,8 @@ newdata = Real[data...]
 
 #-
 
-# More on macros.
+# #### More on macros
+#
 # Each and every macro can define its own syntax. The `@benchmark` macro uses `$` in a special way.
 # The goal behind `@benchmark` is to evaluate the performance of a code snippet
 # as though it were written in a function. Use `$` to flag what will be an argument
@@ -149,23 +185,32 @@ x = 0.5 # non-constant global
 
 @code_llvm 1 + 2
 
-#-
-
-@code_llvm 1.0 + 2.0
-
 # This applies just the same to any functions we write — even the more complicated ones:
 
 @code_llvm findclosest2(Float32[2.2,3.4,4.5],Float32(3.2))
 
+# This applies just the same to any functions we write — even the more complicated ones:
+
+remove_comments(s) = join(filter(x->!startswith(x, ";"), split(s, "\n")), "\n")
+sprint(code_llvm, findclosest2, Tuple{Vector{Float32}, Int}) |> remove_comments |> print
+
 # ## Modern hardware effects
-# 
+#
 # There are lots of little performance quirks in modern computers; I'll just
 # cover two interesting ones here:
+
+@benchmark findclosest2($data, $0.5)
+
+#-
 
 sorteddata = sort(data)
 @benchmark findclosest2($sorteddata, $0.5)
 
-#-
+# Unfortunately, this isn't demonstrable on a hardened cloud platform... because
+# it's a huge security risk!
+#
+# * https://meltdownattack.com
+# * https://discourse.julialang.org/t/psa-microbenchmarks-remember-branch-history/17436
 
 idxs = sortperm(data)
 sortedview = @view data[idxs]
@@ -192,5 +237,5 @@ sortedview = @view data[idxs]
 # # Key Takeaways
 #
 # * Measure, measure, measure!
-# * Get familiar with the [Performance Tips]()
-# * Don't be scared of `@code_typed` and `@code_llvm`
+# * Get familiar with the [Performance Tips](https://docs.julialang.org/en/v1/manual/performance-tips/)
+# * Don't be scared of `@code_typed`/`@code_warntype` and `@code_llvm`

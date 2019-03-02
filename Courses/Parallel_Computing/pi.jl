@@ -56,8 +56,11 @@ function findpi_threads_atomic(n)
     return 4 * inside[] / n
 end
 @timed findpi_threads_atomic(1)
+
 # ts_threads_atomic = [(@timed findpi_threads_atomic(x))[2] for x in xs]
 # plot!(log10.(xs), log10.(ts_threads_atomic), label="atomic threads") # skip this plot — it's not really different
+
+#-
 
 # Still slower, and while the answer is closer it's still off! Ah, the RNG uses
 # and mutates global state, causing some threads to repeat the same random
@@ -74,8 +77,11 @@ function findpi_threads_divided(n)
     return 4 * sum(inside) / n
 end
 @timed findpi_threads_divided(1)
+
 # ts_threads_divided = [(@timed findpi_threads_divided(x))[2] for x in xs]
 # plot!(log10.(xs), log10.(ts_threads_divided), label="divided threads") # skip
+
+#-
 
 # Now let's fix that slight error by using independent RNG streams for each thread:
 
@@ -94,8 +100,11 @@ function findpi_threads_divided_safe(n)
     return 4 * sum(inside) / n
 end
 @timed findpi_threads_divided_safe(1)
+
 # ts_threads_divided_safe = [(@timed findpi_threads_divided_safe(x))[2] for x in xs]
 # plot!(log10.(xs), log10.(ts_threads_divided_safe), label="divided safe threads")
+
+#-
 
 # Fixed the numerical error, but still slower! What about pre-computing our
 # entire sequence of random numbers up front?
@@ -112,10 +121,14 @@ function findpi_threads_prealloc_divided(n)
     return 4 * sum(inside) / n
 end
 @timed findpi_threads_prealloc_divided(1)
+
 # ts_threads_prealloc_divided = [(@timed findpi_threads_prealloc_divided(x))[2] for x in xs]
 # plot!(log10.(xs), log10.(ts_threads_prealloc_divided), label="pre-alloc divided threads")
 
+#-
+
 # Try putting the RNGs on the threads:
+
 const ThreadRNG = Vector{MersenneTwister}(undef, nthreads())
 @noinline function init_thread_rng()
     # Allocate the random number generator on the thread's own heap lazily
@@ -156,6 +169,7 @@ function findpi_simd(n)
     return 4 * inside / n
 end
 @timed findpi_simd(1)
+
 # ts_simd = [(@timed findpi_simd(x))[2] for x in xs]
 # plot!(log10.(xs), log10.(ts_simd), label="simd")
 
@@ -169,8 +183,11 @@ function findpi_simd_prealloc(n)
     return 4 * inside / n
 end
 @timed findpi_simd_prealloc(1)
+
 # ts_simd_prealloc = [(@timed findpi_simd_prealloc(x))[2] for x in xs]
 # plot!(log10.(xs), log10.(ts_simd_prealloc), label="pre-alloc simd")
+
+#-
 
 # Nope, no gains there, either (didn't really expect any). Let's use Distributed
 
@@ -199,7 +216,10 @@ plot!(log10.(xs), log10.(ts_gpu), label="gpu")
 
 # Even better!
 
+#-
+
 # Use a phony FillArray to define the broadcast shape (total number of elements)
+
 function findpi_gpu_broadcast(n)
     4 * sum(Fill(0.0, n) .+ curand(Float64).^2 .+ curand(Float64).^2 .<= 1.0) / n
 end

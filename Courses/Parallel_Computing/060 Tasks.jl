@@ -32,13 +32,18 @@ watch_folder("results", #= time out in seconds =# 5)
 # in a Task with the `@async` macro
 
 t = @async watch_folder("results") # no timeout means it will wait forever!
+
 #-
+
 run(`touch results/0.txt`)
+
 #-
+
 file, info = fetch(t)
 file # |> process
 
 # We can even bundle this up into a repeating task:
+
 isdone = false
 function process_folder(dir)
     !isdir("processed-results") && mkdir("processed-results")
@@ -85,7 +90,7 @@ rm("results", recursive=true)
 rm("processed-results", recursive=true)
 
 # ## Quiz:
-# 
+#
 # How long will this take?
 
 @time for i in 1:10
@@ -113,7 +118,7 @@ function work(N)
     end
     return 4*series
 end
-
+work(1)
 @time work(100_000_000)
 
 #-
@@ -123,7 +128,7 @@ end
 end
 
 # # So what's happening here?
-# 
+#
 # `sleep` is nicely cooperating with our tasks
 
 methods(sleep)
@@ -145,15 +150,12 @@ wait(t)
 fetch(t)
 
 # # Key takeaways
-# 
+#
 # There is a lot more to tasks, but they form the foundation for reasoning about
 # actually _doing_ computation in parallel (and not just hoping that things will
 # cooperate for us to emulate parallelism by task switching).
-# 
+#
 # * `@async` creates and starts running a task
 # * `@sync` waits for them to all complete
 # * We can reason about something that runs asynchronously and may return a value
 #   at some point in the future with `fetch`. Or we can just `wait` for it.
-
-
-

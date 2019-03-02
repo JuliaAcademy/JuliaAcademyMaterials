@@ -1,11 +1,19 @@
 # # Distributed (or multi-core or multi-process) parallelism
+#
+# Julia has a built-in standard library — Distributed — that allows you to
+# start and run multiple concurrent Julia processes. Imagine starting a slew
+# of Julia instances and then having an easy way to run code on each and every
+# one of them; that's what Distributed provides.
+#
+# ![](images/Julia6x.png)
 
 using Distributed
 nprocs()
 
 #-
 
-addprocs(4; exeflags="--project=$(@__DIR__)")
+addprocs(4)
+@sync @everywhere workers() include("/opt/julia-1.0/etc/julia/startup.jl") # Needed just for JuliaBox
 nprocs()
 
 #-
@@ -30,13 +38,16 @@ fetch(r)
 @time for i in 2:nprocs() # proc 1 is the controlling node
     @spawnat i sleep(1)
 end
+
 #-
+
 @time @sync for i in 2:nprocs()
     @spawnat i sleep(1)
 end
 
 # Except unlike tasks, we're executing the code on a separate process — which
 # can be performed on a different processor in parallel!
+
 @everywhere function work(N)
     series = 1.0
     for i in 1:N
@@ -95,7 +106,11 @@ p - pi
 # Why is this different from `@threads for` and `@simd for`? Why not just
 # `@distributed for`?  Why the `@distributed (+) for`?
 
+#-
+
 # ## Data movement
+
+#-
 
 # Remember: Moving data is _expensive_!
 #
@@ -121,6 +136,8 @@ p - pi
 # `@distributed` macro: each worker can do its own (intermediate) reduction
 # before returning just one value to our master node.
 
+#-
+
 # But sometimes you need to see those intermediate values. If you have a
 # very expensive computation relative to the communication overhead, there are
 # several ways to do this. The easiest is `pmap`:
@@ -137,13 +154,19 @@ p - pi
 # There are other ways of doing this, though, too — we'll get to them in a minute.
 # But first, there's something else that I glossed over: the `@everywhere`s above.
 
+#-
+
 # ## Code movement
+
+#-
 
 # Each node is _completely_ independent; it's like starting brand new, separate
 # Julia processes yourself. By default, `addprocs()` just launches the
 # appropriate number of workers for the current workstation that you're on, but
 # you can easily connect them to remote machines via SSH or even through cluster
 # managers.
+
+#-
 
 # Those `@everywhere`s above are very important! They run the given expression
 # on all workers to make sure the state between them is consistent. Without it,
@@ -176,6 +199,8 @@ fetch(@spawnat 2 mean(rand(100_000)))
 #
 # So there are some special array types that can help bridge the gap between
 # processes and make writing parallel code a bit easier.
+
+#-
 
 # ## The `SharedArray`
 #
@@ -253,9 +278,10 @@ function prefix!(y::SharedArray, ⊕)
 end
 A = SharedArray(data)
 @time prefix!(A, +)
+
 #-
+
 A ≈ cumsum(data)
-#
 
 # ## DistributedArrays
 #
@@ -269,6 +295,7 @@ A = DArray(I->fill(myid(), length.(I)), (24, 24))
 
 # The first argument takes a function that transforms the given set of indices
 # to the _local portion_ of the distributed array.
+
 A = DArray((24,24)) do I
     @show I
     fill(myid(), length.(I))
@@ -281,7 +308,9 @@ end
 
 @everywhere using BenchmarkTools
 fetch(@spawnat 2 @benchmark $A[1,1])
+
 #-
+
 fetch(@spawnat 2 @benchmark $A[end,end])
 
 # So it's fastest to work on a `DArray`'s "local" portion, but it's _possible_
@@ -296,7 +325,6 @@ function life_step(d::DArray)
         bot   = mod1( last(I[1])+1,size(d,1))
         left  = mod1(first(I[2])-1,size(d,2))
         right = mod1( last(I[2])+1,size(d,2))
-
         # Create a new, temporary array that holds the local part + outside edge
         old = Array{Bool}(undef, length(I[1])+2, length(I[2])+2)
         # These accesses will pull data from other processors
@@ -328,26 +356,34 @@ end
     end
     new
 end
+
 #-
+
 A = DArray(I->rand(Bool, length.(I)), (20,20))
 using Colors
 Gray.(A)
+
 #-
+
 B = copy(A)
+
 #-
+
 B = Gray.(life_step(B))
 
 # ## Clusters and more ways to distribute
 #
 # You can easily connect to completely separate machines with SSH access built in!
 # But there are many other ways to connect to clusters:
-# 
+#
 # * [JuliaRun](https://juliacomputing.com/products/juliarun)
 # * [Kubernetes](https://juliacomputing.com/blog/2018/12/15/kuber.html)
 # * [MPI](https://github.com/JuliaParallel/MPI.jl)
 # * [Cluster job queues with ClusterManagers](https://github.com/JuliaParallel/ClusterManagers.jl)
 # * [Hadoop](https://github.com/JuliaParallel/Elly.jl)
 # * [Spark](https://github.com/dfdx/Spark.jl)
+
+#-
 
 # # Multi-process parallelism is the heavy-duty workhorse in Julia
 #
@@ -363,4 +399,3 @@ B = Gray.(life_step(B))
 #     * `pmap` is great for very expensive inner loops that return a value
 #     * `SharedArray`s can be an easier drop-in replacement for threading-like behaviors (on a single machine)
 #     * `DistributedArray`s can turn the problem on its head and let the data do the work splitting!
-#

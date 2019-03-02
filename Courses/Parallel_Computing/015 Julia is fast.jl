@@ -336,7 +336,9 @@ d
 # others are just sitting by idly. Let's put them to work!
 
 using Distributed
-addprocs(4; exeflags="--project=$(@__DIR__)")
+using DistributedArrays
+addprocs(4)
+@sync @everywhere workers() include("/opt/julia-1.0/etc/julia/startup.jl") # Needed just for JuliaBox
 @everywhere using DistributedArrays
 
 #-
@@ -352,7 +354,7 @@ d
 # # 9. Distributed Julia (hand-written)
 #
 # Ok, that might be cheating, too — it's again just calling a library
-# function. How might we write a distributed sum ourselves?
+# function. Is it possible to write distributed sum ourselves?
 
 function mysum_dist(a::DArray)
     r = Array{Future}(undef, length(procs(a)))
@@ -377,3 +379,11 @@ for (key, value) in sort(collect(d), by=last)
     println(rpad(key, 25, "."), lpad(round(value; digits=1), 6, "."))
 end
 
+
+# # Key take-aways
+#
+# * Julia allows for serial C-like performance, even with hand-written functions
+# * Julia allows us to exploit many forms of parallelism to further improve performance. We demonstrated:
+#     * Single-processor parallelism with SIMD
+#     * Multi-process parallelism with DistributedArrays
+# * But there are many other ways to express parallelism, too!

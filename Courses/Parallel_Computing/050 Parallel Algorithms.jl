@@ -62,7 +62,6 @@ end
 fib(j)=reduce(*, fill(M,j))
 fib.([4,7])
 
-
 # You can solve recurrences of any complexity using `reduce`. For example, `reduce` can compute a Hadamard matrix from its definition in terms of its submatrices:
 #
 # $$H_2 = \begin{pmatrix} H_1 & H_1 \\ H_1 & -H_1 \end{pmatrix} = \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} \otimes H_1$$
@@ -197,6 +196,8 @@ prefix!(copy(A), *) == cumprod(A)
 
 # ## What is this magic?
 
+#-
+
 # We can visualize the operations with a little bit of trickery. In Julia, arrays are simply types that expose the array protocol. In particular, they need to implement  methods for the generic functions `length`, `getindex` and `setindex!`. The last two are used in indexing operations, since statements
 #
 #     y = A[1]
@@ -250,7 +251,6 @@ M[7] = M[3] + M[2]
 #-
 
 M.history
-
 
 # So now we can trace the access pattern when calling `prefix8`!
 

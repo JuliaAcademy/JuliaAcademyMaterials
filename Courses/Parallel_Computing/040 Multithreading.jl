@@ -11,10 +11,11 @@
 versioninfo(verbose = true)
 
 #-
+
 #nb ;cat /proc/cpuinfo # on Linux machines
-#-
 
 # import Pkg; Pkg.add("Hwloc")
+
 using Hwloc
 Hwloc.num_physical_cores()
 
@@ -24,6 +25,7 @@ Hwloc.num_physical_cores()
 # processors will lead to significantly worse performance because they still
 # have to share much of the nuts and bolts of the computation hardware.
 
+#-
 
 # Julia is somewhat multithreaded by default! BLAS calls (like matrix multiplication) are
 # already threaded:
@@ -158,6 +160,10 @@ threaded_sum3(rand(10) .+ rand(10)im) # try an array of complex numbers!
 
 # Isn't there an easier way?
 
+R = zeros(eltype(A), nthreads())
+
+#-
+
 function threaded_sum4(A)
     R = zeros(eltype(A), nthreads())
     @threads for i in eachindex(A)
@@ -188,12 +194,18 @@ threaded_sum4(rand(10) .+ rand(10)im)
 #       share state. `@threads for i in 1:nthreads()` is a handy idiom.
 #     * Alternatively, just use an array and only access a single thread's elements
 
+#-
+
 # # Beware of global state (even if it's not obvious!)
 #
 # Another class of algorithm that you may want to parallelize is a monte-carlo
 # problem. Since each iteration is a new random draw, and since you're interested
 # in looking at the aggregate result, this seems like it should lend itself to
 # parallelism quite nicely!
+
+using BenchmarkTools
+
+#-
 
 function serialpi(n)
     inside = 0
@@ -205,6 +217,11 @@ function serialpi(n)
 end
 serialpi(1)
 @time serialpi(100_000_000)
+
+#-
+
+using .Threads
+nthreads()
 
 # Let's use the techniques we learned above to make a fast threaded implementation:
 
@@ -219,12 +236,14 @@ end
 threadedpi(100_000_000)
 @time threadedpi(100_000_000)
 
-# Ok, now why didn't that work?  It's slow!
+# Ok, now why didn't that work?  It's slow! Let's look at the sequence of random
+# numbers that we generate:
 
 import Random
 Random.seed!(0)
-Rserial = zeros(20)
-for i in 1:20
+N = 20000
+Rserial = zeros(N)
+for i in 1:N
     Rserial[i] = rand()
 end
 Rserial
@@ -232,8 +251,8 @@ Rserial
 #-
 
 Random.seed!(0)
-Rthreaded = zeros(20)
-@threads for i in 1:20
+Rthreaded = zeros(N)
+@threads for i in 1:N
     Rthreaded[i] = rand()
 end
 Rthreaded
@@ -269,10 +288,13 @@ function threadedpi2(n)
     end
     return 4 * sum(inside) / n
 end
+threadedpi2(10)
 @time threadedpi2(100_000_000)
 
 # As an aside, be careful about initializing many `MersenneTwister`s with
 # different states. Better to use [`randjump`](https://docs.julialang.org/en/v1/manual/parallel-computing/#Side-effects-and-mutable-function-arguments-1) to skip ahead for a single state.
+
+#-
 
 # # Beware oversubscription
 #
@@ -287,12 +309,13 @@ function serial_matmul(As)
     end
     first_idxs
 end
+serial_matmul(Ms);
 @time serial_matmul(Ms);
 
 #-
 
 using LinearAlgebra
-BLAS.set_num_threads(nthreads())
+BLAS.set_num_threads(nthreads()) # Explicitly tell BLAS to use the same number of threads
 function threaded_matmul(As)
     first_idxs = zeros(length(As))
     @threads for i in eachindex(As)
@@ -300,11 +323,16 @@ function threaded_matmul(As)
     end
     first_idxs
 end
-@time threaded_matmul(Ms)
+threaded_matmul(Ms)
+@time threaded_matmul(Ms);
+
 #-
+
 BLAS.set_num_threads(1)
-@time threaded_matmul(Ms)
+@time threaded_matmul(Ms);
+
 #-
+
 @time serial_matmul(Ms) # Again, now that BLAS has just 1 thread
 
 # ## Further improvements coming here!

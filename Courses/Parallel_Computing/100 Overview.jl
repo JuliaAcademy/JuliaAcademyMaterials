@@ -17,7 +17,7 @@
 #         * Shared memory
 #         * Distributed memory
 #     * GPU programming
-#
+# 
 #
 # ## Why so many kinds of parallelism?
 #
