@@ -41,3 +41,4 @@
 #   * Current computer archetectures push us towards parallel programming for peak performance — even if we're not on a cluster!
 #   * But it's hard to design good parallel algorithms
 #   * And it's hard to express and reason about those algorithms
+

@@ -17,7 +17,7 @@
 #         * Shared memory
 #         * Distributed memory
 #     * GPU programming
-# 
+#
 #
 # ## Why so many kinds of parallelism?
 #
@@ -26,3 +26,4 @@
 # * We want to maximize comuting while minimizing overhead
 #     * Chosen solution will depend upon the amount of computing in each inner loop
 #       and the amount of syncronization that is required between loops.
+

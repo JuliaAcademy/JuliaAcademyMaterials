@@ -399,3 +399,4 @@ B = Gray.(life_step(B))
 #     * `pmap` is great for very expensive inner loops that return a value
 #     * `SharedArray`s can be an easier drop-in replacement for threading-like behaviors (on a single machine)
 #     * `DistributedArray`s can turn the problem on its head and let the data do the work splitting!
+

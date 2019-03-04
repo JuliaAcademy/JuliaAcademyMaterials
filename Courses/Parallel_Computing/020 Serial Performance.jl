@@ -81,8 +81,6 @@ findclosest2(data, 0.5) == findclosest(data, .5)
 
 @benchmark findclosest2($data, $0.5)
 
-#-
-
 # ## A quick word on macros
 #
 # Macros are those funny things starting with `@`. They can reinterpret what
@@ -101,6 +99,8 @@ findclosest2(data, 0.5) == findclosest(data, .5)
 # Each macro can define its own special syntax, and this is used extensively for
 # code introspection, serial performance improvements, and — perhaps most
 # importantly — parallelization perimitives!
+
+#-
 
 # ## How is Julia fast?
 #
@@ -234,8 +234,11 @@ sortedview = @view data[idxs]
 #
 #  (from https://www.prowesscorp.com/computer-latency-at-a-human-scale/)
 
+#-
+
 # # Key Takeaways
 #
 # * Measure, measure, measure!
 # * Get familiar with the [Performance Tips](https://docs.julialang.org/en/v1/manual/performance-tips/)
 # * Don't be scared of `@code_typed`/`@code_warntype` and `@code_llvm`
+

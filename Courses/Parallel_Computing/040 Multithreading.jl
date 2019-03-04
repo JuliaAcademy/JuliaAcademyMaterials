@@ -335,12 +335,56 @@ BLAS.set_num_threads(1)
 
 @time serial_matmul(Ms) # Again, now that BLAS has just 1 thread
 
+# # Beware "false sharing"
+
+#-
+
+# Remember the memory latency table?
+#
+#
+# | System Event                   | Actual Latency | Scaled Latency |                          |
+# | ------------------------------ | -------------- | -------------- | ------------------------ |
+# | One CPU cycle                  |     0.4 ns     |     1 s        | ← work happens here     |
+# | Level 1 cache access           |     0.9 ns     |     2 s        |                          |
+# | Level 2 cache access           |     2.8 ns     |     7 s        |                          |
+# | Level 3 cache access           |      28 ns     |     1 min      |                          |
+# | Main memory access (DDR DIMM)  |    ~100 ns     |     4 min      | ← we have control here  |
+#
+# This is what a typical modern cpu looks like:
+#
+# ![Intel Core i7](images/i7.jpg)
+#
+# Multiple cores on the same processor share the L3 cache, but do not share L1 and L2 caches! So what happens if we're accessing and mutating data from the same array across multiple cores?
+#
+# ![Cache coherency](images/false-sharing.gif)
+#
+# Unlike "true" sharing — which we saw above — false sharing will still return the correct answer! But it does so at the cost of performance. The cores recognize they don't have exclusive access to the cache line and so upon modification they alert all other cores to invalidate and re-fetch the data.
+#
+# ```julia
+# function threaded_sum4(A)
+#     R = zeros(eltype(A), nthreads())
+#     @threads for i in eachindex(A)
+#         @inbounds R[threadid()] += A[i]
+#     end
+#     r = zero(eltype(A))
+#     # sum the partial results from each thread
+#     for i in eachindex(R)
+#         @inbounds r += R[i]
+#     end
+#     return r
+# end
+# ```
+
+#-
+
 # ## Further improvements coming here!
 #
 # PARTR — the threading improvement I discussed at the beginning aims to address
 # this problem of having library functions implemented with `@threads` and then
 # having callers call them with `@threads`. Uses a state-of-the-art work queue
 # mechanism to make sure that all threads stay busy.
+
+#-
 
 # # Threading takeaways:
 #
@@ -349,4 +393,6 @@ BLAS.set_num_threads(1)
 #     * Be aware of your hardware to set `JULIA_NUM_THREADS` appropiately
 #     * Beware shared state (for both performance and correctness)
 #     * Beware global state (even if it's not obvious)
+#     * Beware false sharing (if Julia/LLVM don't handle it for you)
 # * We need to think carefully about how to design parallel algorithms!
+

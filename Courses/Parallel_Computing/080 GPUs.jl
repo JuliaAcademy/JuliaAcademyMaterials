@@ -10,9 +10,33 @@
 # Just like how we needed to send data to other processes, we need to send our
 # data to the GPU to do computations there.
 
-# You can inspect the installed GPUs with nvidia-smi:
+#-
+
+# ## How is a GPU different from a CPU?
+#
+# This is what a typical consumer CPU looks like:
+#
+# ![](images/i7.jpg)
+#
+# And this is what a GPU looks like:
+#
+# ![](images/GK110.jpg)
+#
+# Each SMX isn't just one "core", each is a _streaming multiprocessor_ capable of running hundreds of threads simultaneously itself.  There are so many threads, in fact, that you reason about them in groups of 32 — called a "warp."  No, no [that warp](https://www.google.com/search?tbm=isch&q=warp&tbs=imgo:1), [this one](https://www.google.com/search?tbm=isch&q=warp%20weaving&tbs=imgo:1).
+#
+# The card above supports up to 6 warps per multiprocessor, with 32 threads each, times 15 multiprocessors... 2880 threads at a time!
+#
+# Also note the memory interfaces.
+#
+# --------------
+#
+# Each thread is relatively limited — and a warp is almost like a SIMD unit that supports branching. Except it's still only executing one instruction even after a branch:
+#
+# ![](images/warp-branch.png)
 
 #-
+
+# You can inspect the installed GPUs with nvidia-smi:
 
 ;nvidia-smi
 
@@ -101,8 +125,11 @@ using BenchmarkTools
 # That leans on broadcast to build the GPU kernel — and is creating three arrays
 # in the process — but it's still much faster than our serial pi from before.
 
+#-
+
 # In general, using CuArrays and broadcast is one of the best ways to just
 # get everything to work. If you really want to get your hands dirty, you
 # can use [CUDAnative.jl](https://github.com/JuliaGPU/CUDAnative.jl) to manually specify exactly how everything works,
 # but be forewarned, it's not for the [faint at heart](https://github.com/JuliaGPU/CUDAnative.jl/blob/master/examples/reduce/reduce.jl)! (If you've done CUDA
 # programming in C or C++, it's very similar.)
+

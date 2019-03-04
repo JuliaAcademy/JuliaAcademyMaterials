@@ -230,3 +230,4 @@ unsafe_diff!(Bcopy, Bcopy)
 #     * Smaller datatypes can improve this further; use `Float32` instead of `Float64`
 #       if possible, `Int32` instead of `Int64`, etc.
 #     * When buying a new processor, look for [AVX-512](https://en.wikichip.org/wiki/x86/avx-512) support
+

@@ -127,14 +127,14 @@ d
 
 using Libdl
 C_code = """
-#include <stddef.h>
-double c_sum(size_t n, double *X) {
-    double s = 0.0;
-    for (size_t i = 0; i < n; ++i) {
-        s += X[i];
+    #include <stddef.h>
+    double c_sum(size_t n, double *X) {
+        double s = 0.0;
+        for (size_t i = 0; i < n; ++i) {
+            s += X[i];
+        }
+        return s;
     }
-    return s;
-}
 """
 
 const Clib = tempname()   # make a temporary file
@@ -379,7 +379,6 @@ for (key, value) in sort(collect(d), by=last)
     println(rpad(key, 25, "."), lpad(round(value; digits=1), 6, "."))
 end
 
-
 # # Key take-aways
 #
 # * Julia allows for serial C-like performance, even with hand-written functions
@@ -387,3 +386,4 @@ end
 #     * Single-processor parallelism with SIMD
 #     * Multi-process parallelism with DistributedArrays
 # * But there are many other ways to express parallelism, too!
+
