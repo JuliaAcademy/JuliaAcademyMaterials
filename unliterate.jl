@@ -20,8 +20,13 @@ function unliterate(path, output)
         
         if type == "markdown"
             for line in cell["source"]
-                print(out, "# ")
-                print(out, line)
+                print(out, "#")
+                if !isempty(strip(line))
+                    print(out, " ")
+                    print(out, line)
+                else
+                    print(out, "\n")
+                end
             end
             print(out, "\n\n")
         elseif type == "code"
