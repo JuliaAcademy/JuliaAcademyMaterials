@@ -1,8 +1,8 @@
 # # Conditionals
-# 
+#
 # #### with the `if` keyword
 # In Julia, the syntax
-# 
+#
 # ```julia
 # if *condition 1*
 #     *option 1*
@@ -12,12 +12,12 @@
 #     *option 3*
 # end
 # ```
-# 
+#
 # allows us to conditionally evaluate one of our options.
 # <br><br>
 # For example, we might want to implement the FizzBuzz test: given a number, N, print "Fizz" if N is divisible by 3, "Buzz" if N is divisible by 5, and "FizzBuzz" if N is divisible by 3 and 5. Otherwise just print the number itself! Enter your choice for `N` here:
 
-N = 
+N =
 
 #-
 
@@ -32,15 +32,15 @@ else
 end
 
 # #### with ternary operators
-# 
+#
 # For this last block, we could instead use the ternary operator with the syntax
-# 
+#
 # ```julia
 # a ? b : c
 # ```
-# 
-# which equates to 
-# 
+#
+# which equates to
+#
 # ```julia
 # if a
 #     b
@@ -69,7 +69,7 @@ end
 (x > y) ? x : y
 
 # #### with short-circuit evaluation
-# 
+#
 # We've already seen expressions with the syntax
 # ```julia
 # a && b
@@ -95,14 +95,12 @@ true || println("hi")
 false || println("hi")
 
 # ### Exercises
-# 
-# #### 5.1 
+#
+# #### 5.1
 # Write a conditional statement that prints a number if the number is even and the string "odd" if the number is odd.
 
+#-
 
-
-# #### 5.2 
+# #### 5.2
 # Rewrite the code from 5.1 using a ternary operator.
-
-
 

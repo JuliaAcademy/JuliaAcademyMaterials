@@ -1,8 +1,8 @@
 # # Plotting
-# 
+#
 # ## Basics
 # There are a few different ways to plot in Julia (including calling PyPlot). <br>
-# 
+#
 # Here we'll show you how to use `Plots.jl`.  If it's not installed yet, you need to use the package manager to install it, and Julia will precompile it for you the first time you use it:
 
 ## using Pkg
@@ -10,7 +10,7 @@
 using Plots
 
 # One of the advantages to `Plots.jl` is that it allows you to seamlessly change backends. In this notebook, we'll try out the `gr()` and `plotlyjs()` backends.<br>
-# 
+#
 # In the name of scientific inquiry, let's use this notebook to examine the relationship between the global temperature and the number of pirates between roughly 1860 and 2000.
 
 globaltemperatures = [14.4, 14.5, 14.8, 15.2, 15.5, 15.8]
@@ -22,13 +22,13 @@ gr()
 
 # and now we can use commands like `plot` and `scatter` to generate plots.
 
-plot(numpirates, globaltemperatures, label="line")  
-scatter!(numpirates, globaltemperatures, label="points") 
+plot(numpirates, globaltemperatures, label="line")
+scatter!(numpirates, globaltemperatures, label="points")
 
 # The `!` at the end of the `scatter!` function name makes `scatter!` a mutating function, indicating that the scattered points will be added onto the pre-existing plot.
-# 
+#
 # In contrast, see what happens when you replace `scatter!` in the above with the non-mutating function `scatter`.
-# 
+#
 # Next, let's update this plot with the `xlabel!`, `ylabel!`, and `title!` commands to add more information to our plot.
 
 xlabel!("Number of Pirates [Approximate]")
@@ -40,9 +40,9 @@ title!("Influence of pirate population on global warming")
 xflip!()
 
 # And there we have it!
-# 
+#
 # Note: We've had some confusion about this exercise. :) This is a joke about how people often conflate correlation and causation.
-# 
+#
 # **Without changing syntax, we can create this plot with the UnicodePlots backend**
 
 Pkg.add("UnicodePlots")
@@ -50,8 +50,8 @@ unicodeplots()
 
 #-
 
-plot(numpirates, globaltemperatures, label="line")  
-scatter!(numpirates, globaltemperatures, label="points") 
+plot(numpirates, globaltemperatures, label="line")
+scatter!(numpirates, globaltemperatures, label="points")
 xlabel!("Number of Pirates [Approximate]")
 ylabel!("Global Temperature (C)")
 title!("Influence of pirate population on global warming")
@@ -61,17 +61,17 @@ title!("Influence of pirate population on global warming")
 #-
 
 # ### Exercises
-# 
-# #### 8.1 
+#
+# #### 8.1
 # Given
 # ```julia
 # x = -10:10
 # ```
 # plot y vs. x for $y = x^2$.  You may want to change backends back again.
 
+#-
 
-
-# #### 8.2 
+# #### 8.2
 # Execute the following code
 
 p1 = plot(x, x)
@@ -81,6 +81,4 @@ p4 = plot(x, x.^4)
 plot(p1, p2, p3, p4, layout = (2, 2), legend = false)
 
 # and then create a $4x1$ plot that uses `p1`, `p2`, `p3`, and `p4` as subplots.
-
-
 

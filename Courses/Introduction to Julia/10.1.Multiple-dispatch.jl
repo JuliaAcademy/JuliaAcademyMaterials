@@ -3,9 +3,9 @@
 #-
 
 # **Multiple dispatch** is a key feature of Julia, that we will explore in this notebook.
-# 
-# It helps make software fast. It also makes software extensible, programmable, and downright fun to play with. 
-# 
+#
+# It helps make software fast. It also makes software extensible, programmable, and downright fun to play with.
+#
 # It may just herald a breakthrough for parallel computation.
 
 #-
@@ -20,8 +20,8 @@
 
 #-
 
-# Let's define a **new struct** that represents a Roman numeral. For coding simplicity, we'll just deal with numbers between 0 and 9. 
-# 
+# Let's define a **new struct** that represents a Roman numeral. For coding simplicity, we'll just deal with numbers between 0 and 9.
+#
 # **Exercise**: Extend this to larger numbers. (Recall that Roman numbers are a base-10 system!)
 
 struct Roman
@@ -74,7 +74,7 @@ Roman(3) * Roman(2)
 
 Roman.(1:3) .* [Roman(1) Roman(2) Roman(3)]
 
-# But 
+# But
 
 Roman(3) * 2
 
@@ -85,7 +85,7 @@ Roman(3) * 2
 function mytimes(i,j)
   if isa(i,Roman) & isa(j,Number)
         return  fill(1, i.n, j)   # i by j matrix with ones
-    elseif    isa(i,Number) & isa(j,Roman) 
+    elseif    isa(i,Number) & isa(j,Roman)
         return "😄"^ (i*j.n)   #  i * j happy faces
     else
         return("I Don't know")
@@ -146,15 +146,15 @@ import Base: *, +, ^
 +(f::Function, g::Function) = x -> f(x) + g(x)
 
 # For example, the exponential function is defined as
-# 
+#
 # $$\exp(x) = \sum_{n=0}^\infty \frac{1}{n!} x^n.$$
-# 
+#
 # We can think of this just in terms of functions:
-# 
+#
 # $$\exp = \sum_{n=0}^\infty \frac{1}{n!} \mathrm{pow}_n,$$
-# 
+#
 # where $\mathrm{pow}_n(x) = x^n$.
-# 
+#
 # (starts to blur the symbolic with the numerical!)
 
 pow(n) = x -> x^n
@@ -206,7 +206,7 @@ plot([12*sin, sin*12, 5*sin*exp], 0:.01:4π, α=[1 .9 .2], c=[:green :red :blue]
 x=(0:.01:2) * pi;
 
 plot(x, (sin^2).(x), c="blue")     # Squaring just works, y=sin(sin(x)), Gauss would be pleased!
-plot!(x, sin.(x).^2,  c="red")         
+plot!(x, sin.(x).^2,  c="red")
 
 # # Exercise
 

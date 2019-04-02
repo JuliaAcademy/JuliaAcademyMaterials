@@ -1,20 +1,20 @@
 # # Loops
-# 
+#
 # Topics:
 # 1. `while` loops
 # 2. `for` loops
 # <br>
-# 
+#
 # ## while loops
-# 
+#
 # The syntax for a `while` is
-# 
+#
 # ```julia
 # while *condition*
 #     *loop body*
 # end
 # ```
-# 
+#
 # For example, we could use `while` to count or to iterate over an array.
 
 n = 0
@@ -36,15 +36,15 @@ while i <= length(myfriends)
 end
 
 # ## for loops
-# 
+#
 # The syntax for a `for` loop is
-# 
+#
 # ```julia
 # for *var* in *loop iterable*
 #     *loop body*
 # end
 # ```
-# 
+#
 # We could use a for loop to generate the same results as either of the examples above:
 
 for n in 1:10
@@ -60,7 +60,7 @@ for friend in myfriends
 end
 
 # Now let's use `for` loops to create some addition tables, where the value of every entry is the sum of its row and column indices. <br>
-# 
+#
 # First, we initialize an array with zeros.
 
 m, n = 5, 5
@@ -91,35 +91,25 @@ B
 C = [i + j for i in 1:m, j in 1:n]
 
 # ### Exercises
-# 
-# #### 4.1 
+#
+# #### 4.1
 # Loop over integers between 1 and 100 and print their squares.
 
+#-
 
-
-# #### 4.2 
+# #### 4.2
 # Add to the code above a bit to create a dictionary, `squares` that holds integers and their squares as key, value pairs such that
-# 
+#
 # ```julia
 # squares[10] == 100
 # ```
 
-
-
-#-
-
 @assert squares[10] == 100
 @assert squares[11] == 121
 
-# #### 4.3 
+# #### 4.3
 # Use an array comprehension to create an an array `squares_arr` that stores the squares for all integers between 1 and 100.
-
-
-
-#-
 
 @assert length(squares_arr) == 100
 @assert sum(squares_arr) == 338350
-
-# Please click on `Validate` on the top, once you are done with the exercises.
 

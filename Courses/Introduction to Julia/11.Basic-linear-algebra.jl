@@ -12,8 +12,8 @@ A = rand(1:4,3,3)
 
 x = fill(1.0, (3,)) # = fill(1.0, 3)
 
-# Notice that $A$ has type Array{Int64,2} but $x$ has type Array{Float64,1}. Julia defines the aliases Vector{Type}=Array{Type,1} and Matrix{Type}=Array{Type,2}. 
-# 
+# Notice that $A$ has type Array{Int64,2} but $x$ has type Array{Float64,1}. Julia defines the aliases Vector{Type}=Array{Type,1} and Matrix{Type}=Array{Type,2}.
+#
 # Many of the basic operations are the same as in other languages
 # #### Multiplication
 
@@ -33,7 +33,7 @@ transpose(A)
 
 A'A
 
-# #### Solving linear systems 
+# #### Solving linear systems
 # The problem $Ax=b$ for ***square*** $A$ is solved by the \ function.
 
 A\b
@@ -65,36 +65,24 @@ Ashort = rand(2, 3)
 Ashort\bshort
 
 # # The LinearAlgebra library
-# 
+#
 # While much of linear algebra is available in Julia by default (as shown above), there's a standard library named `LinearAlgebra` that brings in many more relevant names and functions. In particular, it provides factorizations and some structured matrix types.  As with all packages, you can bring these additional features into your session with a `using LinearAlgebra`.
 
 #-
 
 # ### Exercises
-# 
-# #### 10.1 
+#
+# #### 10.1
 # Take the inner product (or "dot" product) of a vector `v` with itself and assign it to variable `dot_v`.
-# 
-
 
 v = [1,2,3]
 
 #-
 
-
-
-#-
-
 @assert dot_v == 14
 
-# #### 10.2 
+# #### 10.2
 # Take the outer product of a vector v with itself and assign it to variable `cross_v`
 
-
-
-#-
-
 @assert cross_v == [0, 0, 0]
-
-# Please click on `Validate` on the top, once you are done with the exercises.
 

@@ -1,6 +1,6 @@
 # # Factorizations and other fun
 # Based on work by Andreas Noack
-# 
+#
 # ## Outline
 #  - Factorizations
 #  - Special matrix structures
@@ -16,14 +16,14 @@ x = fill(1, (3,))
 b = A * x
 
 # ## Factorizations
-# 
+#
 # #### LU factorizations
 # In Julia we can perform an LU factorization
 # ```julia
 # PA = LU
-# ``` 
+# ```
 # where `P` is a permutation matrix, `L` is lower triangular unit diagonal and `U` is upper triangular, using `lufact`.
-# 
+#
 # Julia allows computing the LU factorization and defines a composite factorization type for storing it.
 
 Alu = lu(A)
@@ -45,7 +45,7 @@ Alu.L
 Alu.U
 
 # Julia can dispatch methods on factorization objects.
-# 
+#
 # For example, we can solve the linear system using either the original matrix or the factorization object.
 
 A\b
@@ -59,13 +59,13 @@ Alu\b
 det(A) ≈ det(Alu)
 
 # #### QR factorizations
-# 
+#
 # In Julia we can perform a QR factorization
 # ```
 # A=QR
-# ``` 
-# 
-# where `Q` is unitary/orthogonal and `R` is upper triangular, using `qrfact`. 
+# ```
+#
+# where `Q` is unitary/orthogonal and `R` is upper triangular, using `qrfact`.
 
 Aqr = qr(A)
 
@@ -82,7 +82,7 @@ Aqr.R
 #-
 
 # The results from eigendecompositions, singular value decompositions, Hessenberg factorizations, and Schur decompositions are all stored in `Factorization` types.
-# 
+#
 # The eigendecomposition can be computed
 
 Asym = A + A'
@@ -149,7 +149,7 @@ A = SymTridiagonal(randn(n), randn(n-1));
 
 # ## Generic linear algebra
 # The usual way of adding support for numerical linear algebra is by wrapping BLAS and LAPACK subroutines. For matrices with elements of `Float32`, `Float64`, `Complex{Float32}` or `Complex{Float64}` this is also what Julia does.
-# 
+#
 # However, Julia also supports generic linear algebra, allowing you to, for example, work with matrices and vectors of rational numbers.
 
 #-
@@ -178,10 +178,10 @@ Arational\b
 lu(Arational)
 
 # ### Exercises
-# 
+#
 # #### 11.1
 # What are the eigenvalues of matrix A?
-# 
+#
 # ```
 # A =
 # [
@@ -198,42 +198,21 @@ using LinearAlgebra
 
 #-
 
-
-
-#-
-
 @assert A_eigv ==  [-128.49322764802145, -55.887784553056875, 42.7521672793189, 87.16111477514521, 542.4677301466143]
 
-# #### 11.2 
+# #### 11.2
 # Create a `Diagonal` matrix from the eigenvalues of `A`.
-
-
-
-#-
 
 @assert A_diag ==  [-128.493    0.0      0.0      0.0       0.0;
     0.0    -55.8878   0.0      0.0       0.0;
     0.0      0.0     42.7522   0.0       0.0;
     0.0      0.0      0.0     87.1611    0.0;
     0.0 0.0      0.0      0.0     542.468]
-
-# #### 11.3 
-# Create a `LowerTriangular` matrix from `A` and store it in `A_lowertri`
-
-
-
-#-
-
+## #### 11.3
+## Create a `LowerTriangular` matrix from `A` and store it in `A_lowertri`
 @assert A_lowertri ==  [140    0    0    0   0;
   97  106    0    0   0;
   74   89  152    0   0;
  168  131  144   54   0;
  131   36   71  142  36]
-
-# ### Please let us know how we're doing!
-# https://tinyurl.com/introJuliaFeedback
-
-#-
-
-# Please click on `Validate` on the top, once you are done with the exercises.
 

@@ -1,5 +1,5 @@
 # # Getting started
-# 
+#
 # Topics:
 # 1.  How to print
 # 2. How to assign variables
@@ -9,13 +9,13 @@
 #-
 
 # ## How to print
-# 
+#
 # In Julia we usually use `println()` to print
 
 println("I'm excited to learn Julia!")
 
 # ## How to assign variables
-# 
+#
 # All we need is a variable name, value, and an equal's sign!<br>
 # Julia will figure out types for us.
 
@@ -44,8 +44,8 @@ typeof(😺)
 
 typeof(😺)
 
-# Note: Julia allows us to write super generic code, and 😺 is an example of this. 
-# 
+# Note: Julia allows us to write super generic code, and 😺 is an example of this.
+#
 # This allows us to write code like
 
 😀 = 0
@@ -63,7 +63,7 @@ typeof(😺)
 
 #=
 
-For multi-line comments, 
+For multi-line comments,
 use the '#= =#' sequence.
 
 =#
@@ -93,38 +93,27 @@ power = 10 ^ 2
 modulus = 101 % 2
 
 # ### Exercises
-# 
-# #### 1.1 
+#
+# #### 1.1
 # Look up docs for the `convert` function.
 
-
-
-# #### 1.2 
-# Assign `365` to a variable named `days`. Convert `days` to a float and assign it to variable `days_float`
-
-
-
 #-
+
+# #### 1.2
+# Assign `365` to a variable named `days`. Convert `days` to a float and assign it to variable `days_float`
 
 @assert days == 365
 @assert days_float == 365.0
 
-
-# #### 1.3 
+# #### 1.3
 # See what happens when you execute
-# 
+#
 # ```julia
 # convert(Int64, "1")
 # ```
 # and
-# 
+#
 # ```julia
 # parse(Int64, "1")
 # ```
-
-
-
-#-
-
-Please click on `Validate` on the top, once you are done with the exercises.
 

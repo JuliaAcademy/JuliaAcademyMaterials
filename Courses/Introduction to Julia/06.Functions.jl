@@ -1,5 +1,5 @@
 # # Functions
-# 
+#
 # Topics:
 # 1. How to declare a function
 # 2. Duck-typing in Julia
@@ -68,7 +68,7 @@ f3(42)
 
 sayhi(55595472)
 
-# And `f` will work on a matrix. 
+# And `f` will work on a matrix.
 
 A = rand(3, 3)
 A
@@ -81,7 +81,7 @@ f(A)
 
 f("hi")
 
-# On the other hand, `f` will not work on a vector. Unlike `A^2`, which is well-defined, the meaning of `v^2` for a vector, `v`, is not a well-defined algebraic operation. 
+# On the other hand, `f` will not work on a vector. Unlike `A^2`, which is well-defined, the meaning of `v^2` for a vector, `v`, is not a well-defined algebraic operation.
 
 v = rand(3)
 
@@ -90,11 +90,10 @@ v = rand(3)
 f(v)
 
 # ## Mutating vs. non-mutating functions
-# 
+#
 # By convention, functions followed by `!` alter their contents and functions lacking `!` do not.
-# 
+#
 # For example, let's look at the difference between `sort` and `sort!`.
-
 
 v = [3, 5, 2]
 
@@ -107,7 +106,7 @@ sort(v)
 v
 
 # `sort(v)` returns a sorted array that contains the same elements as `v`, but `v` is left unchanged. <br><br>
-# 
+#
 # On the other hand, when we run `sort!(v)`, the contents of v are sorted within the array `v`.
 
 sort!(v)
@@ -117,12 +116,12 @@ sort!(v)
 v
 
 # ## Some higher order functions
-# 
+#
 # ### map
-# 
-# `map` is a "higher-order" function in Julia that *takes a function* as one of its input arguments. 
+#
+# `map` is a "higher-order" function in Julia that *takes a function* as one of its input arguments.
 # `map` then applies that function to every element of the data structure you pass it. For example, executing
-# 
+#
 # ```julia
 # map(f, [1, 2, 3])
 # ```
@@ -134,7 +133,7 @@ v
 map(f, [1, 2, 3])
 
 # Here we've squared all the elements of the vector `[1, 2, 3]`, rather than squaring the vector `[1, 2, 3]`.
-# 
+#
 # To do this, we could have passed to `map` an anonymous function rather than a named function, such as
 
 x -> x^3
@@ -148,15 +147,15 @@ map(x -> x^3, [1, 2, 3])
 #-
 
 # ### broadcast
-# 
+#
 # `broadcast` is another higher-order function like `map`. `broadcast` is a generalization of `map`, so it can do every thing `map` can do and more. The syntax for calling `broadcast` is the same as for calling `map`
 
 broadcast(f, [1, 2, 3])
 
 # and again, we've applied `f` (squared) to all the elements of `[1, 2, 3]` - this time by "broadcasting" `f`!
-# 
+#
 # Some syntactic sugar for calling `broadcast` is to place a `.` between the name of the function you want to `broadcast` and its input arguments. For example,
-# 
+#
 # ```julia
 # broadcast(f, [1, 2, 3])
 # ```
@@ -167,7 +166,7 @@ broadcast(f, [1, 2, 3])
 
 f.([1, 2, 3])
 
-# Notice again how different this is from calling 
+# Notice again how different this is from calling
 # ```julia
 # f([1, 2, 3])
 # ```
@@ -176,7 +175,7 @@ f.([1, 2, 3])
 #-
 
 # To drive home the point, let's look at the difference between
-# 
+#
 # ```julia
 # f(A)
 # ```
@@ -195,14 +194,14 @@ f(A)
 # As before we see that for a matrix, `A`,
 # ```
 # f(A) = A^2 = A * A
-# ``` 
-# 
+# ```
+#
 # On the other hand,
 
 B = f.(A)
 
 # contains the squares of all the entries of `A`.
-# 
+#
 # This dot syntax for broadcasting allows us to write relatively complex compound elementwise expressions in a way that looks natural/closer to mathematical notation. For example, we can write
 
 A .+ 2 .* f.(A) ./ A
@@ -216,8 +215,8 @@ broadcast(x -> x + 2 * f(x) / x, A)
 #-
 
 # ### Exercises
-# 
-# #### 6.1 
+#
+# #### 6.1
 # Write a function `add_one` that adds 1 to its input.
 
 @assert add_one(1) == 2
@@ -226,19 +225,13 @@ broadcast(x -> x + 2 * f(x) / x, A)
 
 @assert add_one(11) == 12
 
-# #### 6.2 
+# #### 6.2
 # Use `map` or `broadcast` to increment every element of matrix `A` by `1` and assign it to a variable `A1`.
-
-
-
-# #### 6.3 
-# Use the broadcast dot syntax to increment every element of matrix `A1` by `1` and store it in variable `A2`
-
-
 
 #-
 
-@assert A2 == [3 4 5; 6 7 8;9 10 11]
+# #### 6.3
+# Use the broadcast dot syntax to increment every element of matrix `A1` by `1` and store it in variable `A2`
 
-# Please click on `Validate` on the top, once you are done with the exercises.
+@assert A2 == [3 4 5; 6 7 8;9 10 11]
 
