@@ -116,19 +116,16 @@ vline!([0], ls=:dash, lw=3)     # add a vertical line at 0
 
 # We can think of $\sigma$ as a smooth version of a step or threshold function (often called a "Heaviside" function). To see this, let's modify the steepness of the jump in $\sigma$ and compare it to the Heaviside function; we'll see how all this works in more detail later:
 
-## using Pkg; Pkg.add("Interact")
-using Interact
-
 #-
 
 heaviside(x) = x < 0 ? 0.0 : 1.0
 
 #-
 
-@manipulate for w in 0.1:0.1:20
-    plot(x -> σ(w*x), -5, 5, label="sigma", lw=2)
-    plot!(heaviside, ls=:dash, label="step")
-end
+## try manipulating the value of `w` between 0 to :
+w = 10.0
+plot(x -> σ(w*x), -5, 5, label="sigma", lw=2)
+plot!(heaviside, ls=:dash, label="step")
 
 # This particular function takes any real number as input, and gives an output between $0$ and $1$. It is continuous and smooth.
 
@@ -414,14 +411,14 @@ plot!(xs, ys)
 
 #-
 
-@manipulate for stepsize in 0.01:0.01:1.0
-    xs = -5.0:stepsize:5.0
-    ys = σ.(xs)
+## Try manipulating `stepsize` between 0 and 1:
+stepsize = 0.5
+xs = -5.0:stepsize:5.0
+ys = σ.(xs)
 
-    scatter(xs, ys)
-    plot!(xs, ys)
+scatter(xs, ys)
+plot!(xs, ys)
 
-    xlims!(-5, 5)
-    ylims!(0, 1)
-end
+xlims!(-5, 5)
+ylims!(0, 1)
 

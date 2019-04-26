@@ -1,7 +1,6 @@
 ## Run this cell to load the graphics packages
-## using Pkg; Pkg.add("Plots"); Pkg.add("Interact")
+## using Pkg; Pkg.add("Plots")
 using Plots; gr()
-using Interact
 
 # ## Adding a function parameter
 
@@ -41,13 +40,12 @@ f(x, w) = σ(w * x)
 
 #-
 
-# Now we are ready to draw the function. For each plot, we *fix* a value of the parameter $w$ and draw the resulting function as a function of $x$. However, `Interact.jl` then allows us to modify interactively the value of $w$, and plot the new function that comes out:
+# Now we are ready to draw the function. For each plot, we *fix* a value of the parameter $w$ and draw the resulting function as a function of $x$. We can interactively modify the value of $w$, and plot the new function that comes out:
 
-@manipulate for w in -2:0.01:2
-
-    plot(x->f(x, w), -5, 5, ylims=(0,1), label="sigmoid")
-    plot!(x->(x>0), -5,5, label="Square Wave")
-end
+## Try manipulating `w` between -2 and 2
+w = 0.0
+plot(x->f(x, w), -5, 5, ylims=(0,1), label="sigmoid")
+plot!(x->(x>0), -5,5, label="Square Wave")
 
 # #### Exercise 1
 #
@@ -89,10 +87,9 @@ end
 # Once you have declared `square_and_scale`, uncomment the code below and see how the parameter `a` scales the function `square` :
 
 ## x = -10:10
-## @manipulate for a in 0:0.01:10
-##     plot(x, square.(x), label="x^2")
-##     plot!(x, square_and_scale.(x, a), ls=:dash, label="ax^2")
-## end
+## a = 5.0 # Try manipulating a here
+## plot(x, square.(x), label="x^2")
+## plot!(x, square_and_scale.(x, a), ls=:dash, label="ax^2")
 
 # ## Fitting a function to data
 
@@ -104,14 +101,13 @@ end
 
 # So suppose that we are given a single data point $(x_0, y_0) = (2, 0.8)$. We can try to "fit" the function $f_w$ by adjusting the parameter $w$ until the function passes through the data.
 #
-# **Game**: Move the slider until the graph of the function hits the data point. Which value of $w$ does that correspond to?
+# **Game**: Change `w` until the graph of the function hits the data point. Which value of $w$ does that correspond to?
 
 x0, y0 = 2, 0.8
 
-@manipulate for w in -2:0.01:2
-    plot(x->f(x, w), -5, 5, ylims=(0, 1), label="f")
-    scatter!([x0], [y0], label="data")
-end
+w = 0.0 # try mainipulatoing `w` between -2 and 2
+plot(x->f(x, w), -5, 5, ylims=(0, 1), label="f")
+scatter!([x0], [y0], label="data")
 
 # ## Quantifying how far we are from the goal: the *loss function*
 
@@ -184,16 +180,15 @@ L(w) = (y0 - f(x0, w))^2
 
 # (b-d): The visualization can be written as follows
 
-@manipulate for w in -2:0.01:2
+w = 0.0 # try manipulating w here between -2 and 2
 
-    plot(x->f(x, w), -5, 5, ylims=(0, 1), label="f_w", lw=3)  # function
+plot(x->f(x, w), -5, 5, ylims=(0, 1), label="f_w", lw=3)  # function
 
-    scatter!([x0], [y0], label="data")
-    plot!([x0, x0], [y0, f(x0, w)], label="loss")  # vertical line
+scatter!([x0], [y0], label="data")
+plot!([x0, x0], [y0, f(x0, w)], label="loss")  # vertical line
 
-    title!("L(w) = $(round(L(w); sigdigits = 5))")
+title!("L(w) = $(round(L(w); sigdigits = 5))")
 
-end
 
 # ## What does the loss function look like?
 

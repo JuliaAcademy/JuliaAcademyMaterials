@@ -24,9 +24,8 @@ L1(w) = (y1 - f(x1, w))^2
 
 #-
 
-## using Pkg; Pkg.add(["Plots", "Interact"])
+## using Pkg; Pkg.add("Plots")
 using Plots; gr()
-using Interact
 
 #-
 
@@ -113,27 +112,25 @@ end
 
 wmin = -2
 wmax = 1
-w_range = wmin:0.01:wmax
 
-@manipulate for w in w_range
-    plot(L1, wmin, wmax, label="L_1")
+w = 0.5 # Try manipulating w between wmin and wmax (-2 to 1)
+plot(L1, wmin, wmax, label="L_1")
 
-    x0 = w
-    y0 = L1(w)
+x0 = w
+y0 = L1(w)
 
-    scatter!([x0], [y0], label="")
+scatter!([x0], [y0], label="")
 
-    m = derivative(L1, w)
+m = derivative(L1, w)
 
-    plot!(x->y0 + m*(x - x0), ls=:dash, label="tangent line")
+plot!(x->y0 + m*(x - x0), ls=:dash, label="tangent line")
 
-    ylims!(-0.1, 0.6)
-    xlims!(wmin, wmax)
+ylims!(-0.1, 0.6)
+xlims!(wmin, wmax)
 
-    title!("Derivative = $m")
-    xlabel!("w")
-    ylabel!("L1(w)")
-end
+title!("Derivative = $m")
+xlabel!("w")
+ylabel!("L1(w)")
 
 # #### Exercise 3
 #
@@ -436,7 +433,7 @@ partialw = partial_w.(L2, wrange, 0.3 )
 
 # #### Exercise 13
 #
-# Plot the cross section of the surface of $L_2(w, b)$ at $b = 0.3$. Make this plot interactive with `@manipulate` to show that the function `partial_w` gives the slope of the tangent to this cross section for any point `w` in the range `-2:0.01:1`.
+# Plot the cross section of the surface of $L_2(w, b)$ at $b = 0.3$. Make this plot interactive to show that the function `partial_w` gives the slope of the tangent to this cross section for any point `w` in the range `-2:0.01:1`.
 #
 # For what value of $w$ in this range is the slope of the cross section closest to -1?
 
@@ -448,18 +445,16 @@ partialw = partial_w.(L2, wrange, 0.3 )
 
 # The slope is closest to -1.0 at w = -0.55. You can see this by running the following code:
 
-using Interact
 L2_fixedb = L2.(wrange, 0.3)
 
-@manipulate for i in 1:length(wrange)
-    plot(wrange, L2_fixedb)
-    scatter!([wrange[i]], [L2_fixedb[i]])
-    slope = partialw[i]
-    tangent_points = slope .* wrange .- slope * wrange[i] .+ L2_fixedb[i]
-    plot!(wrange, tangent_points)
-    ylims!(0.3, 2.0)
-    title!("Slope = $slope @ $(wrange[i])")
-end
+w = 0.0 # Try manipulating w to pick a value within `wrange`
+plot(wrange, L2_fixedb)
+scatter!([w], [L2(w, 0.3)])
+slope = partial_w(L2, w, 0.3)
+tangent_points = slope .* wrange .- slope * w .+ L2.(w, 0.3)
+plot!(wrange, tangent_points)
+ylims!(0.3, 2.0)
+title!("Slope = $slope @ $(w)")
 
 # ## ***Optional**: Functions with $n$ inputs
 

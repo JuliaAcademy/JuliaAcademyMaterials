@@ -1,7 +1,6 @@
 ## Run this cell to load the graphics packages
-## using Pkg; Pkg.add("Plots"); Pkg.add("Interact")
+## using Pkg; Pkg.add("Plots");
 using Plots; gr()
-using Interact
 
 #-
 
@@ -33,10 +32,9 @@ f(x, w) = σ(w * x)
 x0, y0 = 2, 0.8
 x1, y1 = -3, 0.3
 
-@manipulate for w in 0:.05:10
-    plot(x->f(x, w), -5, 5, ylim=(0,1))
-    scatter!([x0, x1], [y0, y1])
-end
+w = 5.0 # try manipulating w between 0 and 10
+plot(x->f(x, w), -5, 5, ylim=(0,1))
+scatter!([x0, x1], [y0, y1])
 
 # You should have found that it's actually *impossible* to fit both data points at the same time! The best we could do is to *minimise* how far away the function is from the data. To do so, we need to somehow balance the distance from each of the two data points.
 
@@ -70,7 +68,7 @@ scatter!([x0, x1], [y0, y1])
 
 # #### Exercise 3
 #
-# Make an interactive visualization to show the function $f_w$ and to visualize the distance from each of the data points.
+# Make a visualization to show the function $f_w$ and to visualize the distance from each of the data points.
 
 #-
 
@@ -81,7 +79,7 @@ ys = [0.8, 0.3]
 
 L(w) = sum( (ys .- f.(xs, w)) .^ 2 )
 
-@manipulate for w in -2:0.01:2
+w = 0.0 # Try manipulating w between -2 and 2
 
     plot(x->f(x, w), -5, 5, ylims=(0, 1), lw = 3, label="f_w")
 
@@ -193,7 +191,7 @@ g(x, w, b) = σ(w*x + b)
 
 # #### Exercise 8
 #
-# Make an interactive visualization with two sliders for $w$ and $b$. Play with the sliders to try and fit *both* data points at once!
+# Make an interactive visualization that allows you to change $w$ and $b$. Play with the sliders to try and fit *both* data points at once!
 
 #-
 
@@ -204,19 +202,18 @@ ys = [0.8, 0.3]
 
 L2D(w, b) = sum( (ys .- g.(xs, w, b)) .^ 2)
 
-@manipulate for w in -2:0.01:2, b in -2:0.01:2
-    plot(x -> g(x, w, b), -5, 5, ylims=(0, 1), lw=3)
+w = 0.0 # Try manipulating w between -2 and 2
+b = 0.0 # Try manipulating b between -2 and 2
+plot(x -> g(x, w, b), -5, 5, ylims=(0, 1), lw=3)
 
-    scatter!(xs, ys)
+scatter!(xs, ys)
 
-    for i in 1:2
-        plot!([xs[i], xs[i]], [ys[i], g(xs[i], w, b)])
-    end
-
-
-    title!("L2D(w, b) = $(L2D(w, b))")
-
+for i in 1:2
+    plot!([xs[i], xs[i]], [ys[i], g(xs[i], w, b)])
 end
+
+
+title!("L2D(w, b) = $(L2D(w, b))")
 
 # You should be able to convince yourself that we can now make the curve pass through both points simultaneously.
 
@@ -308,19 +305,18 @@ gr()
 
 L2(w, b) = sum( (ys .- g.(xs, w, b)) .^ 2)
 
-@manipulate for w in -2:0.01:2, b in -2:0.01:2
-    plot(x->g(x, w, b), -5, 5, ylims=(-0.2, 1))
+w = 0.0 # Try manipulating w between -2 and 2
+b = 0.0 # Try manipulating b between -2 and 2
+plot(x->g(x, w, b), -5, 5, ylims=(-0.2, 1))
 
-    scatter!(xs, ys)
+scatter!(xs, ys)
 
-    for i in 1:length(xs)
-        plot!([xs[i], xs[i]], [ys[i], g(xs[i], w, b)])
-    end
-
-
-    title!("L2(w, b) = $(round(L2(w, b); sigdigits = 5))")
-
+for i in 1:length(xs)
+    plot!([xs[i], xs[i]], [ys[i], g(xs[i], w, b)])
 end
+
+
+title!("L2(w, b) = $(round(L2(w, b); sigdigits = 5))")
 
 # Let's define the loss function that we're using above so that we can plot it as a function of the parameters `w` and `b`.
 

@@ -240,16 +240,14 @@ scatter!(first.(x_bananas), last.(x_bananas), label="bananas")
 #
 # and use this to draw the corresponding hyperplane.
 
-## using Pkg; Pkg.add("Interact")
-using Interact
-
 #-
 
-@manipulate for w1 in -2:0.1:6, w2 in -2:0.1:6, b in -5:0.1:0
-    scatter(first.(x_apples), last.(x_apples), m=:cross, label="apples", xlim=(.3, .9), ylim=(.2,.8))
-    scatter!(first.(x_bananas), last.(x_bananas), label="bananas")
-    plot!(x -> -(w1*x + b) / w2)
-end
+w1 = 3.0 # Try manipulating w1 to have values between -2 and 6
+w2 = 3.0 # Try manipulating w2 to have values between -2 and 6
+b  = -2.5 # Try manipulating b  to have values between -5 and 0
+scatter(first.(x_apples), last.(x_apples), m=:cross, label="apples", xlim=(.3, .9), ylim=(.2,.8))
+scatter!(first.(x_bananas), last.(x_bananas), label="bananas")
+plot!(x -> -(w1*x + b) / w2)
 ## w1 = 2.22
 ## w2 = 1.05
 ## b  = -2.0

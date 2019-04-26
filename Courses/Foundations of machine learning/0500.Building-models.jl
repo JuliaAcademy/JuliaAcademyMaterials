@@ -57,26 +57,22 @@ println("Average green for banana = $banana_green_amount")
 #-
 
 # We can understand how our choice of `w` and `b` affects our model by seeing how our values for `w` and `b` change the plot of the $\sigma$ function.
-#
-# To do so, we will use the `Interact.jl` Julia package, which provides "widgets" for controlling parameters interactively via sliders:
 
-## using Pkg; Pkg.add(["Plots", "Interact"])
+## using Pkg; Pkg.add("Plots")
 using Plots; gr()   # GR works better for interactive manipulations
-using Interact      # package for interactive manipulation
 
 # Run the code in the next cell. You should see two "sliders" appear, one for `w` and one for `b`.
 #
 # **Game**:
-# Move both of those sliders around until the blue curve, labeled "model", which is the graph of the `\sigma` function, passes through *both* of the data points at the same time.
+# Change w and b around until the blue curve, labeled "model", which is the graph of the `\sigma` function, passes through *both* of the data points at the same time.
 
-@manipulate for w in -10:0.01:30, b in 0:0.1:20
+w = 10.0 # try manipulating w between -10 and 30
+b = 10.0 # try manipulating b between 0 and 20
 
-    plot(x -> σ(x, w, b), xlim=(-0,1), ylim=(-0.1,1.1), label="model", legend=:topleft, lw=3)
+plot(x -> σ(x, w, b), xlim=(-0,1), ylim=(-0.1,1.1), label="model", legend=:topleft, lw=3)
 
-    scatter!([apple_green_amount],  [0.0], label="apple", ms=5)   # marker size = 5
-    scatter!([banana_green_amount], [1.0], label="banana", ms=5)
-
-end
+scatter!([apple_green_amount],  [0.0], label="apple", ms=5)   # marker size = 5
+scatter!([banana_green_amount], [1.0], label="banana", ms=5)
 
 # Notice that the two parameters do two very different things. The **weight**, `w`, determines *how fast* the transition between 0 and 1 occurs. It encodes how trustworthy we think our data  actually is, and in what range we should be putting points between 0 and 1 and thus calling them "unsure". The **bias**, `b`, encodes *where* on the $x$-axis the switch should take place. It can be seen as shifting the function left-right. We'll come to understand these *parameters* more in notebook 6.
 #

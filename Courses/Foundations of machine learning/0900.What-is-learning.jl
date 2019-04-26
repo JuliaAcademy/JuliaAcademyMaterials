@@ -12,9 +12,9 @@
 #
 # Let's go back to our example of fitting parameters from notebook 3. Recall that we looked at whether the amount of green in the pictures could distinguish between an apple and a banana, and used a sigmoid function to model our choice of "apple or banana" using the amount of green in an image.
 
-## using Pkg; Pkg.add(["Plots", "Images", "Interact"])
+## using Pkg; Pkg.add(["Plots", "Images"])
 using Plots; gr()
-using Images; using Interact, Statistics
+using Images, Statistics
 
 σ(x,w,b) = 1 / (1 + exp(-w*x+b))
 
@@ -23,13 +23,12 @@ banana = load("data/104_100.jpg")
 apple_green_amount =  mean(Float64.(green.(apple)))
 banana_green_amount = mean(Float64.(green.(banana)));
 
-@manipulate for w in -10:0.01:30, b in 0:0.1:30
+w = 10.0 # Try manipulating w between 0 and 30 to see how the plot changes
+b = 15.0 # Try manipulating b bewteen 0 and 30
 
-    plot(x->σ(x,w,b), 0, 1, label="Model", legend = :topleft, lw=3)
-    scatter!([apple_green_amount],  [0.0], label="Apple")
-    scatter!([banana_green_amount], [1.0], label="Banana")
-
-end
+plot(x->σ(x,w,b), 0, 1, label="Model", legend = :topleft, lw=3)
+scatter!([apple_green_amount],  [0.0], label="Apple")
+scatter!([banana_green_amount], [1.0], label="Banana")
 
 # Intuitively, how did you tweak the sliders so that way the model sends apples to 0 and bananas to 1? Most likely, you did the following:
 #
@@ -66,17 +65,17 @@ b_range = 0:1:20
 L_values = [L(w,b) for b in b_range, w in w_range]
 
 
-@manipulate for w in w_range, b in b_range
+w = 11.5 # Try manipulating w with values from w_range (between 10 and 13)
+b = 10 # Try manipulating b with values from b_range (between 0 and 20)
 ##     p1 = surface(w_range, b_range, L_values, xlabel="w", ylabel="b", cam=(70,40), cbar=false, leg=false)
 ##     scatter!(p1, [w], [b], [L(w,b)+1e-2], markersize=5, color = :blue)
-    p1 = contour(w_range, b_range, L_values, levels=0.05:0.1:1, xlabel="w", ylabel="b", cam=(70,40), cbar=false, leg=false)
-    scatter!(p1, [w], [b], markersize=5, color = :blue)
+p1 = contour(w_range, b_range, L_values, levels=0.05:0.1:1, xlabel="w", ylabel="b", cam=(70,40), cbar=false, leg=false)
+scatter!(p1, [w], [b], markersize=5, color = :blue)
 
-    p2 = plot(x->σ(x,w,b), 0, 1, label="Model", legend = :topleft, lw=3)
-    scatter!(p2, [apple_green_amount],  [0.0], label="Apple", markersize=10)
-    scatter!(p2, [banana_green_amount], [1.0], label="Banana", markersize=10, xlim=(0,1), ylim=(0,1))
-    plot(p1, p2, layout=(2,1))
-end
+p2 = plot(x->σ(x,w,b), 0, 1, label="Model", legend = :topleft, lw=3)
+scatter!(p2, [apple_green_amount],  [0.0], label="Apple", markersize=10)
+scatter!(p2, [banana_green_amount], [1.0], label="Banana", markersize=10, xlim=(0,1), ylim=(0,1))
+plot(p1, p2, layout=(2,1))
 
 # The blue ball on the 3D plot shows the current parameter choices, plotted as `(w,b)`. Shown below the 3D plot is a 2D plot of the corresponding model with those parameters. Notice that as the blue ball rolls down the hill, the model becomes a better fit. Our loss function gives us a mathematical notion of a "hill", and the process of "learning by nudging" is simply rolling the ball down that hill.
 

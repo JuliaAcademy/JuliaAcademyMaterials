@@ -8,8 +8,6 @@
 # will appear in the proceedings of the [First Workshop for High Performance Technical Computing in Dynamic
 # Languages](http://jiahao.github.io/hptcdl-sc14/), held in conjunction with [SC14: The International Conference on High Performance Computing, Networking, Storage and Analysis](http://sc14.supercomputing.org/)
 
-using Interact
-
 #-
 
 using Compose, Gadfly
@@ -53,9 +51,8 @@ prod(fill(M,3))
 
 #-
 
-@manipulate for n=1:100
-    prod(fill(big.(M),n))
-end
+n= 50 # Try manipulating n to pick different values (try between 0-100)
+prod(fill(big.(M),n))
 
 #-
 
@@ -328,15 +325,13 @@ render(prefix_serial!(AccessArray(zeros(8)),+))
 
 #-
 
-@manipulate for npp=1:180
-    render(prefix!(AccessArray(zeros(npp)),+))
-end
+npp=90 # Try manipulating npp to choose different values between 1 and 180
+render(prefix!(AccessArray(zeros(npp)),+))
 
 #-
 
-@manipulate for npp=1:180
-    render(prefix_serial!(AccessArray(zeros(npp)),+))
-end
+npp=90 # And manipulate it again, this time with the serial algorithm
+render(prefix_serial!(AccessArray(zeros(npp)),+))
 
 # # Now exploit the parallelism in the _algorithm_ to use a parallel _implementation_
 
