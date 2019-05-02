@@ -23,7 +23,8 @@ using Flux, Plots
 #
 # For example, the sigmoid function, σ, that we have been using already lives within `Flux`:
 
-?σ
+#nb ?σ
+#jl @doc σ
 
 #-
 
@@ -130,11 +131,13 @@ model.W.grad
 #
 # You don't want to manually write out gradient descent algorithms every time! Flux, of course, also brings in lots of optimizers that can do this all for you.
 
-?SGD
+#nb ?SGD
+#jl @doc SGD
 
 #-
 
-?Flux.train!
+#nb ?Flux.train!
+#jl @doc Flux.train!
 
 # So we can simply define our loss function, an optimizer, and then call `train!`. That's basic machine learning with Flux.jl.
 

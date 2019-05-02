@@ -90,7 +90,8 @@ layer2(layer1(xs[1]))
 
 #-
 
-?Chain
+#nb ?Chain
+#jl @doc Chain
 
 #-
 

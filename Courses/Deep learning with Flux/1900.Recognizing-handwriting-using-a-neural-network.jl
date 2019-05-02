@@ -263,5 +263,6 @@ show(preprocess(images[1]))
 
 #-
 
-?Conv
+#nb ?Conv
+#jl @doc Conv
 

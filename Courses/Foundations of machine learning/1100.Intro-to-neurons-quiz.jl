@@ -4,7 +4,7 @@
 #
 # We'll do this with almost the simplest possible neuron, namely one that takes just two inputs:
 
-include("draw_neural_net.jl")
+include("scripts/draw_neural_net.jl")
 number_inputs, number_neurons = 2, 1
 draw_network([number_inputs, number_neurons])
 
@@ -48,11 +48,13 @@ draw_network([number_inputs, number_neurons])
 
 # Let's load in some real data! We'll use data that we have prepared from photos of apples and bananas; it turns out to be stored on disk in data files as "tab-separated values". We can read this data in with the `CSV.jl` package, as follows.
 
-;head data/Apple_Golden_1.dat
+#nb ;head data/Apple_Golden_1.dat
+#jl run(`head data/Apple_Golden_1.dat`)
 
 #-
 
-;head data/bananas.dat
+#nb ;head data/bananas.dat
+#jl run(`head data/bananas.dat`)
 
 #-
 

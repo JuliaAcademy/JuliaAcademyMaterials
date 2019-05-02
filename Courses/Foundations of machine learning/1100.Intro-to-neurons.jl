@@ -30,7 +30,7 @@
 
 # In the video, we see that one huge class of learning techniques is based around neurons, that is, *artificial neurons*. These are caricatures of real, biological neurons. Both *artificial* and *biological* neurons have several inputs $x_1, \ldots, x_n$, and a single output, $y$. Schematically they look like this:
 
-include("draw_neural_net.jl")
+include("scripts/draw_neural_net.jl")
 
 number_inputs, number_neurons = 4, 1
 
