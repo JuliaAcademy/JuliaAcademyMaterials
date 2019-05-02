@@ -15,17 +15,20 @@
 #
 # To get docs for a function you're not familiar with, precede it with a question mark. (This works at the REPL too!)
 
-?println
+#nb ?println
+#jl @doc println
 
 # ### How to use shell commands
 #
 # Type `;` and then you can use shell commands. For example,
 
-;ls
+#nb ;ls
+#jl run(`ls`)
 
 #-
 
-;pwd
+#nb ;pwd
+#jl run(`pwd`)
 
 # Shell commands also work at the REPL!
 

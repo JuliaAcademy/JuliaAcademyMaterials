@@ -38,7 +38,8 @@
 
 # You can inspect the installed GPUs with nvidia-smi:
 
-;nvidia-smi
+#nb ;nvidia-smi
+#jl run(`nvidia-smi`)
 
 # ## Example
 #
