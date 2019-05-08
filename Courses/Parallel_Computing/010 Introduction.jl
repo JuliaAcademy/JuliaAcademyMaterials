@@ -27,7 +27,7 @@
 
 # ## What is happening to our computers!?
 #
-# ![](images/40-years-processor-trend.png)
+# ![](https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Parallel_Computing/images/40-years-processor-trend.png)
 #
 # Not only have we gained multiple cores, but processors have become extremely
 # complex, with multiple levels of caches, pipelines, predictions, speculations...

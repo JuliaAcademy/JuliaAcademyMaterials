@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Parallel_Computing")
+
 # # Fast (serial) programming with Julia
 #
 # Yes, this is a parallel computing course — but to write efficient parallel

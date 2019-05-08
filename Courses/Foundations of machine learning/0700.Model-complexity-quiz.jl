@@ -1,5 +1,7 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Foundations of machine learning")
+
 ## Run this cell to load the graphics packages
-## using Pkg; Pkg.add("Plots");
 using Plots; gr()
 
 #-
@@ -264,7 +266,6 @@ L2(w, b) = sum( (ys .- g.(xs, w, b)) .^ 2 )
 
 # To plot the loss as a function of *two* variables (the weights *and* the bias), we will make use of the `surface` function.  To get a nice interactive 3D plot, we will use the PlotlyJS "backend" (plotting engine):
 
-## using Pkg; Pkg.add("PlotlyJS")
 gr()  # load the backend
 
 #-

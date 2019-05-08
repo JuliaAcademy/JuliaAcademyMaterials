@@ -1,10 +1,13 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Foundations of machine learning")
+
 # # Motivation
 #
 # Hello, and welcome! We're excited to be your gateway into machine learning. ML is a rapidly growing field that's buzzing with opportunity. Why? Because the tools and skills employed by ML specialists are extremely powerful and allow them to draw conclusions from large data sets quickly and with relative ease.
 #
 # Take the Celeste project, for example. This is a project that took 178 **tera**bytes of data on the visible sky and used it to catalogue 188 millions stars and galaxies. "Cataloguing" these stars meant identifying characteristics like their locations, colors, sizes, and morphologies. This is an amazing feat, *especially* because this entire calculation took under 15 minutes.
 #
-# <img src="data/Celeste.png" alt="Drawing" style="width: 1000px;"/>
+# <img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Foundations%20of%20machine%20learning/data/Celeste.png" alt="Drawing" style="width: 1000px;"/>
 #
 # How are Celeste's calculations so fast? To achieve performance on this scale, the Celeste team uses the Julia programming language to write their software and supercomputers from Lawrence Berkeley National Lab's NERSC as their hardware. In this course, we unfortunately won't be able to give you access to a top 10 supercomputer, but we will teach you how to use Julia!
 #
@@ -18,16 +21,15 @@
 #
 # We can use the `Images.jl` package in Julia to load sample images from this dataset. Most of the data we will use live in the `data` folder in this repository.
 
-## using Pkg; Pkg.add(["Images", "ImageMagick"])
 using Images  # To execute hit <shift> + enter
 
 #-
 
-apple = load("data/10_100.jpg")
+apple = load(datapath("data/10_100.jpg"))
 
 #-
 
-banana = load("data/104_100.jpg")
+banana = load(datapath("data/104_100.jpg"))
 
 # The dataset consists of many images of different fruits, viewed from different positions.
 # These images are [available on GitHub here](https://github.com/Horea94/Fruit-Images-Dataset).

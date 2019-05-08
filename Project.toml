@@ -3,6 +3,7 @@ uuid = "a2de2ff4-d7bb-11e8-2879-f9ef9fa2c94f"
 version = "0.1.0"
 
 [deps]
+JuliaAcademyData = "18b7da76-0988-5e3b-acac-6290be3a708f"
 Literate = "98b081ad-f1c9-55d3-8b20-4c87d4299306"
 Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 

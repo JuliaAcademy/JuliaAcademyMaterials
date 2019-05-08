@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Deep learning with Flux")
+
 # <br /><br /><br />
 # # Recognizing handwritten digits using a neural network
 

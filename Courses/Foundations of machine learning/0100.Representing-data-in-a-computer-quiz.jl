@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Foundations of machine learning")
+
 # # Tools - Using arrays to store data
 
 #-
@@ -6,7 +9,7 @@
 #
 # **Arrays are collections of boxes that we can use to store data.** In the last notebook, we saw an image that can help us to picture a 1-dimensional array:
 #
-# <img src="data/array_cartoon.png" alt="Drawing" style="width: 500px;"/>
+# <img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Foundations%20of%20machine%20learning/data/array_cartoon.png" alt="Drawing" style="width: 500px;"/>
 #
 # *Why do we want an object like this to store our data?*
 
@@ -22,7 +25,7 @@
 #
 # We can visualize how this data is stored:
 #
-# <img src="data/without_arrays.png" alt="Drawing" style="width: 500px;"/>
+# <img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Foundations%20of%20machine%20learning/data/without_arrays.png" alt="Drawing" style="width: 500px;"/>
 #
 #
 #
@@ -101,7 +104,7 @@ first_array = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 #
 # The above line of code is saying that we want to create an array called `counting` that stores two times each of the integers between 1 and 10. This array comprehension has a few different parts, so let's dissect them:
 #
-# <img src="data/array_comprehension.png" alt="Drawing" style="width: 500px;"/>
+# <img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Foundations%20of%20machine%20learning/data/array_comprehension.png" alt="Drawing" style="width: 500px;"/>
 #
 # If we wanted to create another array, `roots`, that stored the square roots of all integers between 1 and 10, we could modify the code above to
 #
@@ -137,7 +140,6 @@ squares = [x^2 for x in 1:100]
 #
 # Execute the code in the next cell. It will generate an array called `myprimes` that stores the first 168 prime numbers. Index into `myprimes` to grab the 89th smallest prime. What is this prime?
 
-## using Pkg; Pkg.add("Primes")
 using Primes
 
 myprimes = primes(1000); # The semicolon suppresses the output, try removing it

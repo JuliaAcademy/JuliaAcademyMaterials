@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Parallel_Computing")
+
 # # SIMD: The parallelism that can (sometimes) happen automatically
 #
 # SIMD: Single-instruction, multiple data

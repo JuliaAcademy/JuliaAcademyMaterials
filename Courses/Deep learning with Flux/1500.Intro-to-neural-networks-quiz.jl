@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Deep learning with Flux")
+
 # # Building a single neural network layer using `Flux.jl`
 #
 # In this notebook, we'll move beyond binary classification. We'll try to distinguish between three fruits now, instead of two. We'll do this using **multiple** neurons arranged in a **single layer**.
@@ -15,9 +18,9 @@ using CSV, DataFrames, Flux, Plots
 #-
 
 ## Load apple data in CSV.read for each file
-apples1 = DataFrame(CSV.File("data/Apple_Golden_1.dat", delim='\t', allowmissing=:none, normalizenames=true))
-apples2 = DataFrame(CSV.File("data/Apple_Golden_2.dat", delim='\t', allowmissing=:none, normalizenames=true))
-apples3 = DataFrame(CSV.File("data/Apple_Golden_3.dat", delim='\t', allowmissing=:none, normalizenames=true))
+apples1 = DataFrame(CSV.File(datapath("data/Apple_Golden_1.dat"), delim='\t', allowmissing=:none, normalizenames=true))
+apples2 = DataFrame(CSV.File(datapath("data/Apple_Golden_2.dat"), delim='\t', allowmissing=:none, normalizenames=true))
+apples3 = DataFrame(CSV.File(datapath("data/Apple_Golden_3.dat"), delim='\t', allowmissing=:none, normalizenames=true))
 ## And then concatenate them all together
 apples = vcat(apples1, apples2, apples3)
 
@@ -36,9 +39,9 @@ x_apples  = [ [apples[i, :red], apples[i, :blue]] for i in 1:size(apples, 1) ]
 # Similarly, let's create arrays called `x_bananas` and `x_grapes`:
 
 ## Load data from *.dat files
-bananas = DataFrame(CSV.File("data/Banana.dat", delim='\t', allowmissing=:none, normalizenames=true))
-grapes1 = DataFrame(CSV.File("data/Grape_White.dat", delim='\t', allowmissing=:none, normalizenames=true))
-grapes2 = DataFrame(CSV.File("data/Grape_White_2.dat", delim='\t', allowmissing=:none, normalizenames=true))
+bananas = DataFrame(CSV.File(datapath("data/Banana.dat"), delim='\t', allowmissing=:none, normalizenames=true))
+grapes1 = DataFrame(CSV.File(datapath("data/Grape_White.dat"), delim='\t', allowmissing=:none, normalizenames=true))
+grapes2 = DataFrame(CSV.File(datapath("data/Grape_White_2.dat"), delim='\t', allowmissing=:none, normalizenames=true))
 
 ## Concatenate data from two grape files together
 grapes = vcat(grapes1, grapes2)
@@ -75,7 +78,6 @@ xs = vcat(x_apples, x_bananas, x_grapes)
 
 # `Flux.jl` provides an efficient representation for one-hot vectors, using advanced features of Julia so that it does not actually store these vectors, which would be a waste of memory; instead `Flux` just records in which position the non-zero element is. To us, however, it looks like all the information is being stored:
 
-## using Pkg; Pkg.add("Flux")
 using Flux: onehot
 
 onehot(1, 1:3)
@@ -104,7 +106,7 @@ ys = [onehot(label, 1:3) for label in labels]  # onehotbatch(labels, 1:3)
 
 # Let's suppose that there are two pieces of input data, as in the previous single neuron notebook. Then the network has 2 inputs and 3 outputs:
 
-include("scripts/draw_neural_net.jl")
+include(datapath("scripts/draw_neural_net.jl"))
 draw_network([2, 3])
 
 # `Flux` allows us to express this again in a simple way:

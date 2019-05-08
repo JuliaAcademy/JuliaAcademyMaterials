@@ -1,10 +1,13 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Foundations of machine learning")
+
 # ## Learning with a single neuron
 #
 # In this notebook, we'll build a neuron that classifies an image as an apple or as a banana using multiple features from the image. We'll **train** our neuron using data from many images that have already been correctly categorised; our neuron will thereby **learn** what parameters to use, by minimizing a loss function using gradient descent.
 #
 # We'll do this with almost the simplest possible neuron, namely one that takes just two inputs:
 
-include("scripts/draw_neural_net.jl")
+include(datapath("scripts/draw_neural_net.jl"))
 number_inputs, number_neurons = 2, 1
 draw_network([number_inputs, number_neurons])
 
@@ -48,21 +51,20 @@ draw_network([number_inputs, number_neurons])
 
 # Let's load in some real data! We'll use data that we have prepared from photos of apples and bananas; it turns out to be stored on disk in data files as "tab-separated values". We can read this data in with the `CSV.jl` package, as follows.
 
-#nb ;head data/Apple_Golden_1.dat
-#jl run(`head data/Apple_Golden_1.dat`)
+#nb ;head $(datapath("data/Apple_Golden_1.dat"))
+#jl run(`head $(datapath("data/Apple_Golden_1.dat"))`)
 
 #-
 
-#nb ;head data/bananas.dat
-#jl run(`head data/bananas.dat`)
+#nb ;head $(datapath("data/bananas.dat"))
+#jl run(`head $(datapath("data/bananas.dat"))`)
 
 #-
 
-## using Pkg; Pkg.add(["CSV", "DataFrames"])
 using CSV, DataFrames
 
-apples = DataFrame(CSV.File("data/Apple_Golden_1.dat", delim='\t', allowmissing=:none, normalizenames=true))
-bananas = DataFrame(CSV.File("data/bananas.dat", delim='\t', allowmissing=:none, normalizenames=true));
+apples = DataFrame(CSV.File(datapath("data/Apple_Golden_1.dat"), delim='\t', allowmissing=:none, normalizenames=true))
+bananas = DataFrame(CSV.File(datapath("data/bananas.dat"), delim='\t', allowmissing=:none, normalizenames=true));
 
 # CSV.jl defaults to creating a `DataFrame` from DataFrames.jl to store the information:
 

@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Parallel_Computing")
+
 # # Parallel Algorithms: Thinking in Parallel
 #
 # Now that we're starting to see the challenges of parallelism, it's worth taking

@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Parallel_Computing")
+
 # # Distributed (or multi-core or multi-process) parallelism
 #
 # Julia has a built-in standard library — Distributed — that allows you to
@@ -5,7 +8,7 @@
 # of Julia instances and then having an easy way to run code on each and every
 # one of them; that's what Distributed provides.
 #
-# ![](images/Julia6x.png)
+# ![](https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Parallel_Computing/images/Julia6x.png)
 
 using Distributed
 nprocs()

@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Foundations of machine learning")
+
 # # Modeling data 2
 
 #-
@@ -6,10 +9,10 @@
 #
 # Recall that in notebook 3, we saw that we could use a mathematical function to classify an image as an apple or a banana, based on the average amount of green in an image:
 #
-# <img src="data/data_flow.png" alt="Drawing" style="width: 500px;"/>
+# <img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Foundations%20of%20machine%20learning/data/data_flow.png" alt="Drawing" style="width: 500px;"/>
 #
 #
-# <img src="data/what_is_model.png" alt="Drawing" style="width: 300px;"/>
+# <img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Foundations%20of%20machine%20learning/data/what_is_model.png" alt="Drawing" style="width: 300px;"/>
 
 #-
 
@@ -30,11 +33,10 @@
 #
 # Note that in the code below, we don't distinguish between data and parameters - both are just inputs to our function, σ!
 
-## using Pkg; Pkg.add("Images")
 using Images, Statistics
 
-apple = load("data/10_100.jpg")
-banana = load("data/104_100.jpg")
+apple = load(datapath("data/10_100.jpg"))
+banana = load(datapath("data/104_100.jpg"))
 
 apple_green_amount = mean(Float64.(green.(apple)))
 banana_green_amount = mean(Float64.(green.(banana)))
@@ -58,7 +60,6 @@ println("Average green for banana = $banana_green_amount")
 
 # We can understand how our choice of `w` and `b` affects our model by seeing how our values for `w` and `b` change the plot of the $\sigma$ function.
 
-## using Pkg; Pkg.add("Plots")
 using Plots; gr()   # GR works better for interactive manipulations
 
 # Run the code in the next cell. You should see two "sliders" appear, one for `w` and one for `b`.
@@ -91,7 +92,7 @@ scatter!([banana_green_amount],[1.0], label="banana")
 
 # Once we have a model, we have a computational representation for how to choose between "apple" and "banana". So let's pull in some new images and see what our model says about them!
 
-apple2 = load("data/107_100.jpg")
+apple2 = load(datapath("data/107_100.jpg"))
 
 #-
 
@@ -116,7 +117,7 @@ scatter!([green_amount], [0.0], label="new apple")
 
 # To get the desired overlay, the code we need is
 
-mybanana = load("data/8_100.jpg")
+mybanana = load(datapath("data/8_100.jpg"))
 mybanana_green_amount = mean(Float64.(green.(banana)))
 scatter!([mybanana_green_amount], [1.0], label="my banana")
 

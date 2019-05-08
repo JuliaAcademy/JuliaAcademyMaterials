@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Parallel_Computing")
+
 # # GPUs
 #
 # The graphics processor in your computer is _itself_ like a mini-computer highly
@@ -16,11 +19,11 @@
 #
 # This is what a typical consumer CPU looks like:
 #
-# ![](images/i7.jpg)
+# ![](https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Parallel_Computing/images/i7.jpg)
 #
 # And this is what a GPU looks like:
 #
-# ![](images/GK110.jpg)
+# ![](https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Parallel_Computing/images/GK110.jpg)
 #
 # Each SMX isn't just one "core", each is a _streaming multiprocessor_ capable of running hundreds of threads simultaneously itself.  There are so many threads, in fact, that you reason about them in groups of 32 — called a "warp."  No, no [that warp](https://www.google.com/search?tbm=isch&q=warp&tbs=imgo:1), [this one](https://www.google.com/search?tbm=isch&q=warp%20weaving&tbs=imgo:1).
 #
@@ -32,7 +35,7 @@
 #
 # Each thread is relatively limited — and a warp is almost like a SIMD unit that supports branching. Except it's still only executing one instruction even after a branch:
 #
-# ![](images/warp-branch.png)
+# ![](https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Parallel_Computing/images/warp-branch.png)
 
 #-
 
@@ -81,7 +84,7 @@ Flux.train!(loss, train[1:1], opt, cb = () -> @show(accuracy(tX, tY)))
 
 # Now let's re-do it on a GPU. "All" it takes is moving the data there with `gpu`!
 
-include("scripts/fixupCUDNN.jl") # JuliaBox uses an old version of CuArrays; this backports a fix for it
+include(datapath("scripts/fixupCUDNN.jl")) # JuliaBox uses an old version of CuArrays; this backports a fix for it
 gputrain = gpu.(train[1:10])
 gpum = gpu(m)
 gputX = gpu(tX)

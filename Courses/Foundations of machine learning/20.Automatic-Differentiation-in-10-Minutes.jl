@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Foundations of machine learning")
+
 # Follow the video on https://www.youtube.com/watch?v=vAp6nUMrKYg.
 
 #-
@@ -44,13 +47,7 @@ x=2; Babylonian(x),√x  # Type \sqrt+<tab> to get the symbol
 
 #-
 
-## using Pkg
-## Pkg.add("Plots")
-## Pkg.add(plotly)
 using Plots
-## plotly()
-gr()
-#pyplot()
 
 #-
 
@@ -114,7 +111,6 @@ end
 #
 # Note: Python and Julia are good friends.  It's not a competition!  Watch how nicely we can use the same code now with SymPy.
 
-## using Pkg; Pkg.add("SymPy")
 using SymPy
 
 #-
@@ -247,9 +243,6 @@ nthroot( x+ϵ,3), ∛x, 1/x^(2/3)/3
 # ## Forward Diff
 # Now that you understand it, you can use the official package
 
-## using Pkg
-## Pkg.add("ForwardDiff")
-
 #-
 
 using ForwardDiff
@@ -309,7 +302,6 @@ ForwardDiff.gradient(x->x'A*x,x)
 
 #-
 
-#Pkg.add("LinearAlgebra")
 using LinearAlgebra
 n = 4
 Strang = SymTridiagonal(2*ones(n),-ones(n-1))

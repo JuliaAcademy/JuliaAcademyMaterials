@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Deep learning with Flux")
+
 # # Learning with a single neuron using Flux.jl
 #
 # In this notebook, we'll use `Flux` to create a single neuron and teach it to learn, as we did by hand in notebook 10!
@@ -8,11 +11,10 @@
 #
 # Let's start by reading in our data
 
-## using Pkg; Pkg.add("CSV"); Pkg.add("DataFrames")
 using CSV, DataFrames, Flux
 
-apples = DataFrame(CSV.File("data/apples.dat", delim='\t', allowmissing=:none, normalizenames=true))
-bananas = DataFrame(CSV.File("data/bananas.dat", delim='\t', allowmissing=:none, normalizenames=true))
+apples = DataFrame(CSV.File(datapath("data/apples.dat"), delim='\t', allowmissing=:none, normalizenames=true))
+bananas = DataFrame(CSV.File(datapath("data/bananas.dat"), delim='\t', allowmissing=:none, normalizenames=true))
 
 # and processing it to extract information about the red and green coloring in our images:
 
@@ -75,7 +77,7 @@ plot(relu, -5, 5)
 
 # Let's use `Flux` to build our neuron with 2 inputs and 1 output:
 #
-#  <img src="data/single-neuron.png" alt="Drawing" style="width: 500px;"/>
+#  <img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Deep%20learning%20with%20Flux/data/single-neuron.png" alt="Drawing" style="width: 500px;"/>
 
 #-
 

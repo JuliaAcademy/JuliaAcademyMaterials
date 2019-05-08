@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+import JuliaAcademyData; JuliaAcademyData.activate("Foundations of machine learning")
+using JuliaAcademyData;
 # ## Functions
 #
 #
@@ -103,7 +106,6 @@ end
 #
 # In addition, it allows us to use different "backends", which are the other libraries that actually carry out the plotting following the instructions from `Plots.jl`.
 
-## using Pkg; Pkg.add("Plots")
 using Plots
 gr()   # use the GR "backend" (plotting library)
 

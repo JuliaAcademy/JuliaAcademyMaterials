@@ -1,5 +1,7 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Foundations of machine learning")
+
 ## Run this cell to load the graphics packages
-## using Pkg; Pkg.add("Plots")
 using Plots; gr()
 
 # ## Adding a function parameter

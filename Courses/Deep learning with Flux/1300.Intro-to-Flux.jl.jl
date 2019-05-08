@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Deep learning with Flux")
+
 # <br/>
 #
 # # Intro to Flux.jl
@@ -32,7 +35,7 @@ plot(σ, -5, 5, label="\\sigma", xlabel="x", ylabel="\\sigma\\(x\\)")
 
 # Importantly, `Flux` allows us to *automatically create neurons* with the **`Dense`** function. For example, in the last notebook, we were looking at a neuron with 2 inputs and 1 output:
 #
-#  <img src="data/single-neuron.png" alt="Drawing" style="width: 500px;"/>
+#  <img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Deep%20learning%20with%20Flux/data/single-neuron.png" alt="Drawing" style="width: 500px;"/>
 #
 #  We could create a neuron with two inputs and one output via
 
@@ -77,8 +80,8 @@ methods(Flux.mse)
 
 using CSV, DataFrames
 
-apples = DataFrame(CSV.File("data/apples.dat", delim='\t', allowmissing=:none, normalizenames=true))
-bananas = DataFrame(CSV.File("data/bananas.dat", delim='\t', allowmissing=:none, normalizenames=true));
+apples = DataFrame(CSV.File(datapath("data/apples.dat"), delim='\t', allowmissing=:none, normalizenames=true))
+bananas = DataFrame(CSV.File(datapath("data/bananas.dat"), delim='\t', allowmissing=:none, normalizenames=true));
 
 #-
 

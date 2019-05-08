@@ -46,6 +46,14 @@ git-tree-sha1 = "1f7a25b53ec67f5e9422f1f551ee216503f4a0fa"
 uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 version = "0.20.0"
 
+[[JuliaAcademyData]]
+deps = ["Pkg"]
+git-tree-sha1 = "6cc6db29d6560619be88d0075d697047eb484f92"
+repo-rev = "master"
+repo-url = "https://github.com/JuliaComputing/JuliaAcademyData.jl"
+uuid = "18b7da76-0988-5e3b-acac-6290be3a708f"
+version = "0.1.0"
+
 [[LibGit2]]
 uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
 

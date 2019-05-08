@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Parallel_Computing")
+
 # # Multithreading
 #
 # Now we're finally ready to start talking about running things on multiple
@@ -13,8 +16,6 @@ versioninfo(verbose = true)
 #-
 
 #nb ;cat /proc/cpuinfo # on Linux machines
-
-# import Pkg; Pkg.add("Hwloc")
 
 using Hwloc
 Hwloc.num_physical_cores()
@@ -352,11 +353,11 @@ BLAS.set_num_threads(1)
 #
 # This is what a typical modern cpu looks like:
 #
-# ![Intel Core i7](images/i7.jpg)
+# ![Intel Core i7](https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Parallel_Computing/images/i7.jpg)
 #
 # Multiple cores on the same processor share the L3 cache, but do not share L1 and L2 caches! So what happens if we're accessing and mutating data from the same array across multiple cores?
 #
-# ![Cache coherency](images/false-sharing.gif)
+# ![Cache coherency](https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Parallel_Computing/images/false-sharing.gif)
 #
 # Unlike "true" sharing — which we saw above — false sharing will still return the correct answer! But it does so at the cost of performance. The cores recognize they don't have exclusive access to the cache line and so upon modification they alert all other cores to invalidate and re-fetch the data.
 #

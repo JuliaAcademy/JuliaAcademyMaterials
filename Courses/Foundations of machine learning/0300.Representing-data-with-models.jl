@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Foundations of machine learning")
+
 # # Representing data in a computer
 #
 # The core of data science and machine learning is **data**: we are interested in extracting knowledge from data.
@@ -10,14 +13,13 @@
 #
 # Let's take a look at some fruit. Using the `Images.jl` library, we can load in some images:
 
-## using Pkg; Pkg.add(["Images", "ImageMagick", "Plots"])
 using Images
 
-apple = load("data/10_100.jpg")
+apple = load(datafile("data/10_100.jpg"))
 
 #-
 
-banana = load("data/104_100.jpg")
+banana = load(datafile("data/104_100.jpg"))
 
 # Here we have images of apples and bananas. We would eventually like to build a program that can automatically distinguish between the two. However, the computer doesn't "see" an apple or a banana; instead, it just sees numbers.
 #
@@ -27,7 +29,7 @@ banana = load("data/104_100.jpg")
 
 #-
 
-# <img src="data/array2d.png" alt="attachment:array2d.png" width="500"/>
+# <img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Foundations%20of%20machine%20learning/data/array2d.png" alt="attachment:array2d.png" width="500"/>
 
 #-
 
@@ -221,11 +223,11 @@ mean(Float64.(green.(banana)))
 ## using Pkg; Pkg.add("Images")
 using Images, Statistics
 
-apple = load("data/10_100.jpg")
+apple = load(datafile("data/10_100.jpg"))
 
 #-
 
-banana = load("data/104_100.jpg")
+banana = load(datafile("data/104_100.jpg"))
 
 # and then compare their average value for the color red, we end up with something that is perhaps surprising:
 
@@ -334,11 +336,11 @@ banana_green_amount = mean(Float64.(green.(banana)));
 #
 # We want to model the connection between "the average amount of green" and "is an apple or banana".
 #
-# <img src="data/data_flow.png" alt="Drawing" style="width: 800px;"/>
+# <img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Foundations%20of%20machine%20learning/data/data_flow.png" alt="Drawing" style="width: 800px;"/>
 #
 # This model is a mathematical function which takes in our data and spits out a number that we will interpret as "is an apple" or "is a banana".
 #
-# <img src="data/what_is_model.png" alt="Drawing" style="width: 500px;"/>
+# <img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Foundations%20of%20machine%20learning/data/what_is_model.png" alt="Drawing" style="width: 500px;"/>
 #
 #
 # We will interpret the output of the function as "is an apple" if the output is close to 0, and "is a banana" if it's close to 1. Anything in the middle is something we are unsure about. Here we're using a mathematical function to perform a **classification**.

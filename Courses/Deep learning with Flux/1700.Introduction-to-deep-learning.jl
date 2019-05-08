@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Deep learning with Flux")
+
 # <br />
 # ## Going deep: Deep neural networks
 #
@@ -20,27 +23,27 @@
 # This is a little perplexing when you first see it. We used neurons to train the model before: why would sticking the output from neurons into other neurons help us fit the data better? The answer can be understood by drawing pictures. Geometrically, the matrix multiplication inside of a layer of neurons is streching and rotating the axis that we can vary:
 
 ## using Plots, Random; Random.seed!(0); xs = range(0, stop=10, length=200); ys = randn.() .+ xs .+ 0.5.*xs.^1.5 .+ 6.0.*sin.(clamp.(xs .- 5, 0, Inf)) .+ 4.5.*clamp.(.-abs.(xs .- 2), -2, 0); scatter(xs, ys, label="", ticks = false, title="Original data", ylim=extrema(ys).+[-.5,.5]); savefig("data/17-raw.png"); fit1 = [xs ones(size(xs))] \ ys; linear1(x) = fit1[1]*x + fit1[2]; plot!(linear1, label="Linear transform", linewidth=4, legend=:topleft); savefig("data/17-raw-withfit.png");
-HTML("""<img src="data/17-raw.png" onclick="this.src='data/17-raw-withfit.png'"/>""")
+HTML("""<img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Deep%20learning%20with%20Flux/data/17-raw.png" onclick="this.src='https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Deep%20learning%20with%20Flux/data/17-raw-withfit.png'"/>""")
 
 # A nonlinear transformation—such as the sigmoid function or a piecewise linear function—then adds a bump to this linearly-transformed data:
 
 ## scatter(xs, ys .- linear1.(xs), ticks = false, label = "", title="data with linear transform", ylim=extrema(ys).+[-.5,.5]); savefig("data/17-linear1.png"); nonlinearity(x) = clamp.(4.0.*x .- 4.5, -4, 4); plot!(nonlinearity, label = "nonlinearity", linewidth=4); savefig("data/17-linear1-withfit.png");
-HTML("""<img src="data/17-linear1.png" onclick="this.src='data/17-linear1-withfit.png'"/>""")
+HTML("""<img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Deep%20learning%20with%20Flux/data/17-linear1.png" onclick="this.src='https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Deep%20learning%20with%20Flux/data/17-linear1-withfit.png'"/>""")
 
 # Resulting in a bit more of the data accounted for:
 
 ## ys2 = ys .- linear1.(xs) .- nonlinearity.(xs); scatter(xs, ys2, ticks = false, label = "", title="data after first 'layer'", ylim=extrema(ys).+[-.5,.5]); savefig("data/17-nonlinear1.png"); fit2 = [xs ones(size(xs))] \ ys2; linear2(x) = fit2[1]*x + fit2[2]; plot!(linear2, label="second linear tranform", linewidth=4); savefig("data/17-nonlinear1-withfit.png");
-HTML("""<img src="data/17-nonlinear1.png" onclick="this.src='data/17-nonlinear1-withfit.png'"/>""")
+HTML("""<img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Deep%20learning%20with%20Flux/data/17-nonlinear1.png" onclick="this.src='https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Deep%20learning%20with%20Flux/data/17-nonlinear1-withfit.png'"/>""")
 
 # Now let's repeat this process. When we send the data through another layer of neurons, we get another rotation and another "bump":
 
 ## ys3 = ys2 .- linear2.(xs); scatter(xs .- 4.5, ys3, ticks = false, label = "", title="data after first layer + second linear transform", ylim=extrema(ys).+[-.5,.5]); savefig("data/17-linear2.png"); plot!(nonlinearity, label = "nonlinearity", linewidth=4); savefig("data/17-linear2-withfit.png");
-HTML("""<img src="data/17-linear2.png" onclick="this.src='data/17-linear2-withfit.png'"/>""")
+HTML("""<img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Deep%20learning%20with%20Flux/data/17-linear2.png" onclick="this.src='https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Deep%20learning%20with%20Flux/data/17-linear2-withfit.png'"/>""")
 
 #-
 
 ## ys4 = ys3 .- nonlinearity.(xs .- 4.5); scatter(xs, ys4, ticks = false, label = "", title="data after second 'layer'", ylim=extrema(ys).+[-.5,.5]); savefig("data/17-nonlinear2.png");
-HTML("""<img src="data/17-nonlinear2.png"/>""")
+HTML("""<img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Deep%20learning%20with%20Flux/data/17-nonlinear2.png"/>""")
 
 #
 # Visually, we see that if we keep doing this process we can make the axis line up with any data. What this means is that **if we have enough layers, then our neural network can approximate any model**.

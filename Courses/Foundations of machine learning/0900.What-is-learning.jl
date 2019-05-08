@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Foundations of machine learning")
+
 # ## What is learning?
 #
 # Computers read data, as we saw in notebooks 1 and 2. We can then build functions that model that data to make decisions, as we saw in notebooks 3 and 5.
@@ -12,14 +15,13 @@
 #
 # Let's go back to our example of fitting parameters from notebook 3. Recall that we looked at whether the amount of green in the pictures could distinguish between an apple and a banana, and used a sigmoid function to model our choice of "apple or banana" using the amount of green in an image.
 
-## using Pkg; Pkg.add(["Plots", "Images"])
 using Plots; gr()
 using Images, Statistics
 
 σ(x,w,b) = 1 / (1 + exp(-w*x+b))
 
-apple =  load("data/10_100.jpg")
-banana = load("data/104_100.jpg")
+apple =  load(datapath("data/10_100.jpg"))
+banana = load(datapath("data/104_100.jpg"))
 apple_green_amount =  mean(Float64.(green.(apple)))
 banana_green_amount = mean(Float64.(green.(banana)));
 

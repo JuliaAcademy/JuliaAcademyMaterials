@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Foundations of machine learning")
+
 # # Representing data in a computer
 #
 # The core of data science and machine learning is **data**: we are interested in extracting knowledge from data.
@@ -10,14 +13,13 @@
 #
 # Let's take a look at some fruit. Using the `Images.jl` library, we can load in some images:
 
-## using Pkg; Pkg.add(["Images", "ImageMagick", "Plots"])
 using Images
 
-apple = load("data/10_100.jpg")
+apple = load(datapath("data/10_100.jpg"))
 
 #-
 
-banana = load("data/104_100.jpg")
+banana = load(datapath("data/104_100.jpg"))
 
 # Here we have images of apples and bananas. We would eventually like to build a program that can automatically distinguish between the two. However, the computer doesn't "see" an apple or a banana; instead, it just sees numbers.
 #
@@ -27,7 +29,7 @@ banana = load("data/104_100.jpg")
 
 #-
 
-# <img src="data/array2d.png" alt="attachment:array2d.png" width="500"/>
+# <img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Foundations%20of%20machine%20learning/data/array2d.png" alt="attachment:array2d.png" width="500"/>
 
 #-
 

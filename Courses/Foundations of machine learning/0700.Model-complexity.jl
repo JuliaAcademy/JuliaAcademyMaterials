@@ -10,7 +10,7 @@
 #
 # In the image below, we depict a data set that is close to linear, and models that exhibit underfitting, fitting well, and overfitting, from left to right:
 #
-# <img src="data/model_fitting.png" alt="Drawing" style="width: 800px;"/>
+# <img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Foundations%20of%20machine%20learning/data/model_fitting.png" alt="Drawing" style="width: 800px;"/>
 #
 #
 # In the first image, the model accounts for the slope along which the data falls, but not the offset.

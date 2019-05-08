@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Deep learning with Flux")
+
 # <br /><br />
 #
 # ## Neural networks
@@ -12,7 +15,7 @@
 #
 # What if we wanted to distinguish between apples, bananas, *and* grapes? We could use *vectors* of `0` or `1` values to symbolize each output.
 #
-# <img src="data/fruit-salad.png" alt="Drawing" style="width: 300px;"/>
+# <img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Deep%20learning%20with%20Flux/data/fruit-salad.png" alt="Drawing" style="width: 300px;"/>
 #
 # The idea of using vectors is that different directions in the space of outputs encode information about different types of inputs.
 
@@ -86,13 +89,13 @@ W*x
 #
 # Previously we worked with a single neuron, which we visualized as
 #
-# <img src="data/single-neuron.png" alt="Drawing" style="width: 300px;"/>
+# <img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Deep%20learning%20with%20Flux/data/single-neuron.png" alt="Drawing" style="width: 300px;"/>
 #
 # where we have two pieces of data (green) coming into a single neuron (pink) that returned a single output. We could use this single output to do binary classification - to identify an image of a fruit as `1`, meaning banana or as `0`, meaning not a banana (or an apple).
 #
 # To do non-binary classification, we can use a layer of neurons, which we can visualize as
 #
-# <img src="data/single-layer.png" alt="Drawing" style="width: 300px;"/>
+# <img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Deep%20learning%20with%20Flux/data/single-layer.png" alt="Drawing" style="width: 300px;"/>
 #
 # We now have stacked a bunch of neurons on top of each other to hopefully work together and train to output results of more complicated features.
 #
@@ -111,14 +114,14 @@ W*x
 
 using CSV, DataFrames, Flux, Plots
 ## Load apple data in CSV.read for each file
-apples1 = DataFrame(CSV.File("data/Apple_Golden_1.dat", delim='\t', allowmissing=:none, normalizenames=true))
-apples2 = DataFrame(CSV.File("data/Apple_Golden_2.dat", delim='\t', allowmissing=:none, normalizenames=true))
-apples3 = DataFrame(CSV.File("data/Apple_Golden_3.dat", delim='\t', allowmissing=:none, normalizenames=true))
+apples1 = DataFrame(CSV.File(datapath("data/Apple_Golden_1.dat"), delim='\t', allowmissing=:none, normalizenames=true))
+apples2 = DataFrame(CSV.File(datapath("data/Apple_Golden_2.dat"), delim='\t', allowmissing=:none, normalizenames=true))
+apples3 = DataFrame(CSV.File(datapath("data/Apple_Golden_3.dat"), delim='\t', allowmissing=:none, normalizenames=true))
 ## And then concatenate them all together
 apples = vcat(apples1, apples2, apples3)
-bananas = DataFrame(CSV.File("data/Banana.dat", delim='\t', allowmissing=:none, normalizenames=true))
-grapes1 = DataFrame(CSV.File("data/Grape_White.dat", delim='\t', allowmissing=:none, normalizenames=true))
-grapes2 = DataFrame(CSV.File("data/Grape_White_2.dat", delim='\t', allowmissing=:none, normalizenames=true))
+bananas = DataFrame(CSV.File(datapath("data/Banana.dat"), delim='\t', allowmissing=:none, normalizenames=true))
+grapes1 = DataFrame(CSV.File(datapath("data/Grape_White.dat"), delim='\t', allowmissing=:none, normalizenames=true))
+grapes2 = DataFrame(CSV.File(datapath("data/Grape_White_2.dat"), delim='\t', allowmissing=:none, normalizenames=true))
 grapes = vcat(grapes1, grapes2)
 
 #-
@@ -138,7 +141,7 @@ ys = vcat(fill([1,0,0], size(x_apples)),
 
 # Recall:
 #
-# <img src="data/fruit-salad.png" alt="Drawing" style="width: 300px;"/>
+# <img src="https://raw.githubusercontent.com/JuliaComputing/JuliaAcademyData.jl/master/courses/Deep%20learning%20with%20Flux/data/fruit-salad.png" alt="Drawing" style="width: 300px;"/>
 
 #-
 

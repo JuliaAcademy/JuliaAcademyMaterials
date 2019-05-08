@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Deep learning with Flux")
+
 # # Multiple neural network layers with `Flux.jl`
 
 #-
@@ -6,7 +9,7 @@
 #
 # By adding another layer between the inputs and the output neurons, a so-called "hidden layer", we will get our first serious **neural network**, looking something like this:
 
-include("scripts/draw_neural_net.jl")
+include(datapath("scripts/draw_neural_net.jl"))
 draw_network([2, 4, 3])
 
 # We will continue to use two input data and try to classify into three types, so we will have three output neurons. We have chosen to add a single "hidden layer" in between, and have arbitrarily chosen to put 4 neurons there.
@@ -28,12 +31,12 @@ using Flux: onehot
 ## using Pkg; Pkg.add("CSV")
 using CSV, DataFrames
 
-apples_1 = DataFrame(CSV.File("data/Apple_Golden_1.dat", delim='\t', allowmissing=:none, normalizenames=true))
-apples_2 = DataFrame(CSV.File("data/Apple_Golden_2.dat", delim='\t', allowmissing=:none, normalizenames=true))
-apples_3 = DataFrame(CSV.File("data/Apple_Golden_3.dat", delim='\t', allowmissing=:none, normalizenames=true))
-bananas = DataFrame(CSV.File("data/Banana.dat", delim='\t', allowmissing=:none, normalizenames=true))
-grapes_1 = DataFrame(CSV.File("data/Grape_White.dat", delim='\t', allowmissing=:none, normalizenames=true))
-grapes_2 = DataFrame(CSV.File("data/Grape_White_2.dat", delim='\t', allowmissing=:none, normalizenames=true))
+apples_1 = DataFrame(CSV.File(datapath("data/Apple_Golden_1.dat"), delim='\t', allowmissing=:none, normalizenames=true))
+apples_2 = DataFrame(CSV.File(datapath("data/Apple_Golden_2.dat"), delim='\t', allowmissing=:none, normalizenames=true))
+apples_3 = DataFrame(CSV.File(datapath("data/Apple_Golden_3.dat"), delim='\t', allowmissing=:none, normalizenames=true))
+bananas = DataFrame(CSV.File(datapath("data/Banana.dat"), delim='\t', allowmissing=:none, normalizenames=true))
+grapes_1 = DataFrame(CSV.File(datapath("data/Grape_White.dat"), delim='\t', allowmissing=:none, normalizenames=true))
+grapes_2 = DataFrame(CSV.File(datapath("data/Grape_White_2.dat"), delim='\t', allowmissing=:none, normalizenames=true))
 
 apples = vcat(apples_1, apples_2, apples_3)
 grapes = vcat(grapes_1, grapes_2);

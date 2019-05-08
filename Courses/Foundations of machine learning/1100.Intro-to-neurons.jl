@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Foundations of machine learning")
+
 # ## Intro to neurons
 #
 # At this point, we know how to build models and have a computer automatically learn how to match the model to data. This is the core of how any machine learning method works.
@@ -30,7 +33,7 @@
 
 # In the video, we see that one huge class of learning techniques is based around neurons, that is, *artificial neurons*. These are caricatures of real, biological neurons. Both *artificial* and *biological* neurons have several inputs $x_1, \ldots, x_n$, and a single output, $y$. Schematically they look like this:
 
-include("scripts/draw_neural_net.jl")
+include(datapath("scripts/draw_neural_net.jl"))
 
 number_inputs, number_neurons = 4, 1
 

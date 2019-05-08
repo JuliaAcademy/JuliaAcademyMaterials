@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Foundations of machine learning")
+
 # # Minimizing functions - how a computer learns
 
 #-
@@ -24,7 +27,6 @@ L1(w) = (y1 - f(x1, w))^2
 
 #-
 
-## using Pkg; Pkg.add("Plots")
 using Plots; gr()
 
 #-

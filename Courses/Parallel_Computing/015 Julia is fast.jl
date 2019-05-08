@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("Parallel_Computing")
+
 # # Julia is fast
 #
 # Very often, benchmarks are used to compare languages.  These benchmarks can
@@ -66,9 +69,6 @@ sum(a)
 # The `@time` macro can yield noisy results, so it's not our best choice for benchmarking!
 #
 # Luckily, Julia has a `BenchmarkTools.jl` package to make benchmarking easy and accurate:
-
-## using Pkg
-## Pkg.add("BenchmarkTools")
 
 #-
 
@@ -173,7 +173,6 @@ d
 
 # The `PyCall` package provides a Julia interface to Python:
 
-## using Pkg; Pkg.add("PyCall")
 using PyCall
 
 #-
@@ -203,7 +202,6 @@ d
 # `numpy` is an optimized C library, callable from Python.
 # It may be installed within Julia as follows:
 
-## using Pkg; Pkg.add("Conda")
 using Conda
 
 #-
