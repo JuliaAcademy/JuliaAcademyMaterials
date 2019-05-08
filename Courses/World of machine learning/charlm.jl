@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("World of machine learning")
+
 # # Character based RNN language model
 # Based on http://karpathy.github.io/2015/05/21/rnn-effectiveness
 
@@ -7,7 +10,7 @@
 # 1-Adds required packages to Julia.   
 # 2-Loads the data and a pretrained model.
 
-cd("charlm")
+cd(datapath("charlm"))
 include("charlm.jl")
 
 # ## Sample Data-1

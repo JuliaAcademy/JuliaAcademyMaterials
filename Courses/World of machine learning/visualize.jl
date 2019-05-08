@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("World of machine learning")
+
 # # Visual Q&A Demo
 
 #-
@@ -6,8 +9,7 @@
 # 1-Installs required packages   
 # 2-Downloads sample data and a pretrained model.     
 
-cd("visualize")
-using Pkg; Pkg.activate("."); Pkg.instantiate(); #install required packages
+cd(datapath("visualize"))
 include("demosetup.jl") 
 include("src/main.jl")
 

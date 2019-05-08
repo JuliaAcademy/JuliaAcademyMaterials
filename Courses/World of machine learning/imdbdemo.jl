@@ -1,3 +1,6 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("World of machine learning")
+
 # # IMDB Movie Review Sentiment Analysis Demo
 
 #-
@@ -7,7 +10,7 @@
 # * Loads the data and a pretrained model.
 # * See [07.imdb.ipynb](https://github.com/denizyuret/Knet.jl/blob/v1.1.1/tutorial/07.imdb.ipynb) to see how the model was trained.
 
-cd("imdb")
+cd(datapath("imdb"))
 include("imdb.jl")
 
 # ## Sample Data

@@ -1,3 +1,7 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("World of machine learning")
+cd(datapath("mnist"))
+
 # # Load and minibatch MNIST data
 # (c) Deniz Yuret, 2018
 
@@ -7,12 +11,6 @@
 # * Prerequisites: [The iteration interface](https://docs.julialang.org/en/v1/manual/interfaces/#man-interface-iteration-1)
 # * Knet: mnistdata, mnistview (used and explained)
 # * Knet: dir, minibatch (used by mnist.jl)
-
-cd("mnist")
-using Pkg
-for p in ("Knet","Images","ImageMagick", "Distributed")
-    haskey(Pkg.installed(),p) || Pkg.add(p)
-end
 
 #-
 
@@ -68,11 +66,6 @@ end
 # * Knet: conv4, pool, mat (explained)
 # * Knet: dir, gpu, minibatch, KnetArray (used by mnist.jl)
 # * Knet: SGD, train!, Train, load, save (used by trainresults)
-
-using Pkg
-for p in ("Knet","Plots","ProgressMeter")
-    haskey(Pkg.installed(),p) || Pkg.add(p)
-end
 
 # ## Introduction to convolution
 

@@ -1,7 +1,10 @@
+import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaComputing/JuliaAcademyData.jl"))
+using JuliaAcademyData; activate("World of machine learning")
+
 # # Image classification with very deep convolutional networks
 
 using Knet
-cd("vgg")
+cd(datapath("vgg"))
 include("vgg.jl")
 
 #-

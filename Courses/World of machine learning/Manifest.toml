@@ -6,6 +6,12 @@ git-tree-sha1 = "dfaf23dba016254bb0eed6de326510caea2889bf"
 uuid = "621f4979-c628-5d54-868e-fcf4e3e8185c"
 version = "0.4.0"
 
+[[ArgParse]]
+deps = ["Compat", "Test", "TextWrap"]
+git-tree-sha1 = "14d5789a99e6bea3e258d668ec09359a9feaf2d1"
+uuid = "c7e460c6-2fb9-53a9-8c5b-16f535851c63"
+version = "0.6.2"
+
 [[AutoGrad]]
 deps = ["Libdl", "LinearAlgebra", "Printf", "Random", "SpecialFunctions", "Statistics", "Test", "TimerOutputs"]
 git-tree-sha1 = "ab7348be00ec33212853f3292be3b9943675a38f"
@@ -261,6 +267,12 @@ git-tree-sha1 = "67ee0ea9efe781edb18641f36b8dcd73675653c4"
 uuid = "6a3955dd-da59-5b1f-98d4-e7296123deb5"
 version = "0.6.0"
 
+[[ImageMagick]]
+deps = ["BinaryProvider", "ColorTypes", "FileIO", "FixedPointNumbers", "ImageCore", "InteractiveUtils", "Libdl", "Pkg", "Random"]
+git-tree-sha1 = "9e08cf4db7caae648384f2c30b2a1d9a6322f596"
+uuid = "6218d12a-5da1-5696-b52f-db25d2ecc6d1"
+version = "0.7.3"
+
 [[ImageMetadata]]
 deps = ["AxisArrays", "ColorVectorSpace", "Colors", "FixedPointNumbers", "ImageAxes", "ImageCore", "IndirectArrays"]
 git-tree-sha1 = "631c3e1dc2b645ed3bdee14418f8bbfc38b9b7f0"
@@ -468,6 +480,12 @@ git-tree-sha1 = "48058bc11607676e5bbc0b974af79106c6200787"
 uuid = "92933f4c-e287-5a05-a399-4b506db050ca"
 version = "0.9.0"
 
+[[PyCall]]
+deps = ["Conda", "Dates", "Libdl", "LinearAlgebra", "MacroTools", "Pkg", "Serialization", "Statistics", "Test", "VersionParsing"]
+git-tree-sha1 = "6e5bac1b1faf3575731a6a5b76f638f2389561d3"
+uuid = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
+version = "1.91.2"
+
 [[REPL]]
 deps = ["InteractiveUtils", "Markdown", "Sockets"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
@@ -576,6 +594,12 @@ uuid = "9d418dce-91a8-11e8-0173-7b01a971d501"
 [[Test]]
 deps = ["Distributed", "InteractiveUtils", "Logging", "Random"]
 uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[[TextWrap]]
+deps = ["Compat", "Test"]
+git-tree-sha1 = "8355cc559e85469cd4dbe927c375f61d3750e002"
+uuid = "b718987f-49a8-5099-9789-dcd902bef87d"
+version = "0.3.0"
 
 [[TiledIteration]]
 deps = ["OffsetArrays", "Test"]
