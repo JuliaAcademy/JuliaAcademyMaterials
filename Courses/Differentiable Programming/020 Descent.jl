@@ -209,200 +209,23 @@ p.grad # but now we can see the gradients involved in that computation!
 # ```
 #
 # But we can be a bit smarter about this just by asking Flux to handle everything
-# with its train! function:
+# with its train! function and associated functionality:
 
-data = Iterators.repeated((), 100) # We'll handle the data in our loss function manually
+data = Iterators.repeated((ts, ys), 100)
 opt = ADAM(0.1)
 cb = function () #callback function to observe training
 #nb     IJulia.clear_output(true)
-    scatter(ts, ys)
-    display(plot!(solve(remake(prob,p=Flux.data(p)),Tsit5(),saveat=0.1),ylim=(0,6), title="loss: $(round(Flux.data(diffeq_loss(p, ts, ys)), digits=3))"))
+    scatter(ts, ys, label="data")
+    display(plot!(solve(remake(prob,p=Flux.data(p)),Tsit5(),saveat=0.1),ylim=(0,8), title="loss: $(round(Flux.data(diffeq_loss(p, ts, ys)), digits=3))"))
 end
 # Display the ODE with the initial parameter values.
 cb()
-Flux.train!(()->diffeq_loss(p, ts, ys), [p], data, opt, cb = cb)
+Flux.train!((xs, ys)->diffeq_loss(p, xs, ys), [p], data, opt, cb = cb)
 
-
-η = 0.00001
-for i in 1:50
-    l = diffeq_loss(p, ts, ys)
-    DiffEqFlux.Tracker.back!(l) # we need to back-propagate our tracking of the gradients
-    p.data .-= η*p.grad
-    scatter(ts, ys)
-    display(plot!(solve(remake(prob,p=p.data),Tsit5(),saveat=0.1),ylim=(0,8)))
-end
-
-identity
-
-# mutable struct LVModel5 <: AbstractVector{Float64}
-#     x::Float64
-#     y::Float64
-#     α::Float64
-#     β::Float64
-#     δ::Float64
-#     γ::Float64
-# end
-# Base.size(::LVModel5) = (6,)
-# Base.getindex(m::LVModel5, i::Int) = getfield(m, i)
-# loss(m::LVModel5, xs, ys) = sum((solve(ODEProblem(lotka_volterra,m[1:2],tspan,m[3:end]), Tsit5(), saveat=xs)[1,:] .- ys).^2)
-# lvmodel = LVModel5(rand(6)...)
+# # Summary
 #
-# loss(lvmodel, ts, ys)
-#
-# grads = Zygote.gradient(lvmodel) do x
-#     Zygote.forwarddiff(x) do x
-#         # loss(x, ts, ys)
-#         sum((solve(ODEProblem(lotka_volterra,x[1:2],tspan,x[3:end]), Tsit5(), saveat=ts)[1,:] .- ys).^2)
-#     end
-# end
-# grads
-#
-# # diffeq_rd(m.p,prob,Tsit5(),saveat=0.1)[1,:]
-
-mutable struct LVModel{T}
-    u0::Vector{T}
-    p::Vector{T}
-end
-loss(m::LVModel, xs, ys) = sum((solve(ODEProblem(lotka_volterra,m.u0,tspan,m.p), saveat=xs)[1,:] .- ys).^2)
-lvmodel = LVModel(rand(2), rand(4))
-
-loss(lvmodel, ts, ys)
-
-grads = Zygote.gradient(lvmodel) do x
-    Zygote.forwarddiff([x.u0; x.p]) do x
-        loss(LVModel(x[1:2], x[3:end]), ts, ys)
-        # sum((solve(ODEProblem(lotka_volterra,x[1:2],tspan,x[3:end]), Tsit5(), saveat=ts)[1,:] .- ys).^2)
-    end
-end
-grads[1][]
-
-η = 0.0001
-lvmodel.u0 -= η*grads[1][].u0
-lvmodel.p -= η*grads[1][].p
-
-for i in 1:100
-    grads = Zygote.gradient(lvmodel) do x
-        Zygote.forwarddiff([x.u0; x.p]) do x
-            loss(LVModel(x[1:2], x[3:end]), ts, ys)
-        end
-    end
-    lvmodel.u0 -= η*grads[1][].u0
-    lvmodel.p -= η*grads[1][].p
-end
-rawplot = scatter(ts, ys)
-plot!(rawplot, ts, solve(ODEProblem(lotka_volterra,lvmodel.u0,tspan,lvmodel.p), saveat=ts)[1,:])
-
-#-
-p = rand(4)
-η = 0.0001
-for i in 1:10
-    grads = Zygote.gradient(p) do p
-        Zygote.forwarddiff(p) do p
-            # loss(LVModel([1.0,1.0], x), ts, ys)
-            sum((solve(ODEProblem(lotka_volterra,ones(eltype(p), 2),tspan,p), Tsit5(), saveat=ts)[1,:] .- ys).^2)
-        end
-    end
-    # lvmodel.u0 -= η*grads[1][].u0
-    p .-= η*grads[1]
-end
-rawplot = scatter(ts, ys)
-plot!(rawplot, ts, solve(ODEProblem(lotka_volterra,[1.0,1.0],tspan,lvmodel.p), Tsit5(), saveat=ts)[1,:])
-
-#-
-
-using DiffEqFlux
-
-p = rand(4)
-grads = Zygote.gradient(p) do p
-    Zygote.forwarddiff(p) do p
-        sol = diffeq_rd(p,prob,Tsit5(),saveat=ts)
-        sum(abs2, sol[1,:] .- ys)
-    end
-end
-p .-= η*grads[1]
-rawplot = scatter(ts, ys)
-plot!(rawplot, ts, diffeq_rd(p,prob,Tsit5(),saveat=ts)[1,:])
-
-#-
-# Restart from the blog post
-
-using Flux, DiffEqFlux, DifferentialEquations, Plots
-
-## Setup ODE to optimize
-function lotka_volterra(du,u,p,t)
-  x, y = u
-  α, β, δ, γ = p
-  du[1] = dx = α*x - β*x*y
-  du[2] = dy = -δ*y + γ*x*y
-end
-u0 = [1.0,1.0]
-tspan = (0.0,10.0)
-p = [1.5,1.0,3.0,1.0]
-prob = ODEProblem(lotka_volterra,u0,tspan,p)
-
-# Verify ODE solution
-sol = solve(prob,Tsit5())
-plot(sol)
-
-# Generate data from the ODE
-sol = solve(prob,Tsit5(),saveat=0.1)
-A = sol[1,:] # length 101 vector
-t = 0:0.1:10.0
-scatter!(t,A)
-
-# Build a neural network that sets the cost as the difference from the
-# generated data and 1
-
-p = param([2.2, 1.0, 2.0, 0.4]) # Initial Parameter Vector
-function predict_rd() # Our 1-layer neural network
-  diffeq_rd(p,prob,Tsit5(),saveat=0.1)[1,:]
-end
-loss_rd() = sum(abs2,x-1 for x in predict_rd()) # loss function
-
-# Optimize the parameters so the ODE's solution stays near 1
-
-data = Iterators.repeated((), 100)
-opt = ADAM(0.1)
-cb = function () #callback function to observe training
-  display(loss_rd())
-  # using `remake` to re-create our `prob` with current parameters `p`
-  display(plot(solve(remake(prob,p=Flux.data(p)),Tsit5(),saveat=0.1),ylim=(0,6)))
-end
-# Display the ODE with the initial parameter values.
-cb()
-Flux.train!(loss_rd, [p], data, opt, cb = cb)
-
-
-#-
-
-p = param(ones(4)) # Initial Parameter Vector
-function predict_rd() # Our 1-layer neural network
-  diffeq_rd(p,prob,Tsit5(),saveat=ts)[1,:]
-end
-loss_rd() = sum(abs2,predict_rd() .- ys) # loss function
-
-# Optimize the parameters so the ODE's solution stays near 1
-
-data = Iterators.repeated((), 100)
-opt = ADAM(0.1)
-cb = function () #callback function to observe training
-  display(loss_rd())
-  # using `remake` to re-create our `prob` with current parameters `p`
-  scatter(ts, ys)
-  display(plot!(solve(remake(prob,p=Flux.data(p)),Tsit5(),saveat=0.1),ylim=(0,6)))
-end
-# Display the ODE with the initial parameter values.
-cb()
-Flux.train!(loss_rd, [p], data, opt, cb = cb)
-
-
-#-
-prob = ODEProblem(lotka_volterra,ones(2),tspan,ones(4))
-p = ones(4) # Initial Parameter Vector
-diffeq_loss(p, xs, ys) = sum(abs2,diffeq_fd(p,prob,Tsit5(),saveat=xs)[1,:] .- ys) # loss function
-
-Zygote.gradient(p) do p
-    Zygote.forward(p) do p
-        diffeq_loss(p, ts, ys)
-    end
-end
+# You can now see the power of differentiating whole programs — we can easily
+# and efficiently tune parameters without brute forcing solutions. Gradient
+# descent easily extends to machine learning and artificial intelligence
+# applications, but there are a variety of other places where knowing the gradient can
+# be powerful and helpful.
