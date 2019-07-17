@@ -1,0 +1,12 @@
+[deps]
+BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+DiffEqFlux = "aae7a2af-3d4f-5e19-a356-7da93b79d9d0"
+DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
+Flux = "587475ba-b771-5e3f-ad9e-33799f191a9c"
+ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
+Literate = "98b081ad-f1c9-55d3-8b20-4c87d4299306"
+Optim = "429524aa-4258-5aef-a3af-852621145aeb"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+Trebuchet = "98b73d46-197d-11e9-11eb-69a6ff759d3a"
+Zygote = "e88e6eb3-aa80-5325-afca-941959d7151f"
