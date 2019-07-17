@@ -90,12 +90,11 @@ plot!(p, df.t, linear.(df.t), label="model: loss $(round(Int, loss(linear, df.t,
 # surface gives us the imagery of a hill, and our goal is to find our way to the bottom:
 
 ms, bs = (-1:.01:6, -2:.05:2.5)
-surface(ms, bs, [loss(LinearModel(m, b), df.t, df.y) for b in bs for m in ms],
-    xlabel="m values", ylabel="b values", title="loss value")
+surface(ms, bs, [loss(LinearModel(m, b), df.t, df.y) for b in bs for m in ms], xlabel="m values", ylabel="b values", title="loss value")
 
 # A countour plot makes it a bit more obvious where the minimum is:
-contour(ms, bs, [loss(LinearModel(m, b), df.t, df.y) for b in bs for m in ms],
-    levels=150, xlabel="m values", ylabel="b values")
+
+contour(ms, bs, [loss(LinearModel(m, b), df.t, df.y) for b in bs for m in ms], levels=150, xlabel="m values", ylabel="b values")
 
 # But building those graphs are expensive! And it becomes completely intractible as soon as we
 # have more than a few parameters to fit. We can instead just try nudging the
@@ -137,10 +136,10 @@ grads
 linear.m -= η*grads[1][].m
 linear.b -= η*grads[1][].b
 
-plot!(p, df.t, linear.(df.t),
-    label="updated model: loss $(round(Int, loss(linear, df.t, df.y)))")
+plot!(p, df.t, linear.(df.t), label="updated model: loss $(round(Int, loss(linear, df.t, df.y)))")
 
 # Now we just need to do this a bunch of times!
+
 for i in 1:200
     grads = Zygote.gradient(linear) do m
         return loss(m, df.t, df.y)

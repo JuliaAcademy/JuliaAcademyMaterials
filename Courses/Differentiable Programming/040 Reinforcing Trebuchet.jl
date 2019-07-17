@@ -18,30 +18,28 @@ visualise(t)
 
 # For training and optimisation, we don't need the whole visualisation, just a simple function that accepts and produces numbers. The `shoot` function just takes a wind speed, angle of release and counterweight mass, and tells us how far the projectile got.
 
-function shoot(wind, angle, weight)
+function shoot((wind, angle, weight))
     Trebuchet.shoot((wind, Trebuchet.deg2rad(angle), weight))[2]
 end
 
 #-
 
-shoot(0, 30, 400)
+shoot([0, 45, 400])
 
 # It's worth playing with these parameters to see the impact they have. How far can you throw the projectile, tweaking only the angle of release?
+
+shoot([0, 40, 400])
 
 #-
 
 # There's actually a much better way of aiming the trebuchet. Let's load up a machine learning library, Flux, and see what we can do.
-
-pathof(Trebuchet)
-
-#-
 
 using Flux, Trebuchet
 using Flux.Tracker: gradient, forwarddiff
 
 # Firstly, we're going to wrap `shoot` to take a _parameter vector_ (just a list of the three numbers we're interested in). There's also a call to `forwarddiff` here, which tells Flux to differentiate the trebuchet itself using forward mode. The number of parameters is small, so forward mode will be the most efficient way to do it. Otherwise Flux defaults to reverse mode.
 
-shoot(ps) = forwarddiff(p -> shoot(p...), ps)
+shoot(ps) = forwarddiff(p->shoot(p...), ps)
 
 # We can get a distance as usual.
 
@@ -49,9 +47,10 @@ shoot([0, 45, 200])
 
 # But we can also get something much more interesting: *gradients* for each of those parameters with respect to distance.
 
-gradient(shoot, [0, 45, 200])
+gradient(x->forwarddiff(shoot, x), [0.0, 45, 200])
 
 # What does these numbers mean? The gradient tells us, very roughly, that if we increase a parameter – let's say we make wind speed 1 m/s stronger – distance will also increase by about 4 metres. Let's try that.
+Zygote.gradient(x->forwarddiff(shoot, x), [0.0, 45, 200])
 
 shoot([1, 45, 200])
 
