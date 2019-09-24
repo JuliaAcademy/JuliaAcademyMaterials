@@ -49,9 +49,10 @@ BLAS.set_num_threads(4)
 
 #-
 
-# Multithreading support is marked as "experimental" for Julia 1.0 and is
-# pending a big revamp for Julia version 1.2 or 1.3. The core tenets will be
-# the same, but it should become much easier to use efficiently.
+# Multithreading support is marked as "experimental" so far, but has been
+# significantly improved in version 1.3.
+# In the future, the core ideas will be the same, but it should become
+# easier to use efficiently.
 
 using .Threads
 
@@ -378,12 +379,12 @@ BLAS.set_num_threads(1)
 
 #-
 
-# ## Further improvements coming here!
-#
-# PARTR — the threading improvement I discussed at the beginning aims to address
-# this problem of having library functions implemented with `@threads` and then
-# having callers call them with `@threads`. Uses a state-of-the-art work queue
-# mechanism to make sure that all threads stay busy.
+# ## New in 1.3: parallel @spawn
+
+# Julia 1.3 adds Threads.@spawn, which runs a "task" in parallel
+# on any available thread, using a work queue.
+# This addresses the problem of having library functions implemented with
+# `@threads` and then having callers call them with `@threads`.
 
 #-
 

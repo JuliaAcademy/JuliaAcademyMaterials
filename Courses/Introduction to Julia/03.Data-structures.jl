@@ -151,6 +151,31 @@ favorites = [["koobideh", "chocolate", "eggs"],["penguins", "cats", "sugarglider
 
 numbers = [[1, 2, 3], [4, 5], [6, 7, 8, 9]]
 
+#-
+
+# 2D arrays can be entered using spaces between columns, and semicolons or
+# line breaks between rows:
+
+A = [1 0 0; 0 1 0; 0 0 1]
+B = [1 2
+     3 4]
+
+#-
+
+# Semicolons inside brackets concatenate arrays:
+
+[[1, 2]; [3, 4]]
+
+#-
+
+# Use `size` to get the dimensions of an array:
+
+size([1 2; 3 4; 5 6])
+
+# Note dimension 1 is row, dimension 2 is column
+
+#-
+
 # Below are examples of 2D and 3D arrays populated with random values.
 
 rand(4, 3)
