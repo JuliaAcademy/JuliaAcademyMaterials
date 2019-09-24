@@ -19,7 +19,7 @@
 
 n = 0
 while n < 10
-    n += 1
+    global n += 1
     println(n)
 end
 n
@@ -32,7 +32,7 @@ i = 1
 while i <= length(myfriends)
     friend = myfriends[i]
     println("Hi $friend, it's great to see you!")
-    i += 1
+    global i += 1
 end
 
 # ## for loops
@@ -112,4 +112,3 @@ C = [i + j for i in 1:m, j in 1:n]
 
 @assert length(squares_arr) == 100
 @assert sum(squares_arr) == 338350
-
