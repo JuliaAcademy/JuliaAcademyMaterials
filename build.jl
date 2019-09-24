@@ -4,7 +4,7 @@ srcpath = joinpath(@__DIR__(), "Courses")
 buildpath = joinpath(@__DIR__(), "Notebooks")
 
 if isempty(ARGS)
-    courses = readdir(srcpath)
+    courses = filter(x->isdir(joinpath(srcpath), x) && x !== "Template", readdir(srcpath))
 else
     courses = ARGS
 end
@@ -16,11 +16,13 @@ notebooks_failed = String[]
 
 Base.julia_cmd()
 for dir in courses
+    @info "building $dir..."
     src_course = joinpath(srcpath, dir)
     build_course = mkdir(joinpath(buildpath, dir))
     cp(src_course, build_course; force=true)
 
     Pkg.activate(build_course)
+    test = false
     Pkg.instantiate()
     for file in readdir(build_course)
         if endswith(file, ".jl")
@@ -31,13 +33,13 @@ for dir in courses
             script = """
             pushfirst!(LOAD_PATH, $(repr(academy_environment)));
             import Literate;
-            Literate.notebook($(repr(course)), $(repr(build_course)); credit=false)
+            Literate.notebook($(repr(course)), $(repr(build_course)); credit=false, execute=false)
             """
             try
-                run(`$(Base.julia_cmd()) --project=$(build_course) -e $script`)
+                run(`$(Base.julia_cmd()) -e $script`)
             catch
                 err_src_course = relpath(joinpath(src_course, file), @__DIR__)
-                @error "Script failed to build: $relpath)"
+                @error "Script failed to build: $err_src_course)"
                 push!(notebooks_failed, err_src_course)
             end
             rm(course)

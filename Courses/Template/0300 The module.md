@@ -1,3 +1,5 @@
+<!-- https://www.youtube.com/watch?v=dQw4w9WgXcQ -->
+
 # The module
 
 A course will have many modules. Each module can be thought of as one "lecture"
