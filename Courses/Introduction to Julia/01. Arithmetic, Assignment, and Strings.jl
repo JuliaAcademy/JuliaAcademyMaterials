@@ -132,6 +132,16 @@ x > 0 || error("x must be positive")
 x = 42
 0 < x < 100 || error("x must be between 0 and 100")
 
+# ### Higher precision
+
+big(2)^1000
+
+big(pi)
+
+big"0.1"
+
+big(0.1)
+
 # # Assignment
 #
 # Assignment in Julia is done with the single `=`. All it does is associates a name (on the left) to a value (on the right).
@@ -152,11 +162,24 @@ y # Is still the value 1
 
 #-
 
+# "Simultaneous" multiple assignment
+
+x, y = y, x  # swap x and y
+x, y = y, x  # swap back
+
+#-
+
 ϵ = eps(1.0) # You can make your own unicode names
 
 #-
 
 5ϵ # Juxtaposition is multiplication
+
+#-
+
+# We make use of juxtaposition for complex numbers
+
+(1 + 2im)^2
 
 # ## Updating operators
 #
@@ -228,5 +251,3 @@ println("I have $num_fingers fingers and $num_toes toes.")
 
 @assert days == 365
 @assert days_float == 365.0
-
-
