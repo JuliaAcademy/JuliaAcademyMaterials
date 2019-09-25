@@ -4,8 +4,8 @@
 #
 # Types of data structures covered:
 # 1. Tuples
-# 2. Dictionaries
-# 3. Arrays
+# 2. Named Tuples
+# 3. Dictionaries
 #
 # <br>
 # As an overview, tuples and arrays are both ordered sequences of elements (so we can index into them). Dictionaries and arrays are both mutable.
@@ -89,157 +89,11 @@ myphonebook[1]
 
 #-
 
-# ## Arrays
-#
-# Unlike tuples, arrays are mutable. Unlike dictionaries, arrays contain ordered collections. <br>
-# We can create an array by enclosing this collection in `[ ]`.
-#
-# Syntax: <br>
-# ```julia
-# [item1, item2, ...]```
-#
-#
-# For example, we might create an array to keep track of my friends
-
-myfriends = ["Ted", "Robyn", "Barney", "Lily", "Marshall"]
-
-# The `1` in `Array{String,1}` means this is a one dimensional vector.  An `Array{String,2}` would be a 2d matrix, etc.  The `String` is the type of each element.
-
-#-
-
-# or to store a sequence of numbers
-
-fibonacci = [1, 1, 2, 3, 5, 8, 13]
-
-#-
-
-mixture = [1, 1, 2, 3, "Ted", "Robyn"]
-
-# Once we have an array, we can grab individual pieces of data from inside that array by indexing into the array. For example, if we want the third friend listed in `myfriends`, we write
-
-myfriends[3]
-
-# We can use indexing to edit an existing element of an array
-
-myfriends[3] = "Baby Bop"
-
-# Yes, Julia is 1-based indexing, not 0-based like Python.  Wars are faught over lesser issues. I have a friend with the wisdom of Solomon who proposes settling this once and for all with ½ 😃
-
-#-
-
-# We can also edit the array by using the `push!` and `pop!` functions. `push!` adds an element to the end of an array and `pop!` removes the last element of an array.
-#
-# We can add another number to our fibonnaci sequence
-
-push!(fibonacci, 21)
-
-# and then remove it
-
-pop!(fibonacci)
-
-#-
-
-fibonacci
-
-# So far I've given examples of only 1D arrays of scalars, but arrays can have an arbitrary number of dimensions and can also store other arrays.
-# <br><br>
-# For example, the following are arrays of arrays:
-
-favorites = [["koobideh", "chocolate", "eggs"],["penguins", "cats", "sugargliders"]]
-
-#-
-
-numbers = [[1, 2, 3], [4, 5], [6, 7, 8, 9]]
-
-#-
-
-# 2D arrays can be entered using spaces between columns, and semicolons or
-# line breaks between rows:
-
-A = [1 0 0; 0 1 0; 0 0 1]
-B = [1 2
-     3 4]
-
-#-
-
-# Semicolons inside brackets concatenate arrays:
-
-[[1, 2]; [3, 4]]
-
-#-
-
-# Use `size` to get the dimensions of an array:
-
-size([1 2; 3 4; 5 6])
-
-# Note dimension 1 is row, dimension 2 is column
-
-#-
-
-# Below are examples of 2D and 3D arrays populated with random values.
-
-rand(4, 3)
-
-#-
-
-rand(4, 3, 2)
-
-# Be careful when you want to copy arrays!
-
-fibonacci
-
-#-
-
-somenumbers = fibonacci
-
-#-
-
-somenumbers[1] = 404
-
-#-
-
-fibonacci
-
-# Editing `somenumbers` caused `fibonacci` to get updated as well!
-#
-# In the above example, we didn't actually make a copy of `fibonacci`. We just created a new way to access the entries in the array bound to `fibonacci`.
-#
-# If we'd like to make a copy of the array bound to `fibonacci`, we can use the `copy` function.
-
-## First, restore fibonacci
-fibonacci[1] = 1
-fibonacci
-
-#-
-
-somemorenumbers = copy(fibonacci)
-
-#-
-
-somemorenumbers[1] = 404
-
-#-
-
-fibonacci
-
-# In this last example, fibonacci was not updated. Therefore we see that the arrays bound to `somemorenumbers` and `fibonacci` are distinct.
-
-#-
-
 # ### Exercises
-#
-# #### 3.1
-# Create an array, `a_ray`, with the following code:
-#
-# ```julia
-# a_ray = [1, 2, 3]
-# ```
-#
-# Add the number `4` to the end of this array and then remove it.
 
 @assert a_ray == [1, 2, 3]
 
-# #### 3.2
+# #### 3.2 
 # Try to add "Emergency" as key to `myphonebook` with the value `string(911)` with the following code
 # ```julia
 # myphonebook["Emergency"] = 911
@@ -247,19 +101,27 @@ fibonacci
 #
 # Why doesn't this work?
 
-#-
 
-# #### 3.3
+
+# #### 3.3 
 # Create a new dictionary called `flexible_phonebook` that has Jenny's number stored as an integer and Ghostbusters' number stored as a string with the following code
 #
 # ```julia
 # flexible_phonebook = Dict("Jenny" => 8675309, "Ghostbusters" => "555-2368")
 # ```
 
+
+
+#-
+
 @assert flexible_phonebook == Dict("Jenny" => 8675309, "Ghostbusters" => "555-2368")
 
-# #### 3.4
+# #### 3.4 
 # Add the key "Emergency" with the value `911` (an integer) to `flexible_phonebook`.
+
+
+
+#-
 
 @assert haskey(flexible_phonebook, "Emergency")
 
@@ -267,6 +129,10 @@ fibonacci
 
 @assert flexible_phonebook["Emergency"] == 911
 
-# #### 3.5
+# #### 3.5 
 # Why can we add an integer as a value to `flexible_phonebook` but not `myphonebook`? How could we have initialized `myphonebook` so that it would accept integers as values?
+
+
+
+# Please click on `Validate` button at the top, upon completion of the excercise
 
