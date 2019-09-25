@@ -243,4 +243,3 @@ fibonacci[1] = 1
 some_numbers = copy(fibonacci)
 some_numbers[2] = 404
 fibonacci
-

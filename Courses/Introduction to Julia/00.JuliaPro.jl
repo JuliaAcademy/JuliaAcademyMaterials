@@ -14,6 +14,10 @@
 
 2 + 2;
 
+# If the output is large, it'll be hidden behind a "reveal triangle"
+
+[1,2,3,4]
+
 # Helpful shortcuts
 #
 # # Documentation

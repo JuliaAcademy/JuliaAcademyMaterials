@@ -228,5 +228,3 @@ println("I have $num_fingers fingers and $num_toes toes.")
 
 @assert days == 365
 @assert days_float == 365.0
-
-
