@@ -22,8 +22,8 @@ gr()
 
 # and now we can use commands like `plot` and `scatter` to generate plots.
 
-plot(numpirates, globaltemperatures, label="line")
-scatter!(numpirates, globaltemperatures, label="points")
+plot(numpirates, globaltemperatures, label="line")  
+scatter!(numpirates, globaltemperatures, label="points") 
 
 # The `!` at the end of the `scatter!` function name makes `scatter!` a mutating function, indicating that the scattered points will be added onto the pre-existing plot.
 #
@@ -50,8 +50,8 @@ unicodeplots()
 
 #-
 
-plot(numpirates, globaltemperatures, label="line")
-scatter!(numpirates, globaltemperatures, label="points")
+plot(numpirates, globaltemperatures, label="line")  
+scatter!(numpirates, globaltemperatures, label="points") 
 xlabel!("Number of Pirates [Approximate]")
 ylabel!("Global Temperature (C)")
 title!("Influence of pirate population on global warming")
@@ -62,16 +62,16 @@ title!("Influence of pirate population on global warming")
 
 # ### Exercises
 #
-# #### 8.1
+# #### 8.1 
 # Given
 # ```julia
 # x = -10:10
 # ```
 # plot y vs. x for $y = x^2$.  You may want to change backends back again.
 
-#-
 
-# #### 8.2
+
+# #### 8.2 
 # Execute the following code
 
 p1 = plot(x, x)
@@ -81,4 +81,6 @@ p4 = plot(x, x.^4)
 plot(p1, p2, p3, p4, layout = (2, 2), legend = false)
 
 # and then create a $4x1$ plot that uses `p1`, `p2`, `p3`, and `p4` as subplots.
+
+
 
