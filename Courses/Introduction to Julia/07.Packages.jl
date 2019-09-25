@@ -4,7 +4,7 @@
 #
 # Even so, the package ecosystem still has some growing to do. Notably, we have first class function calls  to other languages, providing excellent foreign function interfaces. We can easily call into python or R, for example, with `PyCall` or `Rcall`.
 #
-# This means that you don't have to wait until the Julia ecosystem is fully mature, and that moving to Julia doesn't mean you have to give up your favorite package/library from another language! 
+# This means that you don't have to wait until the Julia ecosystem is fully mature, and that moving to Julia doesn't mean you have to give up your favorite package/library from another language!
 #
 # To see all available packages, check out
 #
@@ -57,25 +57,29 @@ rand(palette, 3, 3)
 
 #-
 
-# ### Exercises
+# # What happened?
 #
-# #### 7.1 
-# Load the Primes package (source code at https://github.com/JuliaMath/Primes.jl).
+# Ask Julia for its status
 
+Pkg.status()
 
+# Examine the Project.toml
+#
+# The Project.toml holds all high-level dependencies and a unique identifier.
 
-#-
+# Examine the Manifest.toml
+#
+# The Manifest holds _all_ dependencies and their exact versions.
 
-@assert @isdefined Primes
+# # Environments
+#
+# This is all happening in the global environment right now — but we can choose
+# to use the environment in this folder. This guarantees reproducibility!
 
-# #### 7.2 
-# Verify that you can now use the function `primes` to grab all prime numbers under 1,000,000 and store it in variable `primes_list`
+# # Creating your own package
+#
+# Best way to do this is through the PkgTemplates meta-package
 
+Pkg.add("PkgTemplates")
 
-
-#-
-
-@assert primes_list == primes(1000000)
-
-# Please click on `Validate` on the top, once you are done with the exercises.
-
+# Now use the generate_interactive() function at the REPL to create your new package

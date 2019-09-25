@@ -68,7 +68,7 @@ f3(42)
 
 sayhi(55595472)
 
-# And `f` will work on a matrix. 
+# And `f` will work on a matrix.
 
 A = rand(3, 3)
 A
@@ -81,7 +81,7 @@ f(A)
 
 f("hi")
 
-# On the other hand, `f` will not work on a vector. Unlike `A^2`, which is well-defined, the meaning of `v^2` for a vector, `v`, is not a well-defined algebraic operation. 
+# On the other hand, `f` will not work on a vector. Unlike `A^2`, which is well-defined, the meaning of `v^2` for a vector, `v`, is not a well-defined algebraic operation.
 
 v = rand(3)
 
@@ -151,7 +151,7 @@ y
 #
 # ### map
 #
-# `map` is a "higher-order" function in Julia that *takes a function* as one of its input arguments. 
+# `map` is a "higher-order" function in Julia that *takes a function* as one of its input arguments.
 # `map` then applies that function to every element of the data structure you pass it. For example, executing
 #
 # ```julia
@@ -198,7 +198,7 @@ broadcast(f, [1, 2, 3])
 
 f.([1, 2, 3])
 
-# Notice again how different this is from calling 
+# Notice again how different this is from calling
 # ```julia
 # f([1, 2, 3])
 # ```
@@ -226,7 +226,7 @@ f(A)
 # As before we see that for a matrix, `A`,
 # ```
 # f(A) = A^2 = A * A
-# ``` 
+# ```
 #
 # On the other hand,
 
@@ -248,7 +248,7 @@ broadcast(x -> x + 2 * f(x) / x, A)
 
 # ### Exercises
 #
-# #### 6.1 
+# #### 6.1
 # Write a function `add_one` that adds 1 to its input.
 
 @assert add_one(1) == 2
@@ -257,12 +257,12 @@ broadcast(x -> x + 2 * f(x) / x, A)
 
 @assert add_one(11) == 12
 
-# #### 6.2 
+# #### 6.2
 # Use `map` or `broadcast` to increment every element of matrix `A` by `1` and assign it to a variable `A1`.
 
 
 
-# #### 6.3 
+# #### 6.3
 # Use the broadcast dot syntax to increment every element of matrix `A1` by `1` and store it in variable `A2`
 
 
@@ -272,4 +272,3 @@ broadcast(x -> x + 2 * f(x) / x, A)
 @assert A2 == [3 4 5; 6 7 8;9 10 11]
 
 # Please click on `Validate` on the top, once you are done with the exercises.
-
