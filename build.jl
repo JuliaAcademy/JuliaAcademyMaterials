@@ -1,5 +1,6 @@
 import Pkg
 
+Pkg.instantiate()
 srcpath = joinpath(@__DIR__(), "Courses")
 buildpath = joinpath(@__DIR__(), "Notebooks")
 
