@@ -1,5 +1,6 @@
 import Pkg
 
+Pkg.instantiate()
 srcpath = joinpath(@__DIR__(), "Courses")
 buildpath = joinpath(@__DIR__(), "Notebooks")
 
@@ -22,6 +23,8 @@ for dir in courses
     cp(src_course, build_course; force=true)
 
     Pkg.activate(build_course)
+    Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaAcademy/JuliaAcademyData.jl.git"))
+    Pkg.resolve()
     test = false
     Pkg.instantiate()
     for file in readdir(build_course)
